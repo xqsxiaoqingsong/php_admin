@@ -1,0 +1,232 @@
+{{extend name="layout/application" /}}
+{{block name="content"}}
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">直播间课程管理</strong>
+                <!--<small>Table</small>-->
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-4">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <a type="button" class="am-btn am-btn-default" href="{{:Url('admin/Liveurls/create')}}">
+                                <span class="am-icon-plus"></span> 新增
+                            </a>
+                            <a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"
+                               href="javascript:;">
+                                <span class="am-icon-trash-o"></span> 删除
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <form class="am-form-inline" role="form" method="get">
+                <div class="am-u-sm-12 am-u-md-4">
+                    <div class="am-form-group">
+                        <select data-am-selected="{btnSize: 'sm'}" name="category_id" id="">
+                            <option value="-1">所有栏目</option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u-md-4">
+                    <div class="am-input-group am-input-group-sm">
+                        <input type="text" name="title" class="am-form-field" placeholder="标题名" value="">
+                        <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-default" type="submit">搜索</button>
+                            <a href="{{:Url('/admin/Lives/index')}}" class="am-btn am-btn-default am-btn-sm" type="button">重置</a>
+                    </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <form class="am-form">
+                    <table class="am-table am-table-striped am-table-hover table-main">
+                        <thead>
+                        <tr>
+                            <th class="table-check"><input type="checkbox" class="checked_all"/></th>
+                            <th class="table-id">ID</th>
+                            <th class="table-title">标题</th>
+                            <th class="table-category">所属直播间</th>
+                            <!--<th class="table-type">缩略图</th>-->
+                            <th class="table-author am-hide-sm-only">直播时间</th>
+                            <th class="table-date am-hide-sm-only">结束时间</th>
+                            <th class="table-show am-hide-sm-only">是否显示</th>
+                            <th class="table-show am-hide-sm-only">状态</th>
+                            <th class="table-sort-order am-hide-sm-only" style="width:10%">排序</th>
+                            <th class="table-set">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{foreach name="lives" id="live"}}
+                        <tr data-id="{{$live.id}}" class="xParent">
+                            <td><input type="checkbox" class="checked_id" name="checked_id[]" value="{{$live.id}}"/>
+                            </td>
+                            <td>{{$live.id}}</td>
+                            <td>{{$live.title}}</td>
+                            <td>{{$live.des}}</td>
+                            <!--<td><img src="{{$live.img}}" style="width:70px;height:50px;"></td>-->
+                            <td class="am-hide-sm-only">{{$live.livetime|date='Y-m-d H:i'}}</td>
+                            <td class="am-hide-sm-only">{{$live.overtime|date='Y-m-d H:i'}}</td>
+                            <td class="am-hide-sm-only" data-is_show="{{$live.is_show}}">
+                                {{eq name="live.is_show" value="1"}}
+                                <span class="am-icon-check change_is_show"></span>
+                                {{else/}}
+                                <span class="am-icon-close change_is_show"></span>
+                                {{/eq}}
+                            </td>
+                            <td class="am-hide-sm-only">{{if $live.status == 0 }} <span class="am-badge am-badge-secondary  am-round">未开播</span>
+                                {{elseif $live.status == 1 /}}<span
+                                        class="am-badge am-badge-success am-round">正在直播</span>
+                                {{else /}} <span class="am-badge am-badge-warning am-round">已完成</span>
+                                {{/if}}</td>
+                            <td class="am-hide-sm-only">
+                                <input type="text" style="width: 100px;" name="sort_order[]" class="sort_order"
+                                       value="{{$live.sort_order}}"></td>
+                            <td>
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary"
+                                           href="{{:Url('admin/Liveurls/edit',['id'=>$live.id])}}"><span
+                                                class="am-icon-pencil-square-o"></span> 编辑
+                                        </a>
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only del"
+                                           href="javascript:;">
+                                            <span class="am-icon-trash-o"></span> 删除
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {{/foreach}}
+                    </table>
+                    <div class="am-cf">
+                        共 {{$count}} 条记录
+                        <div class="am-fr">
+                            <ul class="am-pagination">
+                                {{$lives|raw}}
+                            </ul>
+                        </div>
+                    </div>
+                    <hr/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="admin-content-footer">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
+
+</div>
+{{/block}}
+
+{{block name="js"}}
+<script>
+    $(function () {
+        //单条删除
+        $(".del").click(function () {
+            var id = $(this).parents('tr').data('id');
+            // console.log(id);
+            var _this = $(this);
+            if (confirm('确定要删除吗?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/Lives/delete/' + id,
+                    data: {id: id},
+                    success: function () {
+                        // _this.parents('tr').fadeOut(300);
+                        _this.parents('tr').remove();
+                    }
+                })
+            }
+            return false;
+        })
+
+        //全选反选
+        $(".checked_all").click(function () {
+            var checked = $(this).prop('checked');
+            $(".checked_id").prop('checked', checked);
+        })
+        //多条删除
+        $(".del_all").click(function () {
+            var length = $(".checked_id:checked").length;
+            if (length == 0) {
+                alert('请至少选择一篇文章');
+                return false;
+            }
+            var check_id = $(".checked_id:checked").serialize();
+            // console.log(check_id);
+
+            if (confirm('确定要删除吗?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/Lives/delete_all/',
+                    data: check_id,
+                    success: function (data) {
+                        $(".checked_id:checked").each(function () {
+                            $(this).parents("tr").remove();
+                        })
+                        // console.log(data);
+                    }
+                })
+            }
+            return false;
+        })
+
+
+        //排序
+        $(".sort_order").change(function () {
+            var id = $(this).parents('tr').attr('data-id');
+            var sort_order = $(this).val();
+            // console.log(sort_order);return;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Lives/sort_order/' + id,
+                data: {
+                    id: id,
+                    sort_order: sort_order
+                },
+                success: function () {
+                    window.location.reload();
+                }
+            })
+
+            return false;
+        })
+
+        //是否显示
+        $(".change_is_show").click(function () {
+            var id = $(this).parents('tr').attr('data-id');
+            var attr = $(this).parents('td').data('is_show');
+            // console.log(attr);
+            var _this = $(this);
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Lives/change_show/' + id,
+                data: {
+                    id: id,
+                    attr: attr
+                },
+                success: function () {
+                    _this.toggleClass('am-icon-check am-icon-close');
+                }
+            })
+
+            return false;
+        })
+    })
+</script>
+{{/block}}

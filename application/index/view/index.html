@@ -1,0 +1,76 @@
+<html><head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <title>.</title>
+    <!--<script src="../../../../public/image_files/jquery.min.js"></script>-->
+    <style type="text/css">
+        body{font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; } .main{padding: 5px 5%; } .main p{line-height: 30px; }
+    </style>
+</head>
+<body>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>独23123</title>
+<!--<link rel="stylesheet" type="text/css" href="../../../../public/index_files/common.css">-->
+<!--<link rel="stylesheet" type="text/css" href="../../../../public/index_files/boystyle.css">-->
+
+<script>
+    var ss = "SB728";
+    function Ajsx(){
+        $.ajax({
+            url: '#',
+            type: 'POST',
+            data: {
+                a:ss
+            },
+            dataType: 'json',
+            crossDomain: true,
+            success: function(yang) {
+                console.log(yang);
+                console.log(eval(yang));
+                for(var i = 0; i < yang.length; i++) {
+                    var img = yang[i].img;
+                    $('#adCode').append("<img class='adCode' src="+img+">");
+                    $('#adCode2').append("<img class='adCode' src="+img+">");
+                    $('#adCode3').append("<img class='adCode' src="+img+">");
+                    $('#adCode4').append("<img class='adCode' src="+img+">");
+                    $('#adCode5').append("<img class='adCode' src="+img+">");
+                    $('#adCode6').append("<img class='adCode' src="+img+">");
+                    $('#adCode7').append("<img class='adCode' src="+img+">");
+                    $('#adCode8').append("<img class='adCode' src="+img+">");
+                    $('#adCode1').append("<img class='adCode' src="+img+">");
+                }
+
+            },
+        });
+    }
+    day = new Date();
+    hr = day.getHours()
+    var furl = '#';
+    function pushHistory() {
+        var state = {
+            title: 'title',
+            url: '#'
+        };
+        window.history.pushState(state, 'title', '#');
+    }
+
+    if(furl != '') {
+        pushHistory();
+
+        window.addEventListener('popstate', function(e) {
+
+            location.href = furl;
+        });
+    }Ajsx();
+</script>
+
+
+
+123123
+</body></html>

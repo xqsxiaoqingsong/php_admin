@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>后台登录 | 武汉新方向教育发展有限公司</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="/vendor/Amazeui/i/favicon.ico">
+    <link rel="stylesheet" href="/vendor/Amazeui/css/amazeui.min.css"/>
+    <style>
+        .header {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 200%;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .header p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="am-g">
+        <h1>后台系统管理员登录</h1>
+    </div>
+    <hr/>
+</div>
+<div class="am-g">
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+        <h3>登录</h3>
+        <hr>
+        <form method="post" class="am-form" action="{{:Url('admin/Logins/login')}}">
+            <label for="username">用户名:</label>
+            <input type="text" name="username" id="username" value="" required>
+            <br>
+            <label for="password">密码:</label>
+            <div class="am-input-group">
+                <input type="password" name="password" id="password" value="" required>
+                <span class="am-input-group-btn"><a class="am-btn am-btn-default" type="button" id="passwordeye"><span
+                        class="am-icon-eye am-secondary"></span> </a></span>
+            </div>
+            <br>
+            <label for="password">验证码:</label>
+
+            <div class="am-g">
+                <div class="am-u-sm-7">
+                    <input type="text" name="captcha" id="captcha" value="" required>
+                </div>
+                <div class="am-u-sm-5">
+                    <img src="{{:Url('admin/Logins/verify')}}"
+                         onclick="this.src='{{:Url(\'admin/Logins/verify\')}}?'+Math.random()" alt=" captcha"/>
+                </div>
+            </div>
+            <br/>
+            <div class="am-cf am-u-sm-offset-5">
+                <input type="button" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl ajax_login">
+            </div>
+        </form>
+        <hr>
+        <p>武汉新方向教育发展有限责任公司版权所有</p>
+    </div>
+</div>
+<script src="/vendor/Amazeui/js/jquery.min.js"></script>
+<script src="/vendor/Amazeui/js/amazeui.min.js"></script>
+<script>
+    $(function () {
+        //密码显示隐藏
+        $("#passwordeye").click(function () {
+            if ($("#password").attr("type") == "password") {
+                $("#password").attr("type", "text");
+            } else {
+                $("#password").attr("type", "password");
+            }
+            $(this).children('span').toggleClass('am-icon-eye am-icon-eye-slash');
+        });
+
+        $(".ajax_login").click(function () {
+            // alert(123);
+            var info = {
+                'username': $("#username").val(),
+                'password': $("#password").val(),
+                'captcha': $("#captcha").val(),
+            }
+            // console.log(info);
+            // 验证用户名
+            // if (info.name == "" || info.name.length < 5) {
+            //     alert('用户名不能低于五位');
+            //     return false;
+            // }
+            // //验证密码
+            // if (info.password == "" || info.password.length < 5) {
+            //     alert('密码不能低于五位');
+            //     return false;
+            // }
+            // //验证验证码
+            // if (info.captcha == "" || info.captcha.length < 4) {
+            //     alert('验证码不能低于四位');
+            //     return false;
+            // }
+            $.post("{{:Url('admin/Logins/login')}}", info, function (data) {
+                // console.log(data);return;
+                if (data.code == 0) {
+                    alert(data.msg);
+                    return false;
+                } else {
+                    if (data.status == 0){
+                        alert(data.mes);
+                        return false;
+                    }
+                    alert(data.msg);
+                    location.href = "{{:Url('/admin/index')}}";
+                }
+            })
+        })
+    })
+
+</script>
+</body>
+</html>

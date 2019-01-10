@@ -1,0 +1,50 @@
+<!doctype html>
+<html class="no-js fixed-layout">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>武汉新方向教育发展有限公司</title>
+    <meta name="description" content="这是后台首页">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="icon" type="image/png" href="/vendor/Amazeui/i/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="/vendor/Amazeui/i/app-icon72x72@2x.png">
+    <link rel="stylesheet" href="/vendor/Amazeui/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="/vendor/Amazeui/css/admin.css">
+    <link rel="stylesheet" href="/vendor/admin/css/common.css">
+    {{block name="css"}}{{/block}}
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+
+{{include file="layout/_header" /}}
+
+<div class="am-cf admin-main">
+    <!-- sidebar start -->
+    {{include file="layout/_sidebar" /}}
+    <!-- sidebar end -->
+
+    <!-- content start -->
+    {{block name="content"}}{{/block}}
+    <!-- content end -->
+
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+<!--[if lt IE 9]>
+<script src="/vendor/amazeui/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<script src="/vendor/Amazeui/js/jquery.min.js"></script>
+<script src="/vendor/Amazeui/js/amazeui.min.js"></script>
+<script src="/vendor/Amazeui/js/app.js"></script>
+{{block name="js"}}{{/block}}
+</body>
+</html>

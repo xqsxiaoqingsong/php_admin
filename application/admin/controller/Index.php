@@ -1,0 +1,92 @@
+<?php
+
+namespace app\admin\controller;
+
+use think\Controller;
+use think\Request;
+
+class Index extends Common
+{
+    public function __construct()
+    {
+        //分类共享
+        parent::__construct();
+        return $this->assign([
+//            'messagecount' => Message::count(),
+            '_home' => 'am-active',   //高亮
+
+        ]);
+    }
+
+    //后台首页
+    public function index()
+    {
+        return view('/index');
+    }
+
+    /**
+     * 显示创建资源表单页.
+     *
+     * @return \think\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * 保存新建的资源
+     *
+     * @param  \think\Request  $request
+     * @return \think\Response
+     */
+    public function save(Request $request)
+    {
+        //
+    }
+
+    /**
+     * 显示指定的资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function read($id)
+    {
+        //
+    }
+
+    /**
+     * 显示编辑资源表单页.
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * 保存更新的资源
+     *
+     * @param  \think\Request  $request
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * 删除指定资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function delete($id)
+    {
+        //
+    }
+}

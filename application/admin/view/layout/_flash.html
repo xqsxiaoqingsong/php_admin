@@ -1,0 +1,23 @@
+{{if($e >0)}}
+<div class="am-alert am-alert-danger" data-am-alert>
+    <button type="button" class="am-close">&times;</button>
+    <ul>
+        {{foreach ($e->all() as $error)}}
+        <li>{{ $error }}</li>
+       {{/foreach}}
+    </ul>
+</div>
+{{/if}}
+
+{{if(session('success'))}}
+<div class="am-alert am-alert-block am-alert-success" data-am-alert>
+    <button type="button" class="am-close">&times;</button>
+    {{ session('success') }}
+</div>
+{{/if}}
+
+{{if(session('error'))}}
+<div class="am-alert am-alert-block am-alert-danger">
+    {{ session('error') }}
+</div>
+{{/if}}
