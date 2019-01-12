@@ -37,8 +37,8 @@
                     }
                 </style>
                 <div class="am-form-group">
-                    <span class="teacher_search_span">姓名：</span>
-                    <input type="text" name="name" class="am-form-field am-input-sm" style="width: 120px" placeholder="姓名"
+                    <span class="teacher_search_span">课程名称：</span>
+                    <input type="text" name="name" class="am-form-field am-input-sm" style="width: 120px" placeholder="课程名称"
                            value="{{empty name='$condition.name'}}  {{else /}}{{$condition.name}}{{/empty}}">
                 </div>
                 <div class="am-form-group">
@@ -52,13 +52,9 @@
                         {{/foreach}}
                     </select>
                 </div>
-                <div class="am-form-group">
-                    <span class="teacher_search_span">联系方式：</span>
-                    <input type="text" id="phone" class="am-form-field am-input-sm" name="phone" style="width: 120px" placeholder="联系方式"
-                           value="{{empty name='$condition.phone'}}  {{else /}} {{$condition.phone}}{{/empty}}">
-                </div>
+
                 <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
-                <a href="/admin/teachers" class="am-btn am-btn-default am-btn-sm">重置</a>
+                <a href="/admin/Courses" class="am-btn am-btn-default am-btn-sm">重置</a>
             </form>
         </div>
 
@@ -72,9 +68,10 @@
                             <th style="width: 10%" class="table-id">编号</th>
                             <th style="width: 20%;">课程名称</th>
                             <th>专业方向</th>
-                            <th>推荐排序</th>
                             <th>课时数</th>
                             <th>在学人数</th>
+                            <th>推荐排序</th>
+                            <th>上下架</th>
                             <!--<th class="table-is-show am-hide-sm-only">是否显示</th>-->
                             <!--<th class="table-sort-order am-hide-sm-only" style="width:8%">排序</th>-->
                             <th class="table-set">操作</th>
@@ -87,10 +84,17 @@
                             </td>
                             <td>{{$course.id}}</td>
                             <td>{{$course.courseName}}</td>
-                            <td>{{$course.majorId}}</td>
-                            <td>{{$course.recommendSort}}</td>
+                            <td>{{$course.coursepro.MAJOR_NAME}}</td>
                             <td>{{$course.classHour}}</td>
                             <td>{{$course.studyNumber}}</td>
+                            <td><input type="text" style="width: 60px;" name="sort_order[]" class="sort_order" value="{{$course.recommendSort}}"></td>
+                            <td class="am-hide-sm-only" data-is_show="{{$course.state}}">
+                                {{eq name="$course.state" value="1"}}
+                                <span class="am-icon-check change_is_show"></span>
+                                {{else/}}
+                                <span class="am-icon-close change_is_show"></span>
+                                {{/eq}}
+                            </td>
                             <td>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
@@ -184,47 +188,51 @@
         })
 
         //排序
-        // $(".sort_order").change(function () {
-        //     var id = $(this).parents('tr').attr('data-id');
-        //     var sort_order = $(this).val();
-        //     // console.log(sort_order);return;
-        //
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/admin/Messagecategories/sort_order/' + id,
-        //         data: {
-        //             id: id,
-        //             sort_order: sort_order
-        //         },
-        //         success: function () {
-        //             window.location.reload();
-        //         }
-        //     })
-        //
-        //     return false;
-        // })
-        //
-        // //是否显示
-        // $(".change_is_show").click(function () {
-        //     var id = $(this).parents('tr').attr('data-id');
-        //     var attr = $(this).parents('td').data('is_show');
-        //     // console.log(attr);
-        //     var _this = $(this);
-        //
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/admin/Messagecategories/change_show/' + id,
-        //         data: {
-        //             id: id,
-        //             attr: attr
-        //         },
-        //         success: function () {
-        //             _this.toggleClass('am-icon-check am-icon-close');
-        //         }
-        //     })
-        //
-        //     return false;
-        // })
+        $(".sort_order").change(function () {
+            var id = $(this).parents('tr').attr('data-id');
+            var sort_order = $(this).val();
+            // console.log(sort_order);return;
+
+            if (confirm('确定要更改排序吗?')) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Courses/sort_order/' + id,
+                data: {
+                    id: id,
+                    sort_order: sort_order
+                },
+                success: function () {
+                    window.location.reload();
+                }
+            })
+            }else {
+                window.location.reload();
+            }
+            return false;
+        })
+
+        //是否显示
+        $(".change_is_show").click(function () {
+            var id = $(this).parents('tr').attr('data-id');
+            var attr = $(this).parents('td').data('is_show');
+            // console.log(attr);
+            var _this = $(this);
+
+            if (confirm('确定要更改上下架状态吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Courses/change_show/' + id,
+                    data: {
+                        id: id,
+                        attr: attr
+                    },
+                    success: function () {
+                        _this.toggleClass('am-icon-check am-icon-close');
+                    }
+                })
+            }
+            return false;
+        })
     })
 </script>
 {{/block}}

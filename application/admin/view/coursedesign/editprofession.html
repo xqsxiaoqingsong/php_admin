@@ -1,0 +1,554 @@
+{{extend name="layout/application" /}}
+
+{{block name="css"}}
+<!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
+{{/block}}
+
+{{block name="content"}}
+<div class="admin-content">
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">编辑课程分类</strong> /
+            <!--<small>Create A New AdCategory</small>-->
+        </div>
+    </div>
+    <hr>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+            <form class="am-form" action="" method="post">
+                <input type="hidden" name="_token" value="">
+                <!--<div class="am-g am-margin-top">-->
+                <!--<div class="am-u-sm-4 am-u-md-2 am-text-right">-->
+                <!--主讲分类-->
+                <!--</div>-->
+                <!--<div class="am-u-sm-8 am-u-md-4 am-u-end col-end">-->
+                <!--<select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"-->
+                <!--name="majorId" style="display: none;">-->
+                <!--<option value="">顶级分类</option>-->
+                <!--{{foreach name="categories" id="category"}}-->
+                <!--<option value="{{$category.ID}}" {{if $category.ID == $course.majorId}} selected {{/if}}>{{$category.MAJOR_NAME}}</option>-->
+                <!--{{/foreach}}-->
+                <!--</select>-->
+                <!--&lt;!&ndash;<div class="am-selected am-dropdown " id="am-selected-n65gb" data-am-dropdown=""&ndash;&gt;-->
+                <!--&lt;!&ndash;style="width: 100%;">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="am-selected-content am-dropdown-content"><h2 class="am-selected-header">&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="am-icon-chevron-left">返回</span></h2>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="am-selected-hint"></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        课程名称：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-10">
+                        {{$course.courseName}}
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        权限分组管理：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-10">
+                        <div class="am-btn-group am-btn-group-sm">
+                            <a type="button" class="am-btn am-btn-default am-text-success createstagetd" href="javascript:;">
+                                <span class="am-icon-plus"></span> 新增
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-11 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                <th style="width: 10%" class="table-id">编号</th>
+                                <th style="width: 20%;">分类名</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                                <!--<th class="table-is-show am-hide-sm-only">是否显示</th>-->
+                                <!--<th class="table-sort-order am-hide-sm-only" style="width:8%">排序</th>-->
+                                <!--<th class="table-set">操作</th>-->
+                            </tr>
+                            </thead>
+                            <tbody class="createstage">
+                            {{foreach $stages as $stage}}
+                            <tr data-id="{{$stage.id}}" class="xParent">
+                                <td style="line-height: 37px">{{$stage.id}}</td>
+                                <td><input readonly="readonly" type="text" style="width: 260px;" name="stageName[]"
+                                           class="stageName" value="{{$stage.stageName}}"></td>
+                                <td>
+                                    <input readonly="readonly" type="text" style="width: 60px;" name="recommendSort[]"
+                                           class="sort_order" value="{{$stage.recommendSort}}">
+                                </td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-sm">
+                                            <a class=" removeredaonlyno am-btn am-btn-default am-btn-xs am-text-secondary"
+                                               href="javascript:;" res="0">
+                                                <span class="am-icon-pencil-square-o"></span> 编辑
+                                            </a>
+                                            <a class="delstage am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
+                                               href="javascript:;">
+                                                <span class="am-icon-trash-o"></span> 删除
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/foreach}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        课程分类管理：
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        一级分类：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                        <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                name="majorId" style="display: none;" class="selectnum">
+                            <!--<option value=""></option>-->
+                            {{foreach name="catalogs" id="catalog"}}
+                            <option value="{{$catalog.id}}">{{$catalog.muluName}}</option>
+                            {{/foreach}}
+                        </select>
+                        <!--<div class="am-selected am-dropdown " id="am-selected-n65gb" data-am-dropdown=""-->
+                        <!--style="width: 100%;">-->
+                        <!--<div class="am-selected-content am-dropdown-content"><h2 class="am-selected-header">-->
+                        <!--<span class="am-icon-chevron-left">返回</span></h2>-->
+                        <!--<div class="am-selected-hint"></div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="am-u-sm-6">
+                        <div class="am-btn-group am-btn-group-sm">
+                            <a class=" am-btn am-btn-default am-btn-xs am-text-secondary"
+                               href="{{:Url('admin/Coursedesigns/edit',['id'=>$course.id])}}">
+                                <span class="am-icon-pencil-square-o"></span> 编辑
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        二级分类：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-10">
+                        <div class="am-btn-group am-btn-group-sm">
+                            <a type="button" class="am-btn am-btn-default am-text-success createcatalogtd" href="javascript:;">
+                                <span class="am-icon-plus"></span> 新增
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-11 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                <th style="width: 10%" class="table-id">编号</th>
+                                <th style="width: 20%;">分类名</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                                <!--<th class="table-is-show am-hide-sm-only">是否显示</th>-->
+                                <!--<th class="table-sort-order am-hide-sm-only" style="width:8%">排序</th>-->
+                                <!--<th class="table-set">操作</th>-->
+                            </tr>
+                            </thead>
+                            <tbody class="tbajax createmulu">
+                            {{foreach name="catalogs" id="catalog"}}
+                            {{foreach $catalog.sub as $cata}}
+                            <tr data-id="{{$cata.id}}" class="xParent">
+                                <td style="line-height: 37px">{{$cata.id}}</td>
+                                <td><input readonly="readonly" type="text" style="width: 260px;" name="muluName[]"
+                                           class="muluName" value="{{$cata.muluName}}"></td>
+                                <td>
+                                    <input readonly="readonly" type="text" style="width: 60px;" name="recommendSort[]"
+                                           class="sort_order" value="{{$cata.recommendSort}}">
+                                </td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-sm">
+                                            <a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"
+                                               href="javascript:;" res="0">
+                                                <span class="am-icon-pencil-square-o"></span> 编辑
+                                            </a>
+                                            <a class="delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
+                                               href="javascript:;">
+                                                <span class="am-icon-trash-o"></span> 删除
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/foreach}}
+                            {{/foreach}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top" style="margin-top: 2.6rem">
+                    <div class="am-u-sm-4 am-u-md-4 am-text-right">
+                        <buttom class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">确认</buttom>
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-6 am-u-end col-end">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="admin-content-footer" style="margin-top: 2rem">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
+</div>
+{{/block}}
+
+{{block name="js"}}
+<!--<script src="/vendor/markdown/editormd.min.js"></script>             //文本编辑器-->
+<!--<script src="/vendor/admin/js/editormd_config.js"></script>-->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
+
+<script type="text/javascript">
+    //     var ue = UE.getEditor('container',{
+    //
+    //     });
+    //
+    //     function getstring(){
+    //
+    //         document.getElementById('container').innerHTML=UE.getEditor('editor').getContent();
+    //
+    // //get.Content() 函数可以获得你所编辑的内容的html代码
+    //     }
+</script>
+<script>
+    $(function () {
+        //更改确定和编辑
+        $(".removeredaonlyno").click(function () {
+            var i = $(this).attr("res");
+            if (i == 0) {
+                $(this).attr("res", "1");
+                $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+                $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
+            } else {
+                if (confirm('是否要提交更改?')) {
+                    var info = {
+                        'id' :$(this).parents('tr').data('id'),
+                        'courseId': "{{$course.id}}",
+                        'stageName': $(this).parents('td').siblings('td').children('.stageName').val(),
+                        'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+                    }
+                    // console.log(info);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/Coursedesigns/editstage',
+                            data: info,
+                            success: function (data) {
+                                // console.log(data);return;
+                                if (data.code == 0) {
+                                    alert(data.msg);
+                                    return false;
+                                }
+                                if (data.status == 1) {
+                                    alert(data.msg);
+                                    window.location.reload();
+                                } else {
+                                    alert(data.msg);
+                                    return false
+                                }
+                            }
+                        })
+                }else {
+                    $(this).attr("res", "0");
+                    $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                    $(this).parents('td').siblings('td').children('input').attr("readOnly", true);
+                }
+            }
+        });
+
+        //新增阶段td并且取消
+        $(".createstagetd").click(function () {
+            var li = "";
+            li += "<tr data-id=\"\" class=\"xParent\">\n" +
+                "                                <td style=\"line-height: 37px\"></td>\n" +
+                "                                <td><input type=\"text\" style=\"width: 260px;\" name=\"stageName[]\"\n" +
+                "                                           class=\"stagename\" value=\"\"></td>\n" +
+                "                                <td>\n" +
+                "                                    <input type=\"text\" style=\"width: 60px;\" name=\"recommendSort[]\"\n" +
+                "                                           class=\"sort_order\" value=\"\">\n" +
+                "                                </td>\n" +
+                "                                <td>\n" +
+                "                                    <div class=\"am-btn-toolbar\">\n" +
+                "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                "                                            <a class=\"removeredaonly querenstage am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                "                                               href=\"javascript:;\" res=\"0\">\n" +
+                "                                                <span class=\"am-icon-pencil-square-o\"></span> 确认\n" +
+                "                                            </a>\n" +
+                "                                            <a class=\"del quxiao am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                "                                               href=\"javascript:;\">\n" +
+                "                                                <span class=\"am-icon-trash-o\"></span> 取消\n" +
+                "                                            </a>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                </td>\n" +
+                "                            </tr>";
+            $(".createstage").append(li);//将拼接出来的加入到指定的模块
+            $(".quxiao").click(function () {
+                $(this).parents("tr").remove();
+            })
+            $(".querenstage").click(function () {
+                var info = {
+                    'courseId': "{{$course.id}}",
+                    'stageName': $(this).parents('td').siblings('td').children('.stagename').val(),
+                    'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+                }
+                //编辑权限
+                if (confirm('确定要提交吗?')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/Coursedesigns/savestage',
+                        data: info,
+                        success: function (data) {
+                            // console.log(data);return;
+                            if (data.code == 0) {
+                                alert(data.msg);
+                                return false;
+                            }
+                            if (data.status == 1) {
+                                alert(data.msg);
+                                window.location.reload();
+                            } else {
+                                alert(data.msg);
+                                window.location.reload();
+                                return false
+                            }
+                        }
+                    })
+                }
+            })
+        })
+
+        //阶段单条删除
+        $(".delstage").click(function () {
+            var id = $(this).parents('tr').data('id');
+            // console.log(id);return;
+            var _this = $(this);
+            if (confirm('确定要删除吗?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/Coursedesigns/deletestage/' + id,
+                    data: {id: id},
+                    success: function () {
+                        // _this.parents('tr').fadeOut(300);
+                        _this.parents('tr').remove();
+                    }
+                })
+            }
+            return false;
+        })
+
+        //新增目录td并且取消
+        $(".createcatalogtd").click(function () {
+            var li = "";
+            li += "<tr data-id=\"\" class=\"xParent\">\n" +
+                "                                <td style=\"line-height: 37px\"></td>\n" +
+                "                                <td><input type=\"text\" style=\"width: 260px;\" name=\"muluName[]\"\n" +
+                "                                           class=\"muluName\" value=\"\"></td>\n" +
+                "                                <td>\n" +
+                "                                    <input type=\"text\" style=\"width: 60px;\" name=\"recommendSort[]\"\n" +
+                "                                           class=\"sort_order\" value=\"\">\n" +
+                "                                </td>\n" +
+                "                                <td>\n" +
+                "                                    <div class=\"am-btn-toolbar\">\n" +
+                "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                "                                            <a class=\"removeredaonly querencatalog am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                "                                               href=\"javascript:;\" res=\"0\">\n" +
+                "                                                <span class=\"am-icon-pencil-square-o\"></span> 确认\n" +
+                "                                            </a>\n" +
+                "                                            <a class=\"del quxiao am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                "                                               href=\"javascript:;\">\n" +
+                "                                                <span class=\"am-icon-trash-o\"></span> 取消\n" +
+                "                                            </a>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                </td>\n" +
+                "                            </tr>";
+            $(".createmulu").append(li);//将拼接出来的加入到指定的模块
+            $(".quxiao").click(function () {
+                $(this).parents("tr").remove();
+            })
+            $(".querencatalog").click(function () {
+                var info = {
+                    'level': 2,
+                    'pid': $(".selectnum").val(),
+                    'muluName': $(this).parents('td').siblings('td').children('.muluName').val(),
+                    'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+                }
+                if (confirm('确定要提交吗?')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/Coursedesigns/savecatalog',
+                        data: info,
+                        success: function (data) {
+                            // console.log(data);return;
+                            if (data.code == 0) {
+                                alert(data.msg);
+                                return false;
+                            }
+                            if (data.status == 1) {
+                                alert(data.msg);
+                                window.location.reload();
+                            } else {
+                                alert(data.msg);
+                                window.location.reload();
+                                return false
+                            }
+                        }
+                    })
+                }
+            })
+        })
+
+        //进入页面自动加载change时间,在最后给元素绑定上trigger("change")
+        $(".selectnum").on('change', function () {
+            var id = $(this).val();
+            var _this = $(this);
+            //选择一级目录分类二级目录分类联动
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Coursedesigns/editproajax/' + id,
+                data: {id: id},
+                success: function (data) {
+                    // console.log(data);return;
+                    // $('#team_list').html(data.data);
+                    // console.log(data.data);return;
+                    var li = "";
+                    for (var i = 0; i < data.length; i++) {//循环后台传过来的Json数组
+                        var datas = data[i];
+                        // console.log(datas);return;
+                        var num = datas.id;
+                        var name = datas.muluName;
+                        var sort_order = datas.recommendSort;
+                        li +=
+                            "<tr data-id=\""+ num +"\" class=\"xParent\">\n" +
+                            "                                <td style=\"line-height: 37px\">" + num + "</td>\n" +
+                            "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 260px;\" name=\"muluName[]\" class=\"muluName\" value=\"" +name + "\"></td>\n" +
+                            "                                <td>\n" +
+                            "                                    <input readonly=\"readonly\" type=\"text\" style=\"width: 60px;\" name=\"recommendSort[]\" class=\"sort_order\" value=\"" +sort_order + "\">\n" +
+                            "                                </td>\n" +
+                            "                                <td>\n" +
+                            "                                    <div class=\"am-btn-toolbar\">\n" +
+                            "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                            "                                            <a class=\"removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                            "                                               href=\"javascript:;\" res=\"0\">\n" +
+                            "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                            "                                            </a>\n" +
+                            "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                            "                                               href=\"javascript:;\">\n" +
+                            "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
+                            "                                            </a>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>\n" +
+                            "                                </td>\n" +
+                            "                            </tr>";
+                    }
+                    $(".tbajax").html(li);//将拼接出来的加入到指定的模块
+                    // 重新加载js
+                    $(".removeredaonly").click(function () {
+                        var i = $(this).attr("res");
+                        if (i == 0) {
+                            $(this).attr("res", "1");
+                            $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+                            $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
+                        } else {
+                            //编辑二级目录
+                            if (confirm('是否要提交更改?')) {
+                                var info = {
+                                    'id' :$(this).parents('tr').data('id'),
+                                    // 'courseId': "{{$course.id}}",
+                                    'muluName': $(this).parents('td').siblings('td').children('.muluName').val(),
+                                    'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+                                }
+                                // console.log(info);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/admin/Coursedesigns/editcatalog',
+                                    data: info,
+                                    success: function (data) {
+                                        // console.log(data);return;
+                                        if (data.code == 0) {
+                                            alert(data.msg);
+                                            return false;
+                                        }
+                                        if (data.status == 1) {
+                                            alert(data.msg);
+                                            window.location.reload();
+                                        } else {
+                                            alert(data.msg);
+                                            return false
+                                        }
+                                    }
+                                })
+                            }else {
+                                $(this).attr("res", "0");
+                                $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                                $(this).parents('td').siblings('td').children('input').attr("readOnly", true);
+                            }
+                        }
+                    });
+                    // 目录单条删除
+                    $(".delcatalog").click(function () {
+                        var id = $(this).parents('tr').data('id');
+                        // console.log(id);return;
+                        var _this = $(this);
+                        if (confirm('确定要删除吗?')) {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '/admin/Coursedesigns/deletecatalog/' + id,
+                                data: {id: id},
+                                success: function () {
+                                    // _this.parents('tr').fadeOut(300);
+                                    _this.parents('tr').remove();
+                                }
+                            })
+                        }
+                        return false;
+                    })
+                }
+            })
+            return false;
+        });
+        $('.selectnum').trigger("change");
+        // $('.removeredaonlyno').trigger("click");
+
+
+    })
+</script>
+<!--//图片上传js-->
+<script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>
+<!--//普通模块图片上传js-->
+<!--<script src="/vendor/admin/js/upload.js"></script>-->
+<!--<script src="/vendor/admin/js/upload123.js"></script>-->
+<!--//课程信息图片js-->
+<script src="/vendor/admin/js/courseimgupload.js"></script>
+<script src="/vendor/admin/js/courseupload.js"></script>
+{{/block}}

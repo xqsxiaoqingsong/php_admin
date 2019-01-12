@@ -15,4 +15,10 @@ class Course extends Model
 
     // 定义时间戳字段名
     protected $createTime = 'createTime';
+
+    //课程所属专业
+    public function coursepro()
+    {
+        return $this->belongsTo('Profession', 'majorId', 'ID');
+    }
 }
