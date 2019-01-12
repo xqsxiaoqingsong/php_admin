@@ -92,15 +92,19 @@ class CourseDesigns extends Common
                 $info = $this->error();
                 return json($info);
             };
-            $result = CourseCatalog::create($request->param());
-            if ($result) {
-                //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+            if ($request->param('pid')){
+                $result = CourseCatalog::create($request->param());
+                if ($result) {
+                    //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
 //                $this->success('恭喜您，新增成功', 'index');
-                $info = array('status' => 1, 'msg' => '添加二级分类成功');
-            } else {
-                //错误页面的默认跳转页面是返回前一页，通常不需要设置
+                    $info = array('status' => 1, 'msg' => '添加二级分类成功');
+                } else {
+                    //错误页面的默认跳转页面是返回前一页，通常不需要设置
 //                $this->error('新增失败');
-                $info = array('status' => 0, 'msg' => '添加二级分类失败');
+                    $info = array('status' => 0, 'msg' => '添加二级分类失败');
+                }
+            }else{
+                $info =array('status' => 0, 'msg' => '无法直接添加二级分类,请先添加一级分类');
             }
             return json($info);
         }

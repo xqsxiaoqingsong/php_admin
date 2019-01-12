@@ -174,29 +174,29 @@
                             <tbody class="tbajax createmulu">
                             {{foreach name="catalogs" id="catalog"}}
                             {{foreach $catalog.sub as $cata}}
-                            <tr data-id="{{$cata.id}}" class="xParent">
-                                <td style="line-height: 37px">{{$cata.id}}</td>
-                                <td><input readonly="readonly" type="text" style="width: 260px;" name="muluName[]"
-                                           class="muluName" value="{{$cata.muluName}}"></td>
-                                <td>
-                                    <input readonly="readonly" type="text" style="width: 60px;" name="recommendSort[]"
-                                           class="sort_order" value="{{$cata.recommendSort}}">
-                                </td>
-                                <td>
-                                    <div class="am-btn-toolbar">
-                                        <div class="am-btn-group am-btn-group-sm">
-                                            <a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"
-                                               href="javascript:;" res="0">
-                                                <span class="am-icon-pencil-square-o"></span> 编辑
-                                            </a>
-                                            <a class="delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
-                                               href="javascript:;">
-                                                <span class="am-icon-trash-o"></span> 删除
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            <!--<tr data-id="{{$cata.id}}" class="xParent">-->
+                                <!--<td style="line-height: 37px">{{$cata.id}}</td>-->
+                                <!--<td><input readonly="readonly" type="text" style="width: 260px;" name="muluName[]"-->
+                                           <!--class="muluName" value="{{$cata.muluName}}"></td>-->
+                                <!--<td>-->
+                                    <!--<input readonly="readonly" type="text" style="width: 60px;" name="recommendSort[]"-->
+                                           <!--class="sort_order" value="{{$cata.recommendSort}}">-->
+                                <!--</td>-->
+                                <!--<td>-->
+                                    <!--<div class="am-btn-toolbar">-->
+                                        <!--<div class="am-btn-group am-btn-group-sm">-->
+                                            <!--<a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                                               <!--href="javascript:;" res="0">-->
+                                                <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
+                                            <!--</a>-->
+                                            <!--<a class="delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
+                                               <!--href="javascript:;">-->
+                                                <!--<span class="am-icon-trash-o"></span> 删除-->
+                                            <!--</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
                             {{/foreach}}
                             {{/foreach}}
                             </tbody>
@@ -448,28 +448,32 @@
                         var num = datas.id;
                         var name = datas.muluName;
                         var sort_order = datas.recommendSort;
-                        li +=
-                            "<tr data-id=\""+ num +"\" class=\"xParent\">\n" +
-                            "                                <td style=\"line-height: 37px\">" + num + "</td>\n" +
-                            "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 260px;\" name=\"muluName[]\" class=\"muluName\" value=\"" +name + "\"></td>\n" +
-                            "                                <td>\n" +
-                            "                                    <input readonly=\"readonly\" type=\"text\" style=\"width: 60px;\" name=\"recommendSort[]\" class=\"sort_order\" value=\"" +sort_order + "\">\n" +
-                            "                                </td>\n" +
-                            "                                <td>\n" +
-                            "                                    <div class=\"am-btn-toolbar\">\n" +
-                            "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
-                            "                                            <a class=\"removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
-                            "                                               href=\"javascript:;\" res=\"0\">\n" +
-                            "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
-                            "                                            </a>\n" +
-                            "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
-                            "                                               href=\"javascript:;\">\n" +
-                            "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
-                            "                                            </a>\n" +
-                            "                                        </div>\n" +
-                            "                                    </div>\n" +
-                            "                                </td>\n" +
-                            "                            </tr>";
+                        if (datas.pid==0){
+                            li +='';
+                        } else {
+                            li +=
+                                "<tr data-id=\""+ num +"\" class=\"xParent\">\n" +
+                                "                                <td style=\"line-height: 37px\">" + num + "</td>\n" +
+                                "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 260px;\" name=\"muluName[]\" class=\"muluName\" value=\"" +name + "\"></td>\n" +
+                                "                                <td>\n" +
+                                "                                    <input readonly=\"readonly\" type=\"text\" style=\"width: 60px;\" name=\"recommendSort[]\" class=\"sort_order\" value=\"" +sort_order + "\">\n" +
+                                "                                </td>\n" +
+                                "                                <td>\n" +
+                                "                                    <div class=\"am-btn-toolbar\">\n" +
+                                "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                                "                                            <a class=\"removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                                "                                               href=\"javascript:;\" res=\"0\">\n" +
+                                "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                                "                                            </a>\n" +
+                                "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                                "                                               href=\"javascript:;\">\n" +
+                                "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
+                                "                                            </a>\n" +
+                                "                                        </div>\n" +
+                                "                                    </div>\n" +
+                                "                                </td>\n" +
+                                "                            </tr>";
+                        }
                     }
                     $(".tbajax").html(li);//将拼接出来的加入到指定的模块
                     // 重新加载js
