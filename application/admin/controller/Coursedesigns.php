@@ -4,9 +4,11 @@ namespace app\admin\controller;
 
 use app\admin\model\Course;
 use app\admin\model\CourseCatalog;
+use app\admin\model\CourseClass;
 use app\admin\model\CourseStage;
 use think\Controller;
 use think\Request;
+use think\response\Json;
 
 class CourseDesigns extends Common
 {
@@ -92,7 +94,7 @@ class CourseDesigns extends Common
                 $info = $this->error();
                 return json($info);
             };
-            if ($request->param('pid')){
+            if ($request->param('pid')) {
                 $result = CourseCatalog::create($request->param());
                 if ($result) {
                     //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
@@ -103,8 +105,8 @@ class CourseDesigns extends Common
 //                $this->error('新增失败');
                     $info = array('status' => 0, 'msg' => '添加二级分类失败');
                 }
-            }else{
-                $info =array('status' => 0, 'msg' => '无法直接添加二级分类,请先添加一级分类');
+            } else {
+                $info = array('status' => 0, 'msg' => '无法直接添加二级分类,请先添加一级分类');
             }
             return json($info);
         }
@@ -121,7 +123,7 @@ class CourseDesigns extends Common
         //
     }
 
-    //编辑分类
+    //编辑课程分类
     public function editprofession($id)
     {
         $course = Course::find($id);
@@ -140,7 +142,7 @@ class CourseDesigns extends Common
         return view('coursedesign/editprofession', compact('course', 'stages', 'catalogs'));
     }
 
-    //选择一级目录分类二级目录分类联动
+    //课程管理选择一级目录分类二级目录分类联动
     public function editproajax(Request $request)
     {
         if ($request->isAjax()) {
@@ -228,12 +230,6 @@ class CourseDesigns extends Common
         }
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int $id
-     * @return \think\Response
-     */
     //编辑一级目录分类
     public function edit(Request $request, $id)
     {
@@ -298,11 +294,11 @@ class CourseDesigns extends Common
     public function deletefirstcatalog(Request $request, $id)
     {
         if ($request->isAjax()) {
-            $count = CourseCatalog::where('pid',$id)->count();
+            $count = CourseCatalog::where('pid', $id)->count();
 //            return json($count);
-            if ($count){
+            if ($count) {
                 $info = array('status' => 0, 'msg' => '该一级分类下有二级分类,不能删除!!!');
-            }else{
+            } else {
                 $result = CourseCatalog::destroy($id);
                 if ($result) {
                     $info = array('status' => 1, 'msg' => '删除一级分类成功');
@@ -317,8 +313,97 @@ class CourseDesigns extends Common
     //编辑课节
     public function editlessons($id)
     {
-        //
-        return 2;
+        $course = Course::find($id);
+        $catalogs = CourseCatalog::where('courseId', $id)->select();
+        //循环出2级目录
+        foreach ($catalogs as $key => $value) {
+            //查出二级目录
+            $ids = $value['id'];
+            $catalog = CourseCatalog::where('pid', $ids)->order('recommendSort asc')->select();
+            $catalogs[$key]['sub'] = $catalog;
+        }
+        return view('coursedesign/editlessons', compact('course', 'catalogs', ''));
+    }
+
+    //课节管理选择一级目录分类二级目录分类联动
+    public function editlessonsajax(Request $request)
+    {
+        if ($request->isAjax()) {
+            $id = $request->param('id');
+            $courseid =$request->param('courseId');
+//                        return json($courseid);
+            if ($id) {
+                //查出所有课节
+                $classes = CourseClass::where('catalogId', $id)->order('recommendSort asc')->select();
+                //查出二级目录
+                $twocatalog = CourseCatalog::where('pid', $id)->order('recommendSort asc')->select();
+                //查出所有阶段权限
+                $stages = CourseStage::where('courseId', $request->param('courseId'))->order('recommendSort asc')->select();
+
+//                $ajaxcatalog = $catalog->toArray()['data'];//转换为数据,讲要存的信息保存成一个数组
+//                $data['data'] = $ajaxcatalog; //这一段是将数据赋值给一个数组，这个数组用于ajax请求返回给前端
+//                $data['status'] = 1; //状态码
+                $info = array('erjimulu' => $twocatalog, 'lessons' => $classes,'stages'=>$stages);
+                return json($info); //返回json格式的数据
+            } else {
+                $classes =CourseClass::where('courseId', $courseid)->order('recommendSort asc')->select();
+                //查出所有阶段权限
+                $stages = CourseStage::where('courseId', $request->param('courseId'))->order('recommendSort asc')->select();
+                $info = array('lessons' => $classes,'stages'=>$stages);
+                return json($info);
+            }
+        }
+    }
+
+    //新增课节
+    public function saveclass(Request $request)
+    {
+        if ($request->isAjax()) {
+//            return json($request->param());
+            $validate = Validate('CourseClassValidate');
+            if (!$validate->scene('save')->check($request->param())) {
+                $this->error($validate->getError());
+                $info = $this->error();
+                return json($info);
+            };
+            $result = CourseClass::create($request->param());
+            if ($result) {
+                //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+//                $this->success('恭喜您，新增成功', 'index');
+                $info = array('status' => 1, 'msg' => '添加课节成功');
+            } else {
+                //错误页面的默认跳转页面是返回前一页，通常不需要设置
+//                $this->error('新增失败');
+                $info = array('status' => 0, 'msg' => '添加课节失败');
+            }
+            return json($info);
+        }
+    }
+
+    //更新编辑的课节
+    public function editclass(Request $request)
+    {
+        if ($request->isAjax()) {
+            $validate = Validate('CourseClassValidate');
+            if (!$validate->scene('update')->check($request->param())) {
+                $this->error($validate->getError());
+                $info = $this->error();
+                return json($info);
+            };
+//            return json($request->param());
+            $result = CourseClass::where('id', $request->param('id'))->update($request->param());
+            if ($result) {
+                //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+//                $this->success('恭喜您，更新成功', 'index');
+                $info = array('status' => 1, 'msg' => '编辑一级分类成功');
+            } else {
+                //错误页面的默认跳转页面是返回前一页，通常不需要设置
+//                $this->error('更新失败');
+                $info = array('status' => 0, 'msg' => '编辑一级分类失败');
+            }
+            return json($info);
+//            return json($request->param());
+        }
     }
 
     //编辑价格
