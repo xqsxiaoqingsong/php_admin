@@ -350,7 +350,7 @@
         //阶段单条删除
         $(".delstage").click(function () {
             var id = $(this).parents('tr').data('id');
-            // console.log(id);return;
+            console.log(id);return;
             var _this = $(this);
             if (confirm('确定要删除吗?')) {
                 $.ajax({
@@ -522,7 +522,7 @@
                     // 目录单条删除
                     $(".delcatalog").click(function () {
                         var id = $(this).parents('tr').data('id');
-                        // console.log(id);return;
+                        console.log(id);return;
                         var _this = $(this);
                         if (confirm('确定要删除吗?')) {
                             $.ajax({

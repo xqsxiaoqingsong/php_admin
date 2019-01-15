@@ -7,7 +7,7 @@
 {{block name="content"}}
 <div class="admin-content">
     <div class="am-cf am-padding">
-        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">课节管理</strong> /
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">课节管理1</strong> /
             <!--<small>Create A New AdCategory</small>-->
         </div>
     </div>
@@ -244,77 +244,6 @@
             return false;
         });
 
-        $(".querenclass").bind('click',function () {
-             alert(123);return;
-            var erjimuluid = $(".selectclass").val();
-            var yijimuluid = $(".selectnum").val();
-            if (yijimuluid != '') {
-                var info = {
-                    'courseId': "{{$course.id}}",
-                    'catalogId': $(".selectclass").val(),
-                    'className': $(this).parents('td').siblings('td').children('.className').val(),
-                    'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
-                    'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
-                    'stageId': $(".stageId").val(),
-                    'duration': $(this).parents('td').siblings('td').children('.duration').val(),
-                    'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
-                    'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
-                }
-            }
-            if (erjimuluid == null) {
-                var info = {
-                    'courseId': "{{$course.id}}",
-                    'catalogId': $(".selectnum").val(),
-                    'className': $(this).parents('td').siblings('td').children('.className').val(),
-                    'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
-                    'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
-                    'stageId': $(".stageId").val(),
-                    'duration': $(this).parents('td').siblings('td').children('.duration').val(),
-                    'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
-                    'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
-                }
-            }
-            if (erjimuluid == '' || yijimuluid == '') {
-                var info = {
-                    'courseId': "{{$course.id}}",
-                    'catalogId': $(".selectclass").val(),
-                    'className': $(this).parents('td').siblings('td').children('.className').val(),
-                    'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
-                    'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
-                    'stageId': $(".stageId").val(),
-                    'duration': $(this).parents('td').siblings('td').children('.duration').val(),
-                    'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
-                    'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
-                }
-            }
-
-            // console.log(erjimuluid);
-            // console.log(yijimuluid);
-            // console.log(info);
-            // return;
-            if (confirm('确定要提交吗?')) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/admin/Coursedesigns/saveclass',
-                    data: info,
-                    success: function (data) {
-                        // console.log(data);return;
-                        if (data.code == 0) {
-                            alert(data.msg);
-                            return false;
-                        }
-                        if (data.status == 1) {
-                            alert(data.msg);
-                            window.location.reload();
-                        } else {
-                            alert(data.msg);
-                            window.location.reload();
-                            return false
-                        }
-                    }
-                })
-            }
-        })
 
         //新增目录td并且取消
         $(".createclasstd").click(function () {
@@ -341,9 +270,9 @@
                             "                                           class=\"positiveUrl\" value=\"\">\n" +
                             "                                </td>\n" +
                             "<td><select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
-                            "                                name=\"stageId\" style=\"\" class=\" stageId\">\n";
+                            "                                name=\"stageId\" style=\"\" class=\"stageId\">\n";
                         $.each(data.stages, function (m, n) {
-                            li += "<option value=" + n.id + ">" + n.stageName + "</option>";
+                            li += "<option value=" +n.id + ">" + n.stageName + "</option>";
                         });
                         li +=
                             "                        </select></td>" +
@@ -362,7 +291,7 @@
                             "                                <td>\n" +
                             "                                    <div class=\"am-btn-toolbar\">\n" +
                             "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
-                            "                                            <a class=\"querenclass am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                            "                                            <a class=\"removeredaonly querenclass am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
                             "                                               href=\"javascript:;\" res=\"0\">\n" +
                             "                                                <span class=\"am-icon-pencil-square-o\"></span> 确认\n" +
                             "                                            </a>\n" +
@@ -375,20 +304,87 @@
                             "                                </td>\n" +
                             "                            </tr>";
                         $(".createclass").append(li);//将拼接出来的加入到指定的模块
-
+                        $(".quxiao").click(function () {
+                            $(this).parents("tr").remove();
+                        });
+                        $(".querenclass").click(function () {
+                            // alert(123);return
+                            var erjimuluid = $(".selectclass").val();
+                            var yijimuluid = $(".selectnum").val();
+                            if (yijimuluid != '') {
+                                var info = {
+                                    'courseId': "{{$course.id}}",
+                                    'catalogId': $(".selectclass").val(),
+                                    'className': $(this).parents('td').siblings('td').children('.className').val(),
+                                    'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
+                                    'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
+                                    'stageId': $(this).parents('td').siblings('td').children('.stageId').val(),
+                                    'duration': $(this).parents('td').siblings('td').children('.duration').val(),
+                                    'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
+                                    'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
+                                }
+                            }
+                            if (erjimuluid == null) {
+                                var info = {
+                                    'courseId': "{{$course.id}}",
+                                    'catalogId': $(".selectnum").val(),
+                                    'className': $(this).parents('td').siblings('td').children('.className').val(),
+                                    'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
+                                    'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
+                                    'stageId': $(this).parents('td').siblings('td').children('.stageId').val(),
+                                    'duration': $(this).parents('td').siblings('td').children('.duration').val(),
+                                    'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
+                                    'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
+                                }
+                            }
+                            if (erjimuluid == '' || yijimuluid == '') {
+                                var info = {
+                                    'courseId': "{{$course.id}}",
+                                    'catalogId': $(".selectclass").val(),
+                                    'className': $(this).parents('td').siblings('td').children('.className').val(),
+                                    'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
+                                    'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
+                                    'stageId': $(this).parents('td').siblings('td').children('.stageId').val(),
+                                    'duration': $(this).parents('td').siblings('td').children('.duration').val(),
+                                    'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
+                                    'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
+                                }
+                            }
+                            // console.log(erjimuluid);
+                            // console.log(yijimuluid);
+                            // console.log(info);
+                            // return;
+                            if (confirm('确定要提交吗?')) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/admin/Coursedesigns/saveclass',
+                                    data: info,
+                                    success: function (data) {
+                                        // console.log(data);return;
+                                        if (data.code == 0) {
+                                            alert(data.msg);
+                                            return false;
+                                        }
+                                        if (data.status == 1) {
+                                            alert(data.msg);
+                                            window.location.reload();
+                                        } else {
+                                            alert(data.msg);
+                                            window.location.reload();
+                                            return false
+                                        }
+                                    }
+                                })
+                            }
+                        })
                     } else {
                         alert('请先添加权限阶段');
                     }
                 }
             })
-
-            $(".quxiao").on('click', function () {
-                $(this).parents("tr").remove();
-            });
         });
 
         //进入页面自动加载change时间,在最后给元素绑定上trigger("change")
-
         $(".selectnum").on('change', function () {
             var id = $(this).val();
             // console.log(id);
@@ -403,7 +399,7 @@
                 },
                 success: function (data) {
                     // console.log(data);return;
-                    // console.log(data.erjimulu);return;
+                    // console.log(data.stages);return;
                     if (data.erjimulu == '') {
                         var div = "";
                         for (var i = 0; i < data.erjimulu.length; i++) {//循环后台传过来的Json数组
@@ -425,6 +421,8 @@
                         //     var stage = data.stages[a];
                         //     // console.log(stage);return;
                         // }
+                        var stages = data.stages;
+                        // console.log(stages);return;
                         for (var i = 0; i < data.lessons.length; i++) {//循环后台传过来的Json数组
                             var datas = data.lessons[i];
                             // console.log(datas);return;
@@ -445,8 +443,17 @@
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 100px;\" name=\"className[]\" class=\"className\" value=\"" + name + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 120px;\" name=\"trySeeUrl[]\" class=\"trySeeUrl\" value=\"" + freeurl + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:120px;\" name=\"positiveUrl[]\" class=\"positiveUrl\" value=\"" + url + "\"></td>\n" +
-                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:80px ;\" name=\"stageId[]\" class=\"stageId\" value=\"" + stageid + "\"></td>\n" +
-                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
+                                    "<td><select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                                    "                                name=\"stageId\" style=\"\" class=\" stageId\">\n";
+                                $.each(stages, function (m, n) {
+                                    li += "<option value=" + n.id  ;
+                                    if (n.id == stageid){
+                                        li +=   " selected "
+                                    }
+                                    li +=  '>' + n.stageName + "</option>";
+                                });
+                                li +=
+                                    "                        </select></td>" +                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"speaker[]\" class=\"speaker\" value=\"" + teacher + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"recommendSort[]\" class=\"recommendSort\" value=\"" + sort_order + "\"></td>\n" +
                                     "                                <td>\n" +
@@ -575,6 +582,8 @@
                             //     var stage = data.stages[a];
                             //     // console.log(stage);return;
                             // }
+                            var stages = data.stages;
+                            // console.log(stages);return;
                             for (var i = 0; i < data.lessons.length; i++) {//循环后台传过来的Json数组
                                 var datas = data.lessons[i];
                                 // console.log(datas);return;
@@ -592,8 +601,17 @@
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 100px;\" name=\"className[]\" class=\"className\" value=\"" + name + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 120px;\" name=\"trySeeUrl[]\" class=\"trySeeUrl\" value=\"" + freeurl + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:120px;\" name=\"positiveUrl[]\" class=\"positiveUrl\" value=\"" + url + "\"></td>\n" +
-                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:80px ;\" name=\"stageId[]\" class=\"stageId\" value=\"" + stageid + "\"></td>\n" +
-                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
+                                    "<td><select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                                    "                                name=\"stageId\" style=\"\" class=\" stageId\">\n";
+                                $.each(data.stages, function (m, n) {
+                                    li += "<option value=" + n.id  ;
+                                    if (n.id == stageid){
+                                        li +=   " selected "
+                                    }
+                                    li +=  '>' + n.stageName + "</option>";
+                                });
+                                li +=
+                                    "                        </select></td>" +                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"speaker[]\" class=\"speaker\" value=\"" + teacher + "\"></td>\n" +
                                     "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"recommendSort[]\" class=\"recommendSort\" value=\"" + sort_order + "\"></td>\n" +
                                     "                                <td>\n" +
@@ -643,7 +661,10 @@
                             $.ajax({
                                 type: 'POST',
                                 url: '/admin/Coursedesigns/editlessonsajax/' + id,
-                                data: {id: id},
+                                data: {
+                                    courseId: "{{$course.id}}",
+                                    id: id,
+                                },
                                 success: function (data) {
                                     // console.log(data);return;
                                     var li = "";
@@ -667,8 +688,17 @@
                                                 "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 100px;\" name=\"className[]\" class=\"className\" value=\"" + name + "\"></td>\n" +
                                                 "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 120px;\" name=\"trySeeUrl[]\" class=\"trySeeUrl\" value=\"" + freeurl + "\"></td>\n" +
                                                 "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:120px;\" name=\"positiveUrl[]\" class=\"positiveUrl\" value=\"" + url + "\"></td>\n" +
-                                                "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:80px ;\" name=\"stageId[]\" class=\"stageId\" value=\"" + stageid + "\"></td>\n" +
-                                                "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
+                                                "<td><select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                                                "                                name=\"stageId\" style=\"\" class=\" stageId\">\n";
+                                            $.each(data.stages, function (m, n) {
+                                                li += "<option value=" + n.id  ;
+                                                if (n.id == stageid){
+                                                    li +=   " selected "
+                                                }
+                                                li +=  '>' + n.stageName + "</option>";
+                                            });
+                                            li +=
+                                                "                        </select></td>" +                                                "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
                                                 "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"speaker[]\" class=\"speaker\" value=\"" + teacher + "\"></td>\n" +
                                                 "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"recommendSort[]\" class=\"recommendSort\" value=\"" + sort_order + "\"></td>\n" +
 

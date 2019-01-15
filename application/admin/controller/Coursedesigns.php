@@ -2,10 +2,14 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\CountPricebook;
+use app\admin\model\CountPricenobook;
 use app\admin\model\Course;
 use app\admin\model\CourseCatalog;
 use app\admin\model\CourseClass;
 use app\admin\model\CourseStage;
+use app\admin\model\StagePeicebook;
+use app\admin\model\StagePeicenobook;
 use think\Controller;
 use think\Request;
 use think\response\Json;
@@ -330,7 +334,7 @@ class CourseDesigns extends Common
     {
         if ($request->isAjax()) {
             $id = $request->param('id');
-            $courseid =$request->param('courseId');
+            $courseid = $request->param('courseId');
 //                        return json($courseid);
             if ($id) {
                 //查出所有课节
@@ -339,17 +343,13 @@ class CourseDesigns extends Common
                 $twocatalog = CourseCatalog::where('pid', $id)->order('recommendSort asc')->select();
                 //查出所有阶段权限
                 $stages = CourseStage::where('courseId', $request->param('courseId'))->order('recommendSort asc')->select();
-
-//                $ajaxcatalog = $catalog->toArray()['data'];//转换为数据,讲要存的信息保存成一个数组
-//                $data['data'] = $ajaxcatalog; //这一段是将数据赋值给一个数组，这个数组用于ajax请求返回给前端
-//                $data['status'] = 1; //状态码
-                $info = array('erjimulu' => $twocatalog, 'lessons' => $classes,'stages'=>$stages);
+                $info = array('erjimulu' => $twocatalog, 'lessons' => $classes, 'stages' => $stages);
                 return json($info); //返回json格式的数据
             } else {
-                $classes =CourseClass::where('courseId', $courseid)->order('recommendSort asc')->select();
+                $classes = CourseClass::where('courseId', $courseid)->order('recommendSort asc')->select();
                 //查出所有阶段权限
                 $stages = CourseStage::where('courseId', $request->param('courseId'))->order('recommendSort asc')->select();
-                $info = array('lessons' => $classes,'stages'=>$stages);
+                $info = array('lessons' => $classes, 'stages' => $stages);
                 return json($info);
             }
         }
@@ -409,9 +409,158 @@ class CourseDesigns extends Common
     //编辑价格
     public function editprice($id)
     {
-        //
-        return 3;
+        $course = Course::find($id);
+        $catalogs = CourseCatalog::where('courseId', $id)->select();
+        //循环出2级目录
+        foreach ($catalogs as $key => $value) {
+            //查出二级目录
+            $ids = $value['id'];
+            $catalog = CourseCatalog::where('pid', $ids)->order('recommendSort asc')->select();
+            $catalogs[$key]['sub'] = $catalog;
+        }
+        return view('coursedesign/editprice', compact('course', 'catalogs', ''));
     }
+
+    //价格有没有图书联动
+    public function editpriceajax(Request $request)
+    {
+        if ($request->isAjax()) {
+            $id = $request->param('id');
+            $courseid = $request->param('courseId');
+//            return json($request->param());
+            //查出课程的阶段权限
+            $stages = CourseStage::where('courseId', $courseid)->select();
+            if ($id == 1) {
+                foreach ($stages as $key => $value) {
+                    //查出阶段价格
+                    $ids = $value['id'];
+                    $price = StagePeicebook::where('stageId', $ids)->value('price');
+                    $stages[$key]['price'] = $price;
+                }
+                $counts = CountPricebook::where('courseId', $courseid)->select();
+                $info = array('counts' => $counts, 'stages' => $stages);
+                return json($info);
+            }
+            if ($id == 2) {
+                foreach ($stages as $key => $value) {
+                    //查出阶段价格
+                    $ids = $value['id'];
+                    $price = StagePeicenobook::where('stageId', $ids)->value('price');
+                    $stages[$key]['price'] = $price;
+                }
+                $counts = CountPricenobook::where('courseId', $courseid)->select();
+                $info = array('counts' => $counts, 'stages' => $stages);
+                return json($info);
+            }
+        }
+    }
+
+    //新增数量价格
+    public function savecountprice(Request $request)
+    {
+        if ($request->isAjax()) {
+//            return json($request->param());
+            $id = $request->param('typeid');
+            $courseid = $request->param('courseId');
+            $bookcountpriceid = $request->param('id');
+
+            $stages = CourseStage::where('courseId', $courseid)->select();
+            if ($id == 1) {
+//                return json($request->param());
+                $onlycount = CountPricebook::where(['courseId' => $courseid, 'count' => $request->param('count')])->find();
+                if ($onlycount and !$bookcountpriceid) {
+                    $info = array('status' => 0, 'msg' => '该规则已存在!');
+                    return json($info);
+                }
+                if ($bookcountpriceid) {
+                    $result = CountPricebook::where('id', $bookcountpriceid)->update(['count' => $request->param('count'), 'price' => $request->param('price')]);
+                    if ($result !== false) {
+                        $info = array('status' => 1, 'msg' => '更新成功', 'stages' => $stages);
+                    } else {
+                        $info = array('status' => 0, 'msg' => '更新失败');
+                    }
+                } else {
+                    $counts = CountPricebook::create($request->param());
+                    $info = array('status' => 1, 'msg' => '插入成功', 'stages' => $stages);
+                }
+                return json($info);
+            }
+            if ($id == 2) {
+//                return json($request->param());
+                $onlycountnobook = CountPricenobook::where(['courseId' => $courseid, 'count' => $request->param('count')])->find();
+                if ($onlycountnobook and !$bookcountpriceid) {
+                    $info = array('status' => 0, 'msg' => '该规则已存在!');
+                    return json($info);
+                }
+                if ($bookcountpriceid) {
+                    $result = CountPricenobook::where('id', $bookcountpriceid)->update(['count' => $request->param('count'), 'price' => $request->param('price')]);
+                    if ($result !== false) {
+                        $info = array('status' => 1, 'msg' => '更新成功', 'stages' => $stages);
+                    } else {
+                        $info = array('status' => 0, 'msg' => '更新失败');
+                    }
+                } else {
+                    $counts = CountPricenobook::create($request->param());
+                    $info = array('status' => 1, 'msg' => '插入成功', 'stages' => $stages);
+                }
+                return json($info);
+            }
+        }
+    }
+
+    //保存编辑的权限价格
+    public function updatestageprice(Request $request)
+    {
+//        return json($request->param());
+        $type = $request->param('typeid');
+        $id =$request->param('id');
+        if ($type==1){
+            $stagebookprice =StagePeicebook::where('stageId', $id)->find();
+            if ($stagebookprice){
+                $result =StagePeicebook::where('stageId', $id)->setField('price',$request->param('price'));
+                if ($result !== false) {
+                    $info = array('status' => 1, 'msg' => '更新成功');
+                } else {
+                    $info = array('status' => 0, 'msg' => '更新失败');
+                }
+                return json($info);
+            }else{
+                $result =StagePeicebook::create(['stageId'=>$id,'price'=>$request->param('price')]);
+//            return json($result);
+                if ($result) {
+                    $info = array('status' => 1, 'msg' => '更新成功');
+                } else {
+                    $info = array('status' => 0, 'msg' => '更新失败');
+                }
+                return json($info);
+            }
+
+        }
+        if ($type==2){
+            $stagenobookprice = StagePeicenobook::where('stageId', $id)->find();
+            if ($stagenobookprice){
+                $result =StagePeicenobook::where('stageId', $id)->setField('price',$request->param('price'));
+//            return json($result);
+                if ($result) {
+                    $info = array('status' => 1, 'msg' => '更新成功');
+                } else {
+                    $info = array('status' => 0, 'msg' => '更新失败');
+                }
+                return json($info);
+            }else{
+                $result =StagePeicenobook::create(['stageId'=>$id,'price'=>$request->param('price')]);
+//            return json($result);
+                if ($result) {
+                    $info = array('status' => 1, 'msg' => '更新成功');
+                } else {
+                    $info = array('status' => 0, 'msg' => '更新失败');
+                }
+                return json($info);
+            }
+
+        }
+    }
+
 
     /**
      * 保存更新的资源

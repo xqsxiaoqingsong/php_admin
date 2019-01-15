@@ -1,0 +1,729 @@
+{{extend name="layout/application" /}}
+
+{{block name="css"}}
+<!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
+{{/block}}
+
+{{block name="content"}}
+<div class="admin-content">
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">课节管理1</strong> /
+            <!--<small>Create A New AdCategory</small>-->
+        </div>
+    </div>
+    <hr>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+            <form class="am-form" action="" method="post">
+                <input type="hidden" name="_token" value="">
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-offset-1 am-u-sm-2">
+                        <h3>课程名称：</h3>
+                    </div>
+                    <div class=" am-u-sm-9" style="padding-left: 2rem">
+                        {{$course.courseName}}
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-offset-1 am-u-sm-2">
+                        <h3>定价分类：</h3>
+                    </div>
+                    <div class=" am-u-sm-4 am-u-end col-end">
+                        <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                name="majorId" style="display: none;" class="selectbook" id="typeid">
+                            <option value="1">含图书</option>
+                            <option value="2">不含图书</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-offset-1 am-u-sm-2">
+                        <h3>价格管理：</h3>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-offset-1 am-u-sm-2">
+                        单价设置：
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-10 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                <th style="width: 8%" class="table-id">编号</th>
+                                <th style="width: 40%">分类名</th>
+                                <th>价格</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbstageajax">
+                            <!--{{foreach name="catalogs" id="catalog"}}-->
+                            <!--{{foreach $catalog.sub as $cata}}-->
+                            <!--<tr data-id="{{$cata.id}}" class="xParent">-->
+                            <!--<td style="line-height: 37px">{{$cata.id}}</td>-->
+                            <!--<td><input readonly="readonly" type="text" style="width: 260px;" name="muluName[]"-->
+                            <!--class="muluName" value="{{$cata.muluName}}"></td>-->
+                            <!--<td>-->
+                            <!--<input readonly="readonly" type="text" style="width: 60px;" name="recommendSort[]"-->
+                            <!--class="sort_order" value="{{$cata.recommendSort}}">-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<div class="am-btn-toolbar">-->
+                            <!--<div class="am-btn-group am-btn-group-sm">-->
+                            <!--<a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                            <!--href="javascript:;" res="0">-->
+                            <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
+                            <!--</a>-->
+                            <!--<a class="delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
+                            <!--href="javascript:;">-->
+                            <!--<span class="am-icon-trash-o"></span> 删除-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--{{/foreach}}-->
+                            <!--{{/foreach}}-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-offset-1 am-u-sm-2">
+                        数量优惠价：
+                    </div>
+                    <div class="am-u-sm-8">
+                        <div class="am-btn-group am-btn-group-sm">
+                            <a type="button" class="am-btn am-btn-default am-text-success createpricetd"
+                               href="javascript:;">
+                                <span class="am-icon-plus"></span> 新增
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-10 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                <th style="width: 8%" class="table-id">编号</th>
+                                <th style="width: 40%">单次购买数量</th>
+                                <th>价格</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbcountajax createprice">
+                            <!--{{foreach name="catalogs" id="catalog"}}-->
+                            <!--{{foreach $catalog.sub as $cata}}-->
+                            <!--<tr data-id="{{$cata.id}}" class="xParent">-->
+                            <!--<td style="line-height: 37px">{{$cata.id}}</td>-->
+                            <!--<td><input readonly="readonly" type="text" style="width: 260px;" name="muluName[]"-->
+                            <!--class="muluName" value="{{$cata.muluName}}"></td>-->
+                            <!--<td>-->
+                            <!--<input readonly="readonly" type="text" style="width: 60px;" name="recommendSort[]"-->
+                            <!--class="sort_order" value="{{$cata.recommendSort}}">-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<div class="am-btn-toolbar">-->
+                            <!--<div class="am-btn-group am-btn-group-sm">-->
+                            <!--<a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                            <!--href="javascript:;" res="0">-->
+                            <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
+                            <!--</a>-->
+                            <!--<a class="delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
+                            <!--href="javascript:;">-->
+                            <!--<span class="am-icon-trash-o"></span> 删除-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--{{/foreach}}-->
+                            <!--{{/foreach}}-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top" style="margin-top: 2.6rem">
+                    <div class="am-u-sm-4 am-u-md-4 am-text-right">
+                        <buttom class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">确认</buttom>
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-6 am-u-end col-end">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="admin-content-footer" style="margin-top: 2rem">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
+</div>
+{{/block}}
+
+{{block name="js"}}
+<!--<script src="/vendor/markdown/editormd.min.js"></script>             //文本编辑器-->
+<!--<script src="/vendor/admin/js/editormd_config.js"></script>-->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
+
+<script type="text/javascript">
+    //     var ue = UE.getEditor('container',{
+    //
+    //     });
+    //
+    //     function getstring(){
+    //
+    //         document.getElementById('container').innerHTML=UE.getEditor('editor').getContent();
+    //
+    // //get.Content() 函数可以获得你所编辑的内容的html代码
+    //     }
+</script>
+<script>
+
+    $(function () {
+
+        //更改确定和编辑
+        // $(".removeredaonlyno").click(function () {
+        //     var i = $(this).attr("res");
+        //     if (i == 0) {
+        //         $(this).attr("res", "1");
+        //         $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+        //         $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
+        //     } else {
+        //         if (confirm('是否要提交更改?')) {
+        //             var info = {
+        //                 'id': $(this).parents('tr').data('id'),
+        //                 'courseId': "{{$course.id}}",
+        //                 'stageName': $(this).parents('td').siblings('td').children('.stageName').val(),
+        //                 'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+        //             }
+        //             // console.log(info);
+        //             $.ajax({
+        //                 type: 'POST',
+        //                 url: '/admin/Coursedesigns/editclass',
+        //                 data: info,
+        //                 success: function (data) {
+        //                     // console.log(data);return;
+        //                     if (data.code == 0) {
+        //                         alert(data.msg);
+        //                         return false;
+        //                     }
+        //                     if (data.status == 1) {
+        //                         alert(data.msg);
+        //                         window.location.reload();
+        //                     } else {
+        //                         alert(data.msg);
+        //                         return false
+        //                     }
+        //                 }
+        //             })
+        //         } else {
+        //             $(this).attr("res", "0");
+        //             $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+        //             $(this).parents('td').siblings('td').children('input').attr("readOnly", true);
+        //         }
+        //     }
+        // });
+
+        //新增目录td并且取消
+        $(".createpricetd").click(function () {
+            var typeid = $("#typeid").val();
+            // console.log(typeid);
+            // return;
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Coursedesigns/editpriceajax',
+                data: {
+                    id: typeid,
+                    courseId: "{{$course.id}}",
+                },
+                success: function (data) {
+                    // console.log(data);return;
+                    if (data.stages.length > 0) {
+                        var li = "";
+                        li +=
+                            "<tr data-id=\"\" class=\"xParent\">\n" +
+                            "                                <td style=\"line-height: 37px\"></td>\n" +
+                            "                                <td><input type=\"text\" style=\"width: px;\" name=\"count[]\" class=\"count\" value=\"\"></td>\n" +
+                            "                                <td><input type=\"text\" style=\"width: 80px;\" name=\"price[]\" class=\"price\" value=\"\"></td>\n" +
+                            "                                <td >\n" +
+                            "                                    <div class=\"am-btn-toolbar\">\n" +
+                            "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                            "                                            <a class=\"removeredaonly querenclass am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                            "                                               href=\"javascript:;\" res=\"0\">\n" +
+                            "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                            "                                            </a>\n" +
+                            "                                            <a class=\"del quxiao am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                            "                                               href=\"javascript:;\">\n" +
+                            "                                                <span class=\"am-icon-trash-o\"></span> 取消\n" +
+                            "                                            </a>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>\n" +
+                            "                                </td>\n" +
+                            "                            </tr>";
+                        $(".createprice").append(li);//将拼接出来的加入到指定的模块
+                        $(".quxiao").click(function () {
+                            $(this).parents("tr").remove();
+                        });
+                        $(".querenclass").click(function () {
+                            // alert(123);return
+                                var info = {
+                                    'typeid' :$("#typeid").val(),
+                                    'courseId': "{{$course.id}}",
+                                    'price': $(this).parents('td').siblings('td').children('.price').val(),
+                                    'count': $(this).parents('td').siblings('td').children('.count').val(),
+                                }
+                                if (info.count>1 && info.count < data.stages.length+1){
+                                    if (confirm('确定要提交吗?')) {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/admin/Coursedesigns/savecountprice',
+                                            data: info,
+                                            success: function (data) {
+                                                // console.log(data);return;
+                                                if (data.status == 1) {
+                                                    alert(data.msg);
+                                                    window.location.reload();
+                                                } else {
+                                                    alert(data.msg);
+                                                    return false
+                                                }
+                                            }
+                                        })
+                                    }
+                                }else {
+                                    alert('单次购买数量超过限制(必须是2到'+data.stages.length+')');
+                                }
+                            // console.log(info);
+                            // return;
+                        })
+                    } else {
+                        alert('请先添加权限阶段');
+                    }
+                }
+            })
+        });
+
+        //进入页面自动加载change时间,在最后给元素绑定上trigger("change")
+        $(".selectbook").on('change', function () {
+            var id = $(this).val();
+            // console.log(id);return;
+            var _this = $(this);
+            //选择一级目录分类二级目录分类联动
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Coursedesigns/editpriceajax/' + id,
+                data: {
+                    id: id,
+                    courseId: "{{$course.id}}",
+                },
+                success: function (data) {
+                    // console.log(data);return;
+                    var li = "";
+                    var conuntli ="";
+                    //循环出带价格的权限
+                    $.each(data.stages, function (m, n) {
+                        var id = n.id;
+                        var name = n.stageName;
+                        var price = n.price;
+                        // console.log(id);return;
+                        li +=
+                            "<tr data-id=\"" + id + "\" class=\"xParent\">\n" +
+                            "                                <td style=\"line-height: 37px\">" + id + "</td>\n" +
+                            "                                <td style=\"line-height: 37px\">" + name + "\n" +
+                            "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 80px;\" name=\"price[]\" class=\"price\" value=\"" + price + "\"></td>\n" +
+                            "                                <td>\n" +
+                            "                                    <div class=\"am-btn-toolbar\">\n" +
+                            "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                            "                                            <a class=\"changestageprice am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                            "                                               href=\"javascript:;\" res=\"0\">\n" +
+                            "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                            "                                            </a>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>\n" +
+                            "                                </td>\n" +
+                            "                            </tr>";
+                    });
+                    $(".tbstageajax").html(li);//将拼接出来的加入到指定的模块
+
+                    //循环出数量优惠价
+                    $.each(data.counts, function (m, n) {
+                        var id = n.id;
+                        var count = n.count;
+                        var price = n.price;
+                        // console.log(id);return;
+                        conuntli +=
+                            "<tr data-id=\"" + id + "\" class=\"xParent\">\n" +
+                            "                                <td style=\"line-height: 37px\">" + id + "</td>\n" +
+                            "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: px;\" name=\"count[]\" class=\"count\" value=\"" + count + "\"></td>\n" +
+                            "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 80px;\" name=\"price[]\" class=\"price\" value=\"" + price + "\"></td>\n" +
+                            "                                <td>\n" +
+                            "                                    <div class=\"am-btn-toolbar\">\n" +
+                            "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                            "                                            <a class=\"removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                            "                                               href=\"javascript:;\" res=\"0\">\n" +
+                            "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                            "                                            </a>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>\n" +
+                            "                                </td>\n" +
+                            "                            </tr>";
+                    });
+                    $(".tbcountajax").html(conuntli);//将拼接出来的加入到指定的模块
+
+                    // 重新加载js
+                    $(".removeredaonly").click(function () {
+                        var i = $(this).attr("res");
+                        if (i == 0) {
+                            $(this).attr("res", "1");
+                            $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+                            $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
+                        } else {
+                            //编辑二级目录
+                            if (confirm('是否要提交更改?')) {
+                                var info = {
+                                    'id':$(this).parents('tr').attr('data-id'),
+                                    'typeid' :$("#typeid").val(),
+                                    'courseId': "{{$course.id}}",
+                                    'price': $(this).parents('td').siblings('td').children('.price').val(),
+                                    'count': $(this).parents('td').siblings('td').children('.count').val(),
+                                }
+                                // console.log(info);
+                                // return;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/admin/Coursedesigns/savecountprice',
+                                    data: info,
+                                    success: function (data) {
+                                        // console.log(data);return;
+                                        if (data.code == 0) {
+                                            alert(data.msg);
+                                            return false;
+                                        }
+                                        if (data.status == 1) {
+                                            alert(data.msg);
+                                            window.location.reload();
+                                        } else {
+                                            alert(data.msg);
+                                            return false
+                                        }
+                                    }
+                                })
+                            } else {
+                                $(this).attr("res", "0");
+                                $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                                $(this).parents('td').siblings('td').children('input').attr("readOnly", true);
+                            }
+                        }
+                    });
+
+                    $(".changestageprice").click(function () {
+                        var i = $(this).attr("res");
+                        if (i == 0) {
+                            $(this).attr("res", "1");
+                            $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+                            $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
+                        } else {
+                            //编辑二级目录
+                            if (confirm('是否要提交更改?')) {
+                                var info = {
+                                    'typeid' :$("#typeid").val(),
+                                    'id':$(this).parents('tr').attr('data-id'),
+                                    'price': $(this).parents('td').siblings('td').children('.price').val(),
+                                }
+                                // console.log(info);
+                                // return;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/admin/Coursedesigns/updatestageprice',
+                                    data: info,
+                                    success: function (data) {
+                                        if (data.code == 0) {
+                                            alert(data.msg);
+                                            return false;
+                                        }
+                                        if (data.status == 1) {
+                                            alert(data.msg);
+                                            window.location.reload();
+                                        } else {
+                                            alert(data.msg);
+                                            return false
+                                        }
+                                    }
+                                })
+                            } else {
+                                $(this).attr("res", "0");
+                                $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                                $(this).parents('td').siblings('td').children('input').attr("readOnly", true);
+                            }
+                        }
+                    });
+
+                    // console.log(data.stages);return;
+                    // if (data.erjimulu == '') {
+                    //
+                    // } else {
+                        //联动二级目录
+                        // if (id == null && data.lessons) {
+                        //     var li = "";
+                        //     // for (var a = 0; a < data.stages.length; a++) {
+                        //     //     var stage = data.stages[a];
+                        //     //     // console.log(stage);return;
+                        //     // }
+                        //     var stages = data.stages;
+                        //     // console.log(stages);return;
+                        //     for (var i = 0; i < data.lessons.length; i++) {//循环后台传过来的Json数组
+                        //         var datas = data.lessons[i];
+                        //         // console.log(datas);return;
+                        //         var num = datas.id;
+                        //         var name = datas.className;
+                        //         var freeurl = datas.trySeeUrl;
+                        //         var url = datas.positiveUrl;
+                        //         var stageid = datas.stageId;
+                        //         var duration = datas.duration;
+                        //         var teacher = datas.speaker;
+                        //         var sort_order = datas.recommendSort;
+                        //         li +=
+                        //             "<tr data-id=\"" + num + "\" class=\"xParent\">\n" +
+                        //             "                                <td style=\"line-height: 37px\">" + num + "</td>\n" +
+                        //             "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 100px;\" name=\"className[]\" class=\"className\" value=\"" + name + "\"></td>\n" +
+                        //             "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 120px;\" name=\"trySeeUrl[]\" class=\"trySeeUrl\" value=\"" + freeurl + "\"></td>\n" +
+                        //             "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:120px;\" name=\"positiveUrl[]\" class=\"positiveUrl\" value=\"" + url + "\"></td>\n" +
+                        //             "<td><select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                        //             "                                name=\"stageId\" style=\"\" class=\" stageId\">\n";
+                        //         $.each(data.stages, function (m, n) {
+                        //             li += "<option value=" + n.id  ;
+                        //             if (n.id == stageid){
+                        //                 li +=   " selected "
+                        //             }
+                        //             li +=  '>' + n.stageName + "</option>";
+                        //         });
+                        //         li +=
+                        //             "                        </select></td>" +                                    "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
+                        //             "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"speaker[]\" class=\"speaker\" value=\"" + teacher + "\"></td>\n" +
+                        //             "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"recommendSort[]\" class=\"recommendSort\" value=\"" + sort_order + "\"></td>\n" +
+                        //             "                                <td>\n" +
+                        //             "                                    <div class=\"am-btn-toolbar\">\n" +
+                        //             "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                        //             "                                            <a class=\"removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                        //             "                                               href=\"javascript:;\" res=\"0\">\n" +
+                        //             "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                        //             "                                            </a>\n" +
+                        //             "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                        //             "                                               href=\"javascript:;\">\n" +
+                        //             "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
+                        //             "                                            </a>\n" +
+                        //             "                                        </div>\n" +
+                        //             "                                    </div>\n" +
+                        //             "                                </td>\n" +
+                        //             "                            </tr>";
+                        //     }
+                        //     $(".tbajax").html(li);//将拼接出来的加入到指定的模块
+                        // }
+
+                        // if (data.erjimulu) {
+                        //     var div = "";
+                        //     for (var i = 0; i < data.erjimulu.length; i++) {//循环后台传过来的Json数组
+                        //         var datamulu = data.erjimulu[i];
+                        //         // console.log(datamulu);return;
+                        //         var num = datamulu.id;
+                        //         var name = datamulu.muluName;
+                        //         if (datamulu.pid == 0) {
+                        //             div += '';
+                        //         } else {
+                        //             div +=
+                        //                 "<option value=\"" + num + "\">" + name + "</option>"
+                        //         }
+                        //     }
+                        //     $(".selectajax").html(div);
+                        // }
+
+                        // console.log(123);
+
+                        // $(".selectclass").on('change', function () {
+                        //     var id = $(this).val();
+                        //     if (id == null) {
+                        //         return false;
+                        //     }
+                        //     console.log(id);
+                        //     $.ajax({
+                        //         type: 'POST',
+                        //         url: '/admin/Coursedesigns/editlessonsajax/' + id,
+                        //         data: {
+                        //             courseId: "{{$course.id}}",
+                        //             id: id,
+                        //         },
+                        //         success: function (data) {
+                        //             // console.log(data);return;
+                        //             var li = "";
+                        //             for (var i = 0; i < data.lessons.length; i++) {//循环后台传过来的Json数组
+                        //                 var datas = data.lessons[i];
+                        //                 // console.log(datas);return;
+                        //                 var num = datas.id;
+                        //                 var name = datas.className;
+                        //                 var freeurl = datas.trySeeUrl;
+                        //                 var url = datas.positiveUrl;
+                        //                 var stageid = datas.stageId;
+                        //                 var duration = datas.duration;
+                        //                 var teacher = datas.speaker;
+                        //                 var sort_order = datas.recommendSort;
+                        //                 if (datas.pid == 0) {
+                        //                     li += '';
+                        //                 } else {
+                        //                     li +=
+                        //                         "<tr data-id=\"" + num + "\" class=\"xParent\">\n" +
+                        //                         "                                <td style=\"line-height: 37px\">" + num + "</td>\n" +
+                        //                         "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 100px;\" name=\"className[]\" class=\"className\" value=\"" + name + "\"></td>\n" +
+                        //                         "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width: 120px;\" name=\"trySeeUrl[]\" class=\"trySeeUrl\" value=\"" + freeurl + "\"></td>\n" +
+                        //                         "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:120px;\" name=\"positiveUrl[]\" class=\"positiveUrl\" value=\"" + url + "\"></td>\n" +
+                        //                         "<td><select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                        //                         "                                name=\"stageId\" style=\"\" class=\" stageId\">\n";
+                        //                     $.each(data.stages, function (m, n) {
+                        //                         li += "<option value=" + n.id  ;
+                        //                         if (n.id == stageid){
+                        //                             li +=   " selected "
+                        //                         }
+                        //                         li +=  '>' + n.stageName + "</option>";
+                        //                     });
+                        //                     li +=
+                        //                         "                        </select></td>" +                                                "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"duration[]\" class=\"duration\" value=\"" + duration + "\"></td>\n" +
+                        //                         "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"speaker[]\" class=\"speaker\" value=\"" + teacher + "\"></td>\n" +
+                        //                         "                                <td><input readonly=\"readonly\" type=\"text\" style=\"width:60px ;\" name=\"recommendSort[]\" class=\"recommendSort\" value=\"" + sort_order + "\"></td>\n" +
+                        //
+                        //                         "                                <td>\n" +
+                        //                         "                                    <div class=\"am-btn-toolbar\">\n" +
+                        //                         "                                        <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                        //                         "                                            <a class=\"removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary\"\n" +
+                        //                         "                                               href=\"javascript:;\" res=\"0\">\n" +
+                        //                         "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
+                        //                         "                                            </a>\n" +
+                        //                         "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                        //                         "                                               href=\"javascript:;\">\n" +
+                        //                         "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
+                        //                         "                                            </a>\n" +
+                        //                         "                                        </div>\n" +
+                        //                         "                                    </div>\n" +
+                        //                         "                                </td>\n" +
+                        //                         "                            </tr>";
+                        //                 }
+                        //             }
+                        //             $(".tbajax").html(li);//将拼接出来的加入到指定的模块
+                        //             // 重新加载js
+                        //             $(".removeredaonly").click(function () {
+                        //                 var i = $(this).attr("res");
+                        //                 if (i == 0) {
+                        //                     $(this).attr("res", "1");
+                        //                     $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+                        //                     $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
+                        //                 } else {
+                        //                     //编辑二级目录
+                        //                     if (confirm('是否要提交更改?')) {
+                        //                         var erjimuluid = $(".selectclass").val();
+                        //                         var yijimuluid = $(".selectnum").val();
+                        //                         if (yijimuluid != '') {
+                        //                             var info = {
+                        //                                 'id': $(this).parents('tr').data('id'),
+                        //                                 'courseId': "{{$course.id}}",
+                        //                                 'catalogId': $(".selectclass").val(),
+                        //                                 'className': $(this).parents('td').siblings('td').children('.className').val(),
+                        //                                 'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
+                        //                                 'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
+                        //                                 'stageId': $(this).parents('td').siblings('td').children('.stageId').val(),
+                        //                                 'duration': $(this).parents('td').siblings('td').children('.duration').val(),
+                        //                                 'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
+                        //                                 'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
+                        //                             }
+                        //                         }
+                        //                         // alert(erjimuluid);return;
+                        //                         if (erjimuluid == null) {
+                        //                             var info = {
+                        //                                 'id': $(this).parents('tr').data('id'),
+                        //                                 'courseId': "{{$course.id}}",
+                        //                                 'catalogId': $(".selectnum").val(),
+                        //                                 'className': $(this).parents('td').siblings('td').children('.className').val(),
+                        //                                 'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
+                        //                                 'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
+                        //                                 'stageId': $(this).parents('td').siblings('td').children('.stageId').val(),
+                        //                                 'duration': $(this).parents('td').siblings('td').children('.duration').val(),
+                        //                                 'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
+                        //                                 'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
+                        //                             }
+                        //                         }
+                        //                         if (erjimuluid == '' || yijimuluid == '') {
+                        //                             var info = {
+                        //                                 'id': $(this).parents('tr').data('id'),
+                        //                                 'courseId': "{{$course.id}}",
+                        //                                 'catalogId': $(".selectclass").val(),
+                        //                                 'className': $(this).parents('td').siblings('td').children('.className').val(),
+                        //                                 'trySeeUrl': $(this).parents('td').siblings('td').children('.trySeeUrl').val(),
+                        //                                 'positiveUrl': $(this).parents('td').siblings('td').children('.positiveUrl').val(),
+                        //                                 'stageId': $(this).parents('td').siblings('td').children('.stageId').val(),
+                        //                                 'duration': $(this).parents('td').siblings('td').children('.duration').val(),
+                        //                                 'speaker': $(this).parents('td').siblings('td').children('.speaker').val(),
+                        //                                 'recommendSort': $(this).parents('td').siblings('td').children('.recommendSort').val(),
+                        //                             }
+                        //                         }
+                        //                         // console.log(info);
+                        //                         $.ajax({
+                        //                             type: 'POST',
+                        //                             url: '/admin/Coursedesigns/editclass',
+                        //                             data: info,
+                        //                             success: function (data) {
+                        //                                 // console.log(data);return;
+                        //                                 if (data.code == 0) {
+                        //                                     alert(data.msg);
+                        //                                     return false;
+                        //                                 }
+                        //                                 if (data.status == 1) {
+                        //                                     alert(data.msg);
+                        //                                     window.location.reload();
+                        //                                 } else {
+                        //                                     alert(data.msg);
+                        //                                     return false
+                        //                                 }
+                        //                             }
+                        //                         })
+                        //                     } else {
+                        //                         $(this).attr("res", "0");
+                        //                         $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                        //                         $(this).parents('td').siblings('td').children('input').attr("readOnly", true);
+                        //                     }
+                        //                 }
+                        //             });
+                        //         }
+                        //     })
+                        // })
+                    // }
+
+
+                }
+            })
+            return false;
+        });
+        $('.selectbook').trigger("change");
+        // $('.removeredaonlyno').trigger("click");
+
+
+    })
+</script>
+<!--//图片上传js-->
+<script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>
+<!--//普通模块图片上传js-->
+<!--<script src="/vendor/admin/js/upload.js"></script>-->
+<!--<script src="/vendor/admin/js/upload123.js"></script>-->
+<!--//课程信息图片js-->
+<script src="/vendor/admin/js/courseimgupload.js"></script>
+<script src="/vendor/admin/js/courseupload.js"></script>
+{{/block}}
