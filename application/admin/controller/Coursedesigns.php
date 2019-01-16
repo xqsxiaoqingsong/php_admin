@@ -530,27 +530,23 @@ class CourseDesigns extends Common
     {
 //        return json($request->param());
         $type = $request->param('typeid');
-        $id =$request->param('id');
-        if ($type==1){
-            $stagebookprice =StagePeicebook::where('stageId', $id)->find();
-            if ($stagebookprice){
-                $result =StagePeicebook::where('stageId', $id)->setField('price',$request->param('price'));
-<<<<<<< HEAD
-                if ($result !== false) {
-=======
+        $id = $request->param('id');
+        if ($type == 1) {
+            $stagebookprice = StagePeicebook::where('stageId', $id)->find();
+            if ($stagebookprice) {
+                $result = StagePeicebook::where('stageId', $id)->setField('price', $request->param('price'));
 //                return json($result);
                 if ($result) {
->>>>>>> parent of 99fb2a7... 20190116 17.35
                     $info = array('status' => 1, 'msg' => '更新成功');
                 } else {
                     $info = array('status' => 0, 'msg' => '更新失败');
                 }
                 return json($info);
-            }else{
-                $result =StagePeicebook::create(['stageId'=>$id,'price'=>$request->param('price')]);
+            } else {
+                $result = StagePeicebook::create(['stageId' => $id, 'price' => $request->param('price')]);
 //            return json($result);
                 if ($result) {
-                    
+
                     $info = array('status' => 1, 'msg' => '更新成功');
                 } else {
                     $info = array('status' => 0, 'msg' => '更新失败');
@@ -559,10 +555,10 @@ class CourseDesigns extends Common
             }
 
         }
-        if ($type==2){
+        if ($type == 2) {
             $stagenobookprice = StagePeicenobook::where('stageId', $id)->find();
-            if ($stagenobookprice){
-                $result =StagePeicenobook::where('stageId', $id)->setField('price',$request->param('price'));
+            if ($stagenobookprice) {
+                $result = StagePeicenobook::where('stageId', $id)->setField('price', $request->param('price'));
 //            return json($result);
                 if ($result) {
                     $info = array('status' => 1, 'msg' => '更新成功');
@@ -570,8 +566,8 @@ class CourseDesigns extends Common
                     $info = array('status' => 0, 'msg' => '更新失败');
                 }
                 return json($info);
-            }else{
-                $result =StagePeicenobook::create(['stageId'=>$id,'price'=>$request->param('price')]);
+            } else {
+                $result = StagePeicenobook::create(['stageId' => $id, 'price' => $request->param('price')]);
 //            return json($result);
                 if ($result) {
                     $info = array('status' => 1, 'msg' => '更新成功');

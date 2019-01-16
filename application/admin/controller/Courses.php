@@ -3,6 +3,9 @@
 namespace app\admin\controller;
 
 use app\admin\model\Course;
+use app\admin\model\CourseCatalog;
+use app\admin\model\CourseClass;
+use app\admin\model\CourseStage;
 use think\Controller;
 use think\Request;
 
@@ -134,7 +137,16 @@ class Courses extends Common
      */
     public function delete($id)
     {
+        $catalog = CourseCatalog::where('courseId',$id)->find();
+        $stage = CourseStage::where('courseId',$id)->find();
+        $lessons = CourseClass::where('courseId',$id)->find();
+        if ($catalog || $stage || $lessons){
+            $info = array('status' => 0, 'msg' => '课程下还有相关数据,不能直接删除!!!');
+            return json($info);
+        }
         Course::destroy($id);
+        $info = array('status' => 1, 'msg' => '删除成功');
+        return json($info);
         return redirect('index');
     }
 

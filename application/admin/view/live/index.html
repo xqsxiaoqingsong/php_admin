@@ -11,39 +11,48 @@
         <hr>
 
         <div class="am-g">
-            <div class="am-u-sm-12 am-u-md-6">
+            <div class="am-u-sm-12 am-u-md-2">
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                         <a type="button" class="am-btn am-btn-default" href="{{:Url('admin/Lives/create')}}">
                             <span class="am-icon-plus"></span> 新增
                         </a>
-                        <!--<button type="button" class="am-btn am-btn-success" id="show_all">-->
-                            <!--<span class="am-icon-arrows-alt"></span> 展开所有-->
-                        <!--</button>-->
+                        <a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"
+                           href="javascript:;">
+                            <span class="am-icon-trash-o"></span> 删除
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-3">
-                <!--<div class="am-form-group">-->
-                    <!--<select data-am-selected="{btnSize: 'sm'}">-->
-                        <!--<option value="option1">所有类别</option>-->
-                        <!--<option value="option2">IT业界</option>-->
-                        <!--<option value="option3">数码产品</option>-->
-                        <!--<option value="option3">笔记本电脑</option>-->
-                        <!--<option value="option3">平板电脑</option>-->
-                        <!--<option value="option3">只能手机</option>-->
-                        <!--<option value="option3">超极本</option>-->
-                    <!--</select>-->
-                <!--</div>-->
-            </div>
-            <div class="am-u-sm-12 am-u-md-3">
-                <!--<div class="am-input-group am-input-group-sm">-->
-                    <!--<input type="text" class="am-form-field">-->
-                    <!--<span class="am-input-group-btn">-->
-            <!--<button class="am-btn am-btn-default" type="button">搜索</button>-->
-          <!--</span>-->
-                <!--</div>-->
-            </div>
+            <form class="am-form-inline" role="form" method="get">
+                <style>
+                    .teacher_search_span{
+                        font-size: 14px;
+                    }
+                    .am-selected{
+                        width: 120px;
+                    }
+                </style>
+                <div class="am-form-group">
+                    <span class="teacher_search_span">课程名称：</span>
+                    <input type="text" name="name" class="am-form-field am-input-sm" style="width: 120px" placeholder="课程名称"
+                           value="{{empty name='$condition.name'}}  {{else /}}{{$condition.name}}{{/empty}}">
+                </div>
+                <div class="am-form-group">
+                    <span class="teacher_search_span">专业方向：</span>
+                    <select data-am-selected="{btnSize: 'sm'}" name="category_id">
+                        <option value=""></option>
+                        {{foreach name="categories" id="category"}}
+                        <option value="{{$category.ID}}"
+                                {{empty name='$condition.category_id'}}  {{else /}} {{if $category.ID ==$condition.category_id}} selected {{/if}}{{/empty}}
+                        >{{$category.MAJOR_NAME}}</option>
+                        {{/foreach}}
+                    </select>
+                </div>
+
+                <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
+                <a href="/admin/Lives" class="am-btn am-btn-default am-btn-sm">重置</a>
+            </form>
         </div>
 
         <div class="am-g">
@@ -52,57 +61,36 @@
                     <table class="am-table  am-table-hover table-main">
                         <thead>
                         <tr>
+                            <th class="table-check"><input type="checkbox" class="checked_all"/></th>
                             <th style="" class="table-id">编号</th>
-<<<<<<< HEAD
-                            <th style="width: 20%;">标题</th>
-                            <th class="table-is-show am-hide-sm-only">销售价(元)</th>
-                            <th class="table-sort-order am-hide-sm-only" style="">划线价(元)</th>
-                            <th class="table-sort-order am-hide-sm-only" style="">是否显示</th>
-                            <th class="table-sort-order am-hide-sm-only" style="">排序</th>
-=======
                             <th style="width: 30%;text-align: center;">直播间名称</th>
                             <th class="table-is-show am-hide-sm-only">专业方向</th>
                             <th class="table-sort-order am-hide-sm-only" style="">推荐排序</th>
                             <th class="table-sort-order am-hide-sm-only" style="">上下架</th>
->>>>>>> parent of 99fb2a7... 20190116 17.35
+                            <th class="table-set">操作</th>
+                            <th class="table-set">操作</th>
                             <th class="table-set">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         {{foreach name="lives" id="live"}}
                         <tr data-id="{{$live.id}}" class="xParent">
+                            <td><input type="checkbox" class="checked_id" name="checked_id[]" value="{{$live.id}}"/>
                             <td>{{$live.id}}</td>
-<<<<<<< HEAD
-                            <td>{{$live.title}}</td>
-                            <td class="am-hide-sm-only">
-                                <input type="text" style="width: 80px;" name="price[]" class="price"
-                                    value="{{$live.price}}">
-                            </td>
-                            <td class="am-hide-sm-only">
-                                <input type="text" style="width: 80px;" name="real_price[]" class="real_price"
-                                       value="{{$live.real_price}}">
-                            </td>
-                            <td class="am-hide-sm-only" data-is_show="{{$live.is_show}}">
-                                {{eq name="live.is_show" value="1"}}
-=======
-                            <td>{{$live.liveRoomName}}</td>
+                            <td style="text-align: center;">{{$live.liveRoomName}}</td>
                             <td>{{$live.livepro.MAJOR_NAME}}</td>
                             <td class="am-hide-sm-only">
-                                <input type="text" style="width: 80px;" name="recommendSort[]" class="recommendSort"
+                                <input type="text" style="width: 80px;" name="recommendSort[]" class="sort_order recommendSort"
                                        value="{{$live.recommendSort}}">
                             </td>
-                            <td class="am-hide-sm-only" data-is_show="{{$live.state}}">
+                            <td class="am-hide-sm-only" >
                                 {{eq name="live.state" value="1"}}
->>>>>>> parent of 99fb2a7... 20190116 17.35
-                                <span class="am-icon-check change_is_show"></span>
+                                <span class="am-icon-check change_is_show" data-is_show="{{$live.state}}"></span>
                                 {{else/}}
-                                <span class="am-icon-close change_is_show"></span>
+                                <span class="am-icon-close change_is_show" data-is_show="{{$live.state}}"></span>
                                 {{/eq}}
                             </td>
-                            <td class="am-hide-sm-only">
-                                <input type="text" style="width: 80px;" name="sort_order[]" class="sort_order"
-                                       value="{{$live.sort_order}}">
-                            </td>
+
                             <td>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
@@ -110,9 +98,25 @@
                                            href="{{:Url('admin/Lives/edit',['id'=>$live.id])}}">
                                             <span class="am-icon-pencil-square-o"></span> 编辑
                                         </a>
-                                        <a class="del am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
-                                           href="javascript:;">
-                                            <span class="am-icon-trash-o"></span> 删除
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary"
+                                           href="{{:Url('admin/Lives/editstage',['id'=>$live.id])}}">
+                                            <span class="am-icon-pencil-square-o"></span> 设置权限
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary"
+                                           href="{{:Url('admin/Lives/edit',['id'=>$live.id])}}">
+                                            <span class="am-icon-pencil-square-o"></span> 设置价格
                                         </a>
                                     </div>
                                 </div>
@@ -127,7 +131,7 @@
                     共 {{:count($lives)}} 条记录
                     <div class="am-fr">
                         <ul class="am-pagination">
-                            <!--{{$lives|raw}}-->
+                            {{$lives|raw}}
                         </ul>
                     </div>
                 </div>
@@ -147,64 +151,66 @@
 <script>
     $(function () {
         //单条删除
-        $(".del").click(function () {
-            var id = $(this).parents('tr').data('id');
-            // console.log(id);
-            var _this = $(this);
-            if (confirm('确定要删除吗?')) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: '/admin/Livecategories/delete/' + id,
-                    data: {id: id},
-                    success: function () {
-                        // _this.parents('tr').fadeOut(300);
-                        _this.parents('tr').remove();
-                    }
-                })
-            }
-            return false;
-        })
+        // $(".del").click(function () {
+        //     var id = $(this).parents('tr').data('id');
+        //     // console.log(id);
+        //     var _this = $(this);
+        //     if (confirm('确定要删除吗?')) {
+        //         $.ajax({
+        //             type: 'DELETE',
+        //             url: '/admin/Livecategories/delete/' + id,
+        //             data: {id: id},
+        //             success: function () {
+        //                 // _this.parents('tr').fadeOut(300);
+        //                 _this.parents('tr').remove();
+        //             }
+        //         })
+        //     }
+        //     return false;
+        // })
 
         //排序
         $(".sort_order").change(function () {
             var id = $(this).parents('tr').attr('data-id');
             var sort_order = $(this).val();
-            // console.log(sort_order);return;
-
-            $.ajax({
-                type: 'POST',
-                url: '/admin/Livecategories/sort_order/' + id,
-                data: {
-                    id: id,
-                    sort_order: sort_order
-                },
-                success: function () {
-                    window.location.reload();
-                }
-            })
-
+            // console.log(id);return;
+            if (confirm('确定要更改排序吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Lives/sort_order/' + id,
+                    data: {
+                        id: id,
+                        sort_order: sort_order
+                    },
+                    success: function () {
+                        window.location.reload();
+                    }
+                })
+            }else {
+                // window.location.reload();
+            }
             return false;
         })
 
         //是否显示
         $(".change_is_show").click(function () {
             var id = $(this).parents('tr').attr('data-id');
-            var attr = $(this).parents('td').data('is_show');
-            // console.log(attr);
+            var attr = $(this).data('is_show');
+            // console.log(attr);return
             var _this = $(this);
-
-            $.ajax({
-                type: 'POST',
-                url: '/admin/Livecategories/change_show/' + id,
-                data: {
-                    id: id,
-                    attr: attr
-                },
-                success: function () {
-                    _this.toggleClass('am-icon-check am-icon-close');
-                }
-            })
-
+            if (confirm('确定要更改上下架状态吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Lives/change_show/' + id,
+                    data: {
+                        id: id,
+                        attr: attr
+                    },
+                    success: function () {
+                        _this.toggleClass('am-icon-check am-icon-close');
+                    }
+                })
+            }
             return false;
         })
     })
