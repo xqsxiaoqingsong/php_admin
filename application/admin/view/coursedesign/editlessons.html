@@ -127,7 +127,7 @@
                             <!--href="javascript:;" res="0">-->
                             <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
                             <!--</a>-->
-                            <!--<a class="delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
+                            <!--<a class="delclass am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
                             <!--href="javascript:;">-->
                             <!--<span class="am-icon-trash-o"></span> 删除-->
                             <!--</a>-->
@@ -463,7 +463,7 @@
                                     "                                               href=\"javascript:;\" res=\"0\">\n" +
                                     "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
                                     "                                            </a>\n" +
-                                    "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                                    "                                            <a class=\"delclass am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
                                     "                                               href=\"javascript:;\">\n" +
                                     "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
                                     "                                            </a>\n" +
@@ -557,18 +557,25 @@
                             }
                         });
                         // 目录单条删除
-                        $(".delcatalog").click(function () {
+                        $(".delclass").click(function () {
                             var id = $(this).parents('tr').data('id');
                             // console.log(id);return;
                             var _this = $(this);
                             if (confirm('确定要删除吗?')) {
                                 $.ajax({
                                     type: 'DELETE',
-                                    url: '/admin/Coursedesigns/deletecatalog/' + id,
+                                    url: '/admin/Coursedesigns/deleteclass/' + id,
                                     data: {id: id},
-                                    success: function () {
-                                        // _this.parents('tr').fadeOut(300);
-                                        _this.parents('tr').remove();
+                                    success: function (data) {
+                                        // console.log(data);return
+                                        if (data.status == 1) {
+                                            alert(data.msg);
+                                            // _this.parents('tr').fadeOut(300);
+                                            _this.parents('tr').remove();
+                                        } else {
+                                            alert(data.msg);
+                                            return false
+                                        }
                                     }
                                 })
                             }
@@ -621,7 +628,7 @@
                                     "                                               href=\"javascript:;\" res=\"0\">\n" +
                                     "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
                                     "                                            </a>\n" +
-                                    "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                                    "                                            <a class=\"delclass am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
                                     "                                               href=\"javascript:;\">\n" +
                                     "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
                                     "                                            </a>\n" +
@@ -631,6 +638,31 @@
                                     "                            </tr>";
                             }
                             $(".tbajax").html(li);//将拼接出来的加入到指定的模块
+                            // 目录单条删除
+                            $(".delclass").click(function () {
+                                var id = $(this).parents('tr').data('id');
+                                // console.log(id);return;
+                                var _this = $(this);
+                                if (confirm('确定要删除吗?')) {
+                                    $.ajax({
+                                        type: 'DELETE',
+                                        url: '/admin/Coursedesigns/deleteclass/' + id,
+                                        data: {id: id},
+                                        success: function (data) {
+                                            // console.log(data);return
+                                            if (data.status == 1) {
+                                                alert(data.msg);
+                                                // _this.parents('tr').fadeOut(300);
+                                                _this.parents('tr').remove();
+                                            } else {
+                                                alert(data.msg);
+                                                return false
+                                            }
+                                        }
+                                    })
+                                }
+                                return false;
+                            })
                         }
 
                         if (data.erjimulu) {
@@ -709,7 +741,7 @@
                                                 "                                               href=\"javascript:;\" res=\"0\">\n" +
                                                 "                                                <span class=\"am-icon-pencil-square-o\"></span> 编辑\n" +
                                                 "                                            </a>\n" +
-                                                "                                            <a class=\"delcatalog am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                                                "                                            <a class=\"delclass am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
                                                 "                                               href=\"javascript:;\">\n" +
                                                 "                                                <span class=\"am-icon-trash-o\"></span> 删除\n" +
                                                 "                                            </a>\n" +
@@ -802,6 +834,31 @@
                                             }
                                         }
                                     });
+                                    // 目录单条删除
+                                    $(".delclass").click(function () {
+                                        var id = $(this).parents('tr').data('id');
+                                        // console.log(id);return;
+                                        var _this = $(this);
+                                        if (confirm('确定要删除吗?')) {
+                                            $.ajax({
+                                                type: 'DELETE',
+                                                url: '/admin/Coursedesigns/deleteclass/' + id,
+                                                data: {id: id},
+                                                success: function (data) {
+                                                    // console.log(data);return
+                                                    if (data.status == 1) {
+                                                        alert(data.msg);
+                                                        // _this.parents('tr').fadeOut(300);
+                                                        _this.parents('tr').remove();
+                                                    } else {
+                                                        alert(data.msg);
+                                                        return false
+                                                    }
+                                                }
+                                            })
+                                        }
+                                        return false;
+                                    })
                                 }
                             })
                         })

@@ -395,15 +395,32 @@ class CourseDesigns extends Common
             if ($result) {
                 //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
 //                $this->success('恭喜您，更新成功', 'index');
-                $info = array('status' => 1, 'msg' => '编辑一级分类成功');
+                $info = array('status' => 1, 'msg' => '编辑课节成功');
             } else {
                 //错误页面的默认跳转页面是返回前一页，通常不需要设置
 //                $this->error('更新失败');
-                $info = array('status' => 0, 'msg' => '编辑一级分类失败');
+                $info = array('status' => 0, 'msg' => '编辑课节失败');
             }
             return json($info);
 //            return json($request->param());
         }
+    }
+
+    //删除课节
+    public function deleteclass(Request $request,$id)
+    {
+//        return json($request->param());
+        $result = CourseClass::destroy($id);
+        if ($result) {
+            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+//                $this->success('恭喜您，更新成功', 'index');
+            $info = array('status' => 1, 'msg' => '删除课节成功');
+        } else {
+            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+//                $this->error('更新失败');
+            $info = array('status' => 0, 'msg' => '删除课节失败');
+        }
+        return json($info);
     }
 
     //编辑价格
@@ -513,11 +530,11 @@ class CourseDesigns extends Common
     {
 //        return json($request->param());
         $type = $request->param('typeid');
-        $id =$request->param('id');
-        if ($type==1){
-            $stagebookprice =StagePeicebook::where('stageId', $id)->find();
-            if ($stagebookprice){
-                $result =StagePeicebook::where('stageId', $id)->setField('price',$request->param('price'));
+        $id = $request->param('id');
+        if ($type == 1) {
+            $stagebookprice = StagePeicebook::where('stageId', $id)->find();
+            if ($stagebookprice) {
+                $result = StagePeicebook::where('stageId', $id)->setField('price', $request->param('price'));
 //                return json($result);
                 if ($result) {
                     $info = array('status' => 1, 'msg' => '更新成功');
@@ -525,8 +542,8 @@ class CourseDesigns extends Common
                     $info = array('status' => 0, 'msg' => '更新失败');
                 }
                 return json($info);
-            }else{
-                $result =StagePeicebook::create(['stageId'=>$id,'price'=>$request->param('price')]);
+            } else {
+                $result = StagePeicebook::create(['stageId' => $id, 'price' => $request->param('price')]);
 //            return json($result);
                 if ($result) {
 
@@ -538,10 +555,10 @@ class CourseDesigns extends Common
             }
 
         }
-        if ($type==2){
+        if ($type == 2) {
             $stagenobookprice = StagePeicenobook::where('stageId', $id)->find();
-            if ($stagenobookprice){
-                $result =StagePeicenobook::where('stageId', $id)->setField('price',$request->param('price'));
+            if ($stagenobookprice) {
+                $result = StagePeicenobook::where('stageId', $id)->setField('price', $request->param('price'));
 //            return json($result);
                 if ($result) {
                     $info = array('status' => 1, 'msg' => '更新成功');
@@ -549,8 +566,8 @@ class CourseDesigns extends Common
                     $info = array('status' => 0, 'msg' => '更新失败');
                 }
                 return json($info);
-            }else{
-                $result =StagePeicenobook::create(['stageId'=>$id,'price'=>$request->param('price')]);
+            } else {
+                $result = StagePeicenobook::create(['stageId' => $id, 'price' => $request->param('price')]);
 //            return json($result);
                 if ($result) {
                     $info = array('status' => 1, 'msg' => '更新成功');

@@ -68,6 +68,8 @@
                             <th class="table-sort-order am-hide-sm-only" style="">推荐排序</th>
                             <th class="table-sort-order am-hide-sm-only" style="">上下架</th>
                             <th class="table-set">操作</th>
+                            <th class="table-set">操作</th>
+                            <th class="table-set">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -75,17 +77,17 @@
                         <tr data-id="{{$live.id}}" class="xParent">
                             <td><input type="checkbox" class="checked_id" name="checked_id[]" value="{{$live.id}}"/>
                             <td>{{$live.id}}</td>
-                            <td>{{$live.liveRoomName}}</td>
+                            <td style="text-align: center;">{{$live.liveRoomName}}</td>
                             <td>{{$live.livepro.MAJOR_NAME}}</td>
                             <td class="am-hide-sm-only">
-                                <input type="text" style="width: 80px;" name="recommendSort[]" class="recommendSort"
+                                <input type="text" style="width: 80px;" name="recommendSort[]" class="sort_order recommendSort"
                                        value="{{$live.recommendSort}}">
                             </td>
-                            <td class="am-hide-sm-only" data-is_show="{{$live.state}}">
+                            <td class="am-hide-sm-only" >
                                 {{eq name="live.state" value="1"}}
-                                <span class="am-icon-check change_is_show"></span>
+                                <span class="am-icon-check change_is_show" data-is_show="{{$live.state}}"></span>
                                 {{else/}}
-                                <span class="am-icon-close change_is_show"></span>
+                                <span class="am-icon-close change_is_show" data-is_show="{{$live.state}}"></span>
                                 {{/eq}}
                             </td>
 
@@ -96,9 +98,25 @@
                                            href="{{:Url('admin/Lives/edit',['id'=>$live.id])}}">
                                             <span class="am-icon-pencil-square-o"></span> 编辑
                                         </a>
-                                        <a class="del am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
-                                           href="javascript:;">
-                                            <span class="am-icon-trash-o"></span> 删除
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary"
+                                           href="{{:Url('admin/Lives/editstage',['id'=>$live.id])}}">
+                                            <span class="am-icon-pencil-square-o"></span> 设置权限
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary"
+                                           href="{{:Url('admin/Lives/edit',['id'=>$live.id])}}">
+                                            <span class="am-icon-pencil-square-o"></span> 设置价格
                                         </a>
                                     </div>
                                 </div>
@@ -113,7 +131,7 @@
                     共 {{:count($lives)}} 条记录
                     <div class="am-fr">
                         <ul class="am-pagination">
-                            <!--{{$lives|raw}}-->
+                            {{$lives|raw}}
                         </ul>
                     </div>
                 </div>
@@ -133,64 +151,66 @@
 <script>
     $(function () {
         //单条删除
-        $(".del").click(function () {
-            var id = $(this).parents('tr').data('id');
-            // console.log(id);
-            var _this = $(this);
-            if (confirm('确定要删除吗?')) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: '/admin/Livecategories/delete/' + id,
-                    data: {id: id},
-                    success: function () {
-                        // _this.parents('tr').fadeOut(300);
-                        _this.parents('tr').remove();
-                    }
-                })
-            }
-            return false;
-        })
+        // $(".del").click(function () {
+        //     var id = $(this).parents('tr').data('id');
+        //     // console.log(id);
+        //     var _this = $(this);
+        //     if (confirm('确定要删除吗?')) {
+        //         $.ajax({
+        //             type: 'DELETE',
+        //             url: '/admin/Livecategories/delete/' + id,
+        //             data: {id: id},
+        //             success: function () {
+        //                 // _this.parents('tr').fadeOut(300);
+        //                 _this.parents('tr').remove();
+        //             }
+        //         })
+        //     }
+        //     return false;
+        // })
 
         //排序
         $(".sort_order").change(function () {
             var id = $(this).parents('tr').attr('data-id');
             var sort_order = $(this).val();
-            // console.log(sort_order);return;
-
-            $.ajax({
-                type: 'POST',
-                url: '/admin/Livecategories/sort_order/' + id,
-                data: {
-                    id: id,
-                    sort_order: sort_order
-                },
-                success: function () {
-                    window.location.reload();
-                }
-            })
-
+            // console.log(id);return;
+            if (confirm('确定要更改排序吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Lives/sort_order/' + id,
+                    data: {
+                        id: id,
+                        sort_order: sort_order
+                    },
+                    success: function () {
+                        window.location.reload();
+                    }
+                })
+            }else {
+                // window.location.reload();
+            }
             return false;
         })
 
         //是否显示
         $(".change_is_show").click(function () {
             var id = $(this).parents('tr').attr('data-id');
-            var attr = $(this).parents('td').data('is_show');
-            // console.log(attr);
+            var attr = $(this).data('is_show');
+            // console.log(attr);return
             var _this = $(this);
-
-            $.ajax({
-                type: 'POST',
-                url: '/admin/Livecategories/change_show/' + id,
-                data: {
-                    id: id,
-                    attr: attr
-                },
-                success: function () {
-                    _this.toggleClass('am-icon-check am-icon-close');
-                }
-            })
-
+            if (confirm('确定要更改上下架状态吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Lives/change_show/' + id,
+                    data: {
+                        id: id,
+                        attr: attr
+                    },
+                    success: function () {
+                        _this.toggleClass('am-icon-check am-icon-close');
+                    }
+                })
+            }
             return false;
         })
     })
