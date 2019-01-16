@@ -6,177 +6,118 @@
 
 {{block name="content"}}
 <div class="admin-content">
-    <div class="am-cf am-padding">
-        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">编辑直播间</strong> /
-            <!--<small>Create A New AdCategory</small>-->
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-primary am-text-lg">编辑分类</strong>
+                <!--<small>Create Product</small>-->
+            </div>
         </div>
-    </div>
-    <hr>
-    <div class="am-g">
-        <div class="am-u-sm-12 am-u-md-12">
-            <form class="am-form" action="{{:Url('admin/Lives/save')}}" method="post">
-                <div class="am-tabs am-margin" data-am-tabs>
-                    <ul class="am-tabs-nav am-nav am-nav-tabs">
-                        <li class="am-active"><a href="#tab1">通用信息</a></li>
-                        <li><a href="#tab2">直播详情</a></li>
-                        <!--<li><a href="#tab3">商品相册</a></li>-->
-                    </ul>
-                    <div class="am-tabs-bd">
-                        <div class="am-tab-panel am-fade am-in am-active" id="tab1" style="min-height: 400px">
-                            <input type="hidden" name="_token" value="">
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    直播间名称
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-4">
-                                    <input type="text" class="am-input-sm" name="liveRoomName" value="{{$live.liveRoomName}}">
-                                </div>
-                                <div class="am-hide-sm-only am-u-md-6">*必填</div>
-                            </div>
 
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    专业方向
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                    <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
-                                            name="majorId" style="display: none;">
-                                        <option value="">顶级分类</option>
-                                        {{foreach name="categories" id="category"}}
-                                        <option value="{{$category.ID}}"{{if $category.ID == $live.majorId}} selected {{/if}}>{{$category.MAJOR_NAME}}</option>
-                                        {{/foreach}}
-                                    </select>
-                                    <!--<div class="am-selected am-dropdown " id="am-selected-n65gb" data-am-dropdown=""-->
-                                    <!--style="width: 100%;">-->
-                                    <!--<div class="am-selected-content am-dropdown-content"><h2 class="am-selected-header">-->
+        <hr>
+
+        <div class="am-g">
+            <div class="am-u-sm-12 am-u-md-12">
+                <form class="am-form" action="{{:Url('admin/Livecategories/update',['id'=>$category.id])}}" method="post">
+                    <input type="hidden" name="_token" value="">
+                    <!--<div class="am-g am-margin-top">-->
+                        <!--<div class="am-u-sm-4 am-u-md-2 am-text-right">-->
+                            <!--上级分类-->
+                        <!--</div>-->
+                        <!--<div class="am-u-sm-8 am-u-md-4 am-u-end col-end">-->
+                            <!--<select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"-->
+                                    <!--name="parent_id" style="display: none;">-->
+                                <!--<option value="0">顶级分类</option>-->
+
+                            <!--</select>-->
+                            <!--<div class="am-selected am-dropdown " id="am-selected-n65gb" data-am-dropdown=""-->
+                                 <!--style="width: 100%;">-->
+                                <!--<div class="am-selected-content am-dropdown-content"><h2 class="am-selected-header">-->
                                     <!--<span class="am-icon-chevron-left">返回</span></h2>-->
                                     <!--<div class="am-selected-hint"></div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                </div>
-                            </div>
-
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    直播间简介
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-7 am-u-end col-end">
-                                    <textarea rows="2" name="brief">{{$live.brief}}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    课时数
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-2">
-                                    <input type="text" class="am-input-sm" name="classHour" value="{{$live.classHour}}">
-                                </div>
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    讲师
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-3 am-u-end">
-                                    <input type="text" class="am-input-sm" name="speaker" value="{{$live.speaker}}">
-                                </div>
-                            </div>
-
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    推荐排序
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-2">
-                                    <input type="text" class="am-input-sm" name="recommendSort" value="{{$live.recommendSort}}">
-                                </div>
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    上下架
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-2 am-u-end col-end">
-                                    <label class="am-radio-inline">
-                                        <input type="radio" value="1" name="state" {{eq name="live.state" value="1" }}checked{{/eq}}> 上架
-                                    </label>
-                                    <label class="am-radio-inline">
-                                        <input type="radio" value="0" name="state" {{eq name="live.state" value="0" }}checked{{/eq}}> 下架
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!--<div class="am-g am-margin-top">-->
-                            <!--<div class="am-u-sm-4 am-u-md-2 am-text-right">-->
-                            <!--权限分组设置-->
+                                <!--</div>-->
                             <!--</div>-->
-                            <!--<div class="am-u-sm-8 am-u-md-10">-->
-                            <!--<div class="am-btn-group am-btn-group-sm">-->
-                            <!--<a type="button" class="am-btn am-btn-default am-text-success createpricetd"-->
-                            <!--href="javascript:;">-->
-                            <!--<span class="am-icon-plus"></span> 新增-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    列表封面
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
-                                    <div class="am-form-group am-form-file new_thumb">
-                                        <button type="button" class="am-btn am-btn-success am-btn-sm upload_img">
-                                            <i class="am-icon-cloud-upload" id="loading"></i> 上传新的列表封面
-                                        </button>
-                                        <input type="file" id="image_upload">
-                                        <input type="hidden" name="imgUrl">
-                                    </div>
-                                    <hr data-am-widget="divider" style=""
-                                        class="am-divider am-divider-dashed am-no-layout">
-                                    <div>
-                                        <img src="{{$live.imgUrl}}" id="img_show" style="max-height: 200px;">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="am-g am-margin-top">
-                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                    详情封面
-                                </div>
-                                <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
-                                    <div class="am-form-group am-form-file new_thumb">
-                                        <button type="button" class="am-btn am-btn-success am-btn-sm upload_img1">
-                                            <i class="am-icon-cloud-upload" id="loading_img"></i> 上传新的详情封面
-                                        </button>
-                                        <input type="file" id="image_upload1">
-                                        <input type="hidden" name="detailsImgUrl">
-                                    </div>
-                                    <hr data-am-widget="divider" style=""
-                                        class="am-divider am-divider-dashed am-no-layout">
-                                    <div>
-                                        <img src="{{$live.detailsImgUrl}}" id="img_show1" style="max-height: 200px;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="am-tab-panel am-fade" id="tab2">
-                            <div class="am-g am-margin-top-sm">
-                                <div class="am-u-sm-10 am-u-md-12">
-                                    <!--<div id="markdown">-->
-                                    <!--<textarea rows="6" name="content" style="display:none;">{{}}</textarea>-->
-                                    <!--</div>-->
-                                    <script id="container" name="details" type="text/plain">{{$live.details}}</script>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="am-g am-margin-top">
-                        <div class="am-u-sm-4 am-u-md-4 am-text-right">
-                            <button type="submit" class="am-btn am-btn-primary am-radius">提交保存</button>
-                            <buttom class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">返回</buttom>
+                        <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                            分类名称
                         </div>
-                        <div class="am-u-sm-8 am-u-md-6 am-u-end col-end">
+                        <div class="am-u-sm-8 am-u-md-4">
+                            <input type="text" class="am-input-sm" name="name" value="{{$category.name}}">
+                        </div>
+                        <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+                    </div>
+
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                            缩略图
+                        </div>
+
+                        <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
+                            <div class="am-form-group am-form-file new_thumb">
+                                <button type="button" class="am-btn am-btn-success am-btn-sm">
+                                    <i class="am-icon-cloud-upload" id="loading"></i> 上传新的缩略图
+                                </button>
+                                <input type="file" id="image_upload">
+                                <input type="hidden" name="image">
+                            </div>
+
+                            <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed am-no-layout">
+
+                            <div>
+                                <img src="{{$category.image}}" id="img_show" style="max-height: 200px;">
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                            描述信息
+                        </div>
+                        <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                            <textarea rows="4" name="description">{{$category.description}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="am-g am-margin-top sort">
+                        <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                            排序
+                        </div>
+                        <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                            <input type="text" name="sort_order" class="am-input-sm" value="{{$category.sort_order}}">
+                        </div>
+                    </div>
+
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                            显示在导航栏
+                        </div>
+                        <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                            <label class="am-radio-inline">
+                                <input type="radio" value="1" name="show" checked=""
+                                       {{eq name="category.show" value="1" }}checked{{/eq}}> 是
+                            </label>
+                            <label class="am-radio-inline">
+                                <input type="radio" value="0" name="show"
+                                       {{eq name="category.show" value="0" }}checked{{/eq}}> 否
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="am-margin">
+                        <button type="submit" class="am-btn am-btn-primary am-radius">提交保存</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
+    <footer class="admin-content-footer">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
 </div>
 {{/block}}
 
@@ -188,21 +129,17 @@
 <script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
 
 <script type="text/javascript">
-    var ue = UE.getEditor('container',{
-        retainOnlyLabelPasted: true, //粘贴只保留标签，去除标签所有属性
-    });
-    //
-    //     function getstring(){
-    //
-    //         document.getElementById('container').innerHTML=UE.getEditor('editor').getContent();
-    //
-    // //get.Content() 函数可以获得你所编辑的内容的html代码
-    //     }
+//     var ue = UE.getEditor('container');
+//
+//     function getstring(){
+//
+//         document.getElementById('container').innerHTML=UE.getEditor('editor').getContent();
+//
+// //get.Content() 函数可以获得你所编辑的内容的html代码
+//
+//     }
+
 </script>
-
-
 <script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>   //图片上传
-<!--//直播信息图片js-->
-<script src="/vendor/admin/js/courseimgupload.js"></script>
-<script src="/vendor/admin/js/courseupload.js"></script>
+<script src="/vendor/admin/js/upload.js"></script>
 {{/block}}

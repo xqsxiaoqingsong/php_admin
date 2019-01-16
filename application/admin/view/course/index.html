@@ -147,16 +147,9 @@
                     type: 'DELETE',
                     url: '/admin/Courses/delete/' + id,
                     data: {id: id},
-                    success: function (data) {
-                        // console.log(data);return
-                        if (data.status == 1) {
-                            alert(data.msg);
-                            // _this.parents('tr').fadeOut(300);
-                            _this.parents('tr').remove();
-                        } else {
-                            alert(data.msg);
-                            return false
-                        }
+                    success: function () {
+                        // _this.parents('tr').fadeOut(300);
+                        _this.parents('tr').remove();
                     }
                 })
             }
