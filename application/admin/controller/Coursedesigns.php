@@ -395,15 +395,32 @@ class CourseDesigns extends Common
             if ($result) {
                 //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
 //                $this->success('恭喜您，更新成功', 'index');
-                $info = array('status' => 1, 'msg' => '编辑一级分类成功');
+                $info = array('status' => 1, 'msg' => '编辑课节成功');
             } else {
                 //错误页面的默认跳转页面是返回前一页，通常不需要设置
 //                $this->error('更新失败');
-                $info = array('status' => 0, 'msg' => '编辑一级分类失败');
+                $info = array('status' => 0, 'msg' => '编辑课节失败');
             }
             return json($info);
 //            return json($request->param());
         }
+    }
+
+    //删除课节
+    public function deleteclass(Request $request,$id)
+    {
+//        return json($request->param());
+        $result = CourseClass::destroy($id);
+        if ($result) {
+            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+//                $this->success('恭喜您，更新成功', 'index');
+            $info = array('status' => 1, 'msg' => '删除课节成功');
+        } else {
+            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+//                $this->error('更新失败');
+            $info = array('status' => 0, 'msg' => '删除课节失败');
+        }
+        return json($info);
     }
 
     //编辑价格
@@ -518,7 +535,12 @@ class CourseDesigns extends Common
             $stagebookprice =StagePeicebook::where('stageId', $id)->find();
             if ($stagebookprice){
                 $result =StagePeicebook::where('stageId', $id)->setField('price',$request->param('price'));
+<<<<<<< HEAD
                 if ($result !== false) {
+=======
+//                return json($result);
+                if ($result) {
+>>>>>>> parent of 99fb2a7... 20190116 17.35
                     $info = array('status' => 1, 'msg' => '更新成功');
                 } else {
                     $info = array('status' => 0, 'msg' => '更新失败');

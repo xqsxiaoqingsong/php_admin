@@ -27,7 +27,13 @@ class Lives extends Common
     {
         $lives = Live::paginate(10, false, ['query' => request()->param()]);
         $count = $lives->total();
+<<<<<<< HEAD
         return view('live/index', compact('lives', 'count'));
+=======
+        $condition = $request->param();
+//        return json($lives);
+        return view('live/index', compact('lives', 'count','condition'));
+>>>>>>> parent of 99fb2a7... 20190116 17.35
         return json($lives);
     }
 
@@ -49,7 +55,23 @@ class Lives extends Common
      */
     public function save(Request $request)
     {
+<<<<<<< HEAD
         //
+=======
+        $validate = Validate('LiveRoomValidate');
+        if (!$validate->scene('save')->check($request->param())) {
+            $this->error($validate->getError());
+        };
+        return json($request->param());
+        $result = Live::create($request->param());
+        if ($result) {
+            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+            $this->success('恭喜您，新增成功', 'index');
+        } else {
+            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+            $this->error('新增失败');
+        }
+>>>>>>> parent of 99fb2a7... 20190116 17.35
     }
 
     /**
