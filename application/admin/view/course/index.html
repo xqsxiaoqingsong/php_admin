@@ -89,7 +89,7 @@
                             <td>{{$course.studyNumber}}</td>
                             <td><input type="text" style="width: 60px;" name="sort_order[]" class="sort_order" value="{{$course.recommendSort}}"></td>
                             <td class="am-hide-sm-only" data-is_show="{{$course.state}}">
-                                {{eq name="course.state" value="1"}}
+                                {{eq name="$course.state" value="1"}}
                                 <span class="am-icon-check change_is_show"></span>
                                 {{else/}}
                                 <span class="am-icon-close change_is_show"></span>

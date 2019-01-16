@@ -40,7 +40,7 @@ class CourseClassValidate extends Validate
 
     //场景设置
     protected $scene = [
-        'save' => ['className','positiveUrl','recommendSort','stageId','duration','speaker','recommendSort'],//添加资讯
-        'update' => ['className','positiveUrl','recommendSort','stageId','duration','speaker','recommendSort'],//编辑资讯
+        'save' => ['className','trySeeUrl','positiveUrl','recommendSort','stageId','duration','speaker','recommendSort'],//添加资讯
+        'update' => ['className','trySeeUrl','positiveUrl','recommendSort','stageId','duration','speaker','recommendSort'],//编辑资讯
     ];
 }

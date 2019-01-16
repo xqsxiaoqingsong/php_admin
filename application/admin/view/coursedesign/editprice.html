@@ -7,7 +7,7 @@
 {{block name="content"}}
 <div class="admin-content">
     <div class="am-cf am-padding">
-        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">课节管理</strong> /
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">课节管理1</strong> /
             <!--<small>Create A New AdCategory</small>-->
         </div>
     </div>
@@ -436,7 +436,7 @@
                             $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
                             $(this).parents('td').siblings('td').children('input').attr("readOnly", false);
                         } else {
-                            //编辑价格
+                            //编辑二级目录
                             if (confirm('是否要提交更改?')) {
                                 var info = {
                                     'typeid' :$("#typeid").val(),
@@ -450,7 +450,6 @@
                                     url: '/admin/Coursedesigns/updatestageprice',
                                     data: info,
                                     success: function (data) {
-                                        // console.log(data);return
                                         if (data.code == 0) {
                                             alert(data.msg);
                                             return false;
