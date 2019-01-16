@@ -518,7 +518,8 @@ class CourseDesigns extends Common
             $stagebookprice =StagePeicebook::where('stageId', $id)->find();
             if ($stagebookprice){
                 $result =StagePeicebook::where('stageId', $id)->setField('price',$request->param('price'));
-                if ($result !== false) {
+//                return json($result);
+                if ($result) {
                     $info = array('status' => 1, 'msg' => '更新成功');
                 } else {
                     $info = array('status' => 0, 'msg' => '更新失败');
@@ -528,7 +529,7 @@ class CourseDesigns extends Common
                 $result =StagePeicebook::create(['stageId'=>$id,'price'=>$request->param('price')]);
 //            return json($result);
                 if ($result) {
-                    
+
                     $info = array('status' => 1, 'msg' => '更新成功');
                 } else {
                     $info = array('status' => 0, 'msg' => '更新失败');

@@ -23,11 +23,24 @@ class Lives extends Common
      *
      * @return \think\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lives = Live::paginate(10, false, ['query' => request()->param()]);
+        $where = function ($query) use ($request) {
+            //按名称
+            if ($request->param('name') and $request->param('name') != '') {
+                $search = "%" . $request->param('name') . "%";
+                $query->where('liveRoomName', 'like', $search);
+            }
+            //按分类搜索
+            if ($request->param('category_id') and $request->param('category_id') != '-1') {
+                $query->where('majorId', $request->param('category_id'));
+            }
+        };
+        $lives = Live::with('livepro')->where($where)->paginate(10, false, ['query' => request()->param()]);
         $count = $lives->total();
-        return view('live/index', compact('lives', 'count'));
+        $condition = $request->param();
+//        return json($lives);
+        return view('live/index', compact('lives', 'count','condition'));
         return json($lives);
     }
 
@@ -49,7 +62,19 @@ class Lives extends Common
      */
     public function save(Request $request)
     {
-        //
+        $validate = Validate('LiveRoomValidate');
+        if (!$validate->scene('save')->check($request->param())) {
+            $this->error($validate->getError());
+        };
+        return json($request->param());
+        $result = Live::create($request->param());
+        if ($result) {
+            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+            $this->success('恭喜您，新增成功', 'index');
+        } else {
+            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+            $this->error('新增失败');
+        }
     }
 
     /**
