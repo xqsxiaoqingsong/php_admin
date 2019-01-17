@@ -114,6 +114,7 @@
     $(function () {
         // 更改确定和编辑
         $(".removeredaonlyno").click(function () {
+            _this  =$(this);
             var i = $(this).attr("res");
             if (i == 0) {
                 $(this).attr("res", "1");
@@ -140,7 +141,10 @@
                             }
                             if (data.status == 1) {
                                 alert(data.msg);
-                                window.location.reload();
+                                _this.attr("res", "0");
+                                _this.html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                                _this.parents('td').siblings('td').children('input').attr("readOnly", true);
+                                // window.location.reload();
                             } else {
                                 alert(data.msg);
                                 return false
@@ -186,6 +190,7 @@
                 $(this).parents("tr").remove();
             })
             $(".querenstage").click(function () {
+                _this  =$(this);
                 var info = {
                     'id': $(this).parents('tr').data('id'),
                     'liveRoomId': "{{$live.id}}",
@@ -206,7 +211,10 @@
                             }
                             if (data.status == 1) {
                                 alert(data.msg);
-                                window.location.reload();
+                                _this.attr("res", "0");
+                                _this.html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                                _this.parents('td').siblings('td').children('input').attr("readOnly", true);
+                                // window.location.reload();
                             } else {
                                 alert(data.msg);
                                 return false
@@ -242,7 +250,6 @@
             }
             return false;
         });
-
     })
 </script>
 

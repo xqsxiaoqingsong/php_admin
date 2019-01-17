@@ -3,7 +3,9 @@
 namespace app\admin\controller;
 
 use app\admin\model\Live;
+use app\admin\model\LiveCountprice;
 use app\admin\model\LiveStage;
+use app\admin\model\LiveStageprice;
 use think\Controller;
 use think\Request;
 
@@ -37,7 +39,7 @@ class Lives extends Common
                 $query->where('majorId', $request->param('category_id'));
             }
         };
-        $lives = Live::with('livepro')->where($where)->paginate(10, false, ['query' => request()->param()]);
+        $lives = Live::with('livepro')->where($where)->order('recommendSort asc')->paginate(10, false, ['query' => request()->param()]);
         $count = $lives->total();
         $condition = $request->param();
 //        return json($lives);
@@ -98,7 +100,8 @@ class Lives extends Common
     public function edit($id)
     {
         $live = Live::find($id);
-        return view('/live/edit', compact('live', 'content'));
+        $stages = LiveStage::where('liveRoomId', $id)->order('recommendSort asc')->select();
+        return view('/live/edit', compact('live', 'stages'));
     }
 
     //编辑阶段页面
@@ -169,6 +172,112 @@ class Lives extends Common
         }
     }
 
+    //编辑价格页面
+    public function editprice($id)
+    {
+        $live = Live::find($id);
+        $stages = LiveStage::where('liveRoomId', $id)->order('recommendSort asc')->select();
+        foreach ($stages as $key => $value) {
+            //查出阶段价格
+            $ids = $value['id'];
+            $price = LiveStageprice::where('stageId', $ids)->value('price');
+            $stages[$key]['price'] = $price;
+        }
+        $counts = LiveCountprice::where('liveRoomId', $id)->select();
+//        return json($counts);
+        return view('/live/createprice', compact('live', 'stages', 'counts'));
+    }
+
+    //更新阶段价格
+    public function updatestageprice(Request $request)
+    {
+        if ($request->isAjax()) {
+            $id = $request->param('id');
+//            return json($request->param());
+            if ($request->param('price') == "") {
+                $info = array('status' => 0, 'msg' => '价格不能为空');
+                return json($info);
+            }
+            $livestageprice = LiveStageprice::where('stageId', $id)->find();
+            if ($livestageprice) {
+                $result = LiveStageprice::where('stageId', $id)->setField('price', $request->param('price'));
+//                return json($result);
+                if ($result) {
+                    $info = array('status' => 1, 'msg' => '更新成功');
+                } else {
+                    $info = array('status' => 0, 'msg' => '更新失败');
+                }
+                return json($info);
+            } else {
+                $result = LiveStageprice::create(['stageId' => $id, 'price' => $request->param('price')]);
+//            return json($result);
+                if ($result) {
+                    $info = array('status' => 1, 'msg' => '更新成功');
+                } else {
+                    $info = array('status' => 0, 'msg' => '更新失败');
+                }
+                return json($info);
+            }
+        }
+    }
+
+    //保存数量价格
+    public function savecountprice(Request $request)
+    {
+        if ($request->isAjax()) {
+//            return json($request->param());
+            $liveroomid =$request->param('liveRoomId');
+            $id = $request->param('id');
+            $stages =LiveStage::where('liveRoomId',$liveroomid)->count();
+            //判断逻辑,先判断权限阶段是否存在,存在就继续判断是否存在发送过来的id,存在就是更新,不存在就是新建,然后判断输入数量是否超出范围,没有超出范围就继续执行常规操作.
+            //注,新建的时候需要判断规则是否存在,更新暂时有纰漏
+            if ($stages > 0){
+                if (!$id){
+                    if ($request->param('count')<$stages+1 and $request->param('count')>1){
+                        $onlycountprice =  LiveCountprice::where(['liveRoomId' => $liveroomid, 'count' => $request->param('count')])->find();
+                        if ($onlycountprice){
+                            $info = array('status' => 0, 'msg' => '该规则已存在!');
+                            return json($info);
+                        }
+                        if ($request->param('price') == "") {
+                            $info = array('status' => 0, 'msg' => '价格不能为空');
+                            return json($info);
+                        }
+                        $result = LiveCountprice::create($request->param());
+                        if ($result) {
+                            $info = array('status' => 1, 'msg' => '插入成功');
+                        } else {
+                            $info = array('status' => 0, 'msg' => '插入失败');
+                        }
+                    }else{
+                        $info = array('status' => 0, 'msg' => "单次购买数量超过限制(必须是2到$stages)");
+                    }
+                    return json($info);
+                }else{
+                    if ($request->param('count')<$stages+1 and $request->param('count')>1){
+                        if ($request->param('price') == "") {
+                            $info = array('status' => 0, 'msg' => '价格不能为空');
+                            return json($info);
+                        }
+                        $result = LiveCountprice::update($request->param());
+                        if ($result) {
+                            $info = array('status' => 1, 'msg' => '更新成功');
+                        } else {
+                            $info = array('status' => 0, 'msg' => '更新失败');
+                        }
+                        return json($info);
+                    }else{
+                        $info = array('status' => 0, 'msg' => "单次购买数量超过限制(必须是2到$stages)");
+                    }
+                    return json($info);
+                    return json($request->param());
+                }
+            }else{
+                $info =array('status' => 0, 'msg' => '请先添加权限阶段');
+                return json($info);
+            }
+        }
+    }
 
     /**
      * 保存更新的资源
@@ -179,7 +288,21 @@ class Lives extends Common
      */
     public function update(Request $request, $id)
     {
-        //
+//        return json($request->param());
+        $live = Live::find($id);
+//        return json($request->param());
+        $validate = Validate('LiveRoomValidate');
+        if (!$validate->scene('update')->check($request->param())) {
+            $this->error($validate->getError());
+        };
+        $result = $live->update($request->param());
+        if ($result) {
+            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+            $this->success('恭喜您，更新成功', 'index');
+        } else {
+            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+            $this->error('更新失败');
+        }
     }
 
     /**

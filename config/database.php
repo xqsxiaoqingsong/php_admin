@@ -13,20 +13,20 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-//    'hostname'        => '47.104.149.63',
-    'hostname'        => '47.104.176.195',
+    'hostname'        => '47.104.149.63',
+//    'hostname'        => '47.104.176.195',
     // 数据库名
-//    'database'        => 'xfxnoedb',
-    'database'        => 'test',
+    'database'        => 'xfxnoedb',
+//    'database'        => 'test',
     // 用户名
-//    'username'        => 'xfxadmin',
-    'username'        => 'test_xfxerj_com',
+    'username'        => 'xfxadmin',
+//    'username'        => 'test_xfxerj_com',
     // 密码
-//    'password'        => 'xfx2018919come',
-    'password'        => 'FszxPwZdHziyRHsX',
+    'password'        => 'xfx2018919come',
+//    'password'        => 'FszxPwZdHziyRHsX',
     // 端口
-//    'hostport'        => '2208',
-    'hostport'        => '3306',
+    'hostport'        => '2208',
+//    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
