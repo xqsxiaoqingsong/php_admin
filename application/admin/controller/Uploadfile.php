@@ -35,7 +35,7 @@ class Uploadfile extends Controller
         ////前端显示本地图片地址
 //        $result['msg'] = '/uploads/' . $info->getSaveName();
         //前端显示七牛云图片地址
-        $result['msg'] = 'http://pjx6k6jor.bkt.clouddn.com/' . $info->getSaveName();
+        $result['msg'] = 'http://img.xfxerj.com/' . $info->getSaveName();
         $result['status']=1;
 //
 //
