@@ -18,6 +18,7 @@ class CourseValidate extends Validate
         'brief' => 'require',
         'classHour' => 'require',
         'studyNumber' => 'require',
+        'price' => 'require',
         'imgUrl' => 'require',
         'detailsImgUrl' => 'require',
         'details' => 'require',
@@ -38,11 +39,12 @@ class CourseValidate extends Validate
         'imgUrl.require' => '列表图片不能为空',
         'detailsImgUrl.require' => '详情图片不能为空',
         'details.require' => '课程详情不能为空',
+        'price.require' => '价格不能为空',
     ];
 
     //场景设置
     protected $scene = [
-        'save' => ['majorId','courseName', 'brief', 'classHour', 'studyNumber', 'imgUrl','detailsImgUrl','details'],//添加资讯
-        'update' => ['majorId','courseName', 'brief', 'classHour', 'studyNumber', 'imgUrl','detailsImgUrl','details'],//编辑资讯
+        'save' => ['majorId','courseName', 'brief', 'classHour', 'studyNumber','price', 'imgUrl','detailsImgUrl','details'],//添加资讯
+        'update' => ['majorId','courseName', 'brief','classHour', 'studyNumber','price', 'imgUrl','detailsImgUrl','details'],//编辑资讯
     ];
 }

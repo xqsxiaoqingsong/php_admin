@@ -2,6 +2,9 @@
 
 {{block name="css"}}
 <!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
+<link type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+<link href="/vendor/admin/css/demos.css" rel="stylesheet" type="text/css"/>
+<link href="/vendor/admin/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css"/>
 {{/block}}
 
 {{block name="content"}}
@@ -9,7 +12,7 @@
     <div class="admin-content-body">
         <div class="am-cf am-padding am-padding-bottom-0">
             <div class="am-fl am-cf">
-                <strong class="am-text-primary am-text-lg">新增直播课程</strong>
+                <strong class="am-text-primary am-text-lg">新增直播课堂</strong>
                 <!--<small>Create Product</small>-->
             </div>
         </div>
@@ -17,227 +20,192 @@
         <hr>
 
         <div class="am-g">
-            <div class="am-u-sm-12 am-u-md-12">
-                <form class="am-form" action="{{:Url('admin/Lives/save')}}" method="post"
+            <div class="am-u-sm-12 am-u-md-12" style="margin-bottom: 1rem">
+                <form class="am-form" action="{{:Url('admin/Liveurls/saveliveclass')}}" method="post"
                       enctype="multipart/form-data">
-
-                    <div class="am-tabs am-margin" data-am-tabs>
-                        <ul class="am-tabs-nav am-nav am-nav-tabs">
-                            <li class="am-active"><a href="#tab1">通用信息</a></li>
-                            <li><a href="#tab2">资讯内容</a></li>
-                            <!--<li><a href="#tab3">商品相册</a></li>-->
-                        </ul>
-
-                        <div class="am-tabs-bd">
-                            <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        所属类别
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <select name="category_id">
-                                            <option value="0">选择分类</option>
-                                            {{volist name="categories" id="category"}}
-                                            <option value="{{$category.id}}">{{$category.name}}
-
-                                                <!--<volist name="category.children" id="cate">-->
-                                                <!--<option value="">-->
-                                                <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&#45;&#45;-->
-                                                <!--</option>-->
-                                                <!--</volist>-->
-                                            </option>
-                                            {{/volist}}
-                                        </select>
-                                    </div>
+                    <h3>课堂信息</h3>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-1 am-text-right" style="padding: 0;font-size: 14px;line-height: 38px">
+                            课堂名称
+                        </div>
+                        <div class="am-u-sm-2 changeinput">
+                            <input type="text" class="am-input-sm" name="subject" value="">
+                        </div>
+                        <div class="am-u-sm-1 am-text-right" style="padding: 0;font-size: 14px;line-height: 38px">
+                            开播时间
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end changeinput">
+                            <div class="am-form-group am-form-icon">
+                                <div class="am-input-group am-form-icon am-datepicker-date">
+                                    <input type="text" class="am-form-field timepicker " name="startDate"
+                                           placeholder="点击选择日期" autocomplete="off">
+                                    <i class="am-icon-calendar"></i>
                                 </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        直播状态
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <select name="status">
-                                            <option value="-1">选择分类</option>
-                                            <option value="0">未开播</option>
-                                            <option value="1">正在直播</option>
-                                            <option value="2">已结束</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        标题
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <input type="text" class="am-input-sm" name="title">
-                                    </div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        教师
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <input type="text" class="am-input-sm" name="teacher" value="admin">
-                                    </div>
-                                    <div class="am-hide-sm-only am-u-md-6">老师名字</div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        视频网址
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <input type="text" class="am-input-sm" name="url" value="">
-                                    </div>
-                                    <div class="am-hide-sm-only am-u-md-6">直播网址</div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        价格
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <input type="text" class="am-input-sm" name="price" value="">
-                                    </div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        排序
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <input type="text" class="am-input-sm" name="sort_order" value="-1">
-                                    </div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        图片
-                                    </div>
-
-                                    <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
-                                        <div class="am-form-group am-form-file">
-                                            <button type="button"
-                                                    class="am-btn am-btn-success am-btn-sm new_thumb upload_img">
-                                                <i class="am-icon-cloud-upload" id="loading"></i> 上传缩略图
-                                            </button>
-                                            <input type="file" id="image_upload">
-                                            <input type="hidden" name="image" value="">
-                                        </div>
-
-                                        <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
-
-                                        <div>
-                                            <img src="" id="img_show" style="max-height: 200px;">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        是否显示
-                                    </div>
-                                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                                        <label class="am-radio-inline">
-                                            <input type="radio" value="1" name="show" checked> 是
-                                        </label>
-                                        <label class="am-radio-inline">
-                                            <input type="radio" value="0" name="show"> 否
-                                        </label>
-                                    </div>
-                                </div>
-
-
-                                <!--<div class="am-g am-margin-top">-->
-                                <!--<div class="am-u-sm-4 am-u-md-2 am-text-right">-->
-                                <!--内容-->
-                                <!--</div>-->
-                                <!--<div class="am-u-sm-8 am-u-md-9 am-u-end col-end">-->
-                                <!--<script id="container" name="content" type="text/plain">-->
-                                <!--</script>-->
-                                <!--</div>-->
-
-                                <!--</div>-->
-
-                                <!--<div class="am-g am-margin-top">-->
-                                <!--<div class="am-u-sm-4 am-u-md-2 am-text-right">-->
-                                <!--发布日期-->
-                                <!--</div>-->
-                                <!--<div class="am-u-sm-8 am-u-md-4 am-u-end col-end">-->
-                                <!--<div class="am-form-group am-form-icon">-->
-                                <!--<div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">-->
-                                <!--<input type="text" class="am-form-field" name="created_at" placeholder="点击选择日期">-->
-                                <!--<span class="am-input-group-btn am-datepicker-add-on">-->
-                                <!--<button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span></button>-->
-                                <!--</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-
-                                <!--<div class="am-g am-margin-top">-->
-                                <!--<div class="am-u-sm-4 am-u-md-2 am-text-right">-->
-                                <!--加入推荐-->
-                                <!--</div>-->
-                                <!--<div class="am-u-sm-8 am-u-md-4 am-u-end col-end">-->
-                                <!--<input type="hidden" name="is_top" value="0">-->
-                                <!--<input type="hidden" name="is_recommend" value="0">-->
-                                <!--<input type="hidden" name="is_hot" value="0">-->
-                                <!--<input type="hidden" name="is_new" value="0">-->
-
-                                <!--<div class="am-btn-group" data-am-button="">-->
-                                <!--<label class="am-btn am-btn-default am-btn-xs am-round">-->
-                                <!--<input type="checkbox" name="is_top" value="1"> 置顶-->
-                                <!--</label>-->
-                                <!--<label class="am-btn am-btn-default am-btn-xs am-round">-->
-                                <!--<input type="checkbox" name="is_recommend" value="1"> 推荐-->
-                                <!--</label>-->
-                                <!--<label class="am-btn am-btn-default am-btn-xs am-round">-->
-                                <!--<input type="checkbox" name="is_hot" value="1"> 热销-->
-                                <!--</label>-->
-                                <!--<label class="am-btn am-btn-default am-btn-xs am-round">-->
-                                <!--<input type="checkbox" name="is_new" value="1"> 新品-->
-                                <!--</label>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</div>-->
                             </div>
-
-                            <div class="am-tab-panel am-fade" id="tab2">
-                                <div class="am-g am-margin-top-sm">
-                                    <div class="am-u-sm-12 am-u-md-12">
-                                        <!--<div id="markdown">-->
-                                        <!--<textarea rows="6" name="content" style="display:none;"></textarea>-->
-                                        <!--</div>-->
-                                        <script id="container" name="content" type="text/plain">
-                                        </script>
-                                    </div>
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end changeinput">
+                            <div class="am-form-group am-form-icon">
+                                <div class="am-input-group am-form-icon am-datepicker-date">
+                                    <input type="text" class="am-form-field timepicker" name="endDate"
+                                           placeholder="点击选择日期" autocomplete="off">
+                                    <i class="am-icon-calendar"></i>
                                 </div>
-
                             </div>
-
-                            <div class="am-tab-panel am-fade" id="tab3">
-                                <div class="am-g am-margin-top">
-                                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                        商品相册
-                                    </div>
-
-                                    <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
-                                        <div class="am-form-group am-form-file">
-                                            <div id="upload_more"></div>
-                                            <div id="view_more"></div>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="am-u-sm-2 am-fl changeinput">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-sm">
+                                    <a class="removeredaonlyno am-btn am-btn-default am-btn-xs am-text-secondary"
+                                       href="javascript:;" res="1">
+                                        <span class="am-icon-check-circle-o"></span> 确定
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                <hr style="margin-top: 0.5rem">
+                    <style>
+                        .am-form input[type=text][readonly]{
+                            cursor: pointer;
+                            background-color: #eee;
+                        }
+                    </style>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right">
+                            学生加入地址
+                        </div>
+                        <div class="am-u-sm-8 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name=""  readonly=" " value="">
+                        </div>
+                    </div>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right" >
+                            客户端学生加入密码
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name=""  readonly=" " value="">
+                        </div>
+                        <div class="am-u-sm-2 am-text-right">
+                            web端学生加入密码
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name="" readonly=" " value="">
+                        </div>
+                    </div>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right">
+                            老师加入地址
+                        </div>
+                        <div class="am-u-sm-8 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name="" readonly=" " value="">
+                        </div>
+                    </div>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right">
+                            老师加入密码
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name="" readonly=" " value="">
+                        </div>
+                        <div class="am-u-sm-2 am-text-right">
+                            助教加入密码
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name="" readonly=" " value="">
+                        </div>
+                    </div>
+                    <hr style="border-top: 3px solid #eee">
+                <!--</form>-->
+                <!--<form class="am-form" action="{{:Url('admin/Lives/save')}}" method="post"-->
+                      <!--enctype="multipart/form-data">-->
+                    <h3>直播信息</h3>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right">
+                            直播标题
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name="liveClassName" value="">
+                        </div>
+                        <div class="am-u-sm-2 am-text-right">
+                            主讲人
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                            <input type="text" class="am-input-sm" name="speaker" value="">
+                        </div>
+                    </div>
 
-                    <div class="am-margin">
-                        <button type="submit" class="am-btn am-btn-primary am-radius">提交保存</button>
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right">
+                            所属直播间设置
+                        </div>
+                        <div class="am-u-sm-10">
+                            <div class="am-btn-group am-btn-group-sm">
+                                <a type="button" class="am-btn am-btn-default am-text-success createstagetd"
+                                   href="javascript:;">
+                                    <span class="am-icon-plus"></span> 新增
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-2 am-text-right">
+                            状态
+                        </div>
+                        <div class="am-u-sm-3 am-u-end col-end">
+                        <div class="am-form-group">
+                            <label class="am-radio-inline">
+                                <input type="radio" name="state" class="nochecked" value="0" checked> 未开播
+                            </label>
+                            <label class="am-radio-inline">
+                                <input type="radio" name="state" class="nochecked" value="1"> 直播中
+                            </label>
+                            <label class="am-radio-inline">
+                                <input type="radio" name="state" value="3" class="ischecked"> 回放
+                            </label>
+                            <label>
+                            <input type="text" class="am-form-field" name="playbackUrl" id="canedit" readonly="" style="width: 500px" placeholder="请输入回放地址">
+                            </label>
+                            <!--<div class="am-input-group">-->
+                                <!--<span class="am-input-group-label">-->
+                                    <!--<input type="checkbox" >-->
+                                <!--</span>-->
+                                <!--<input type="text" class="am-form-field" name="huifangdizhi" id="canedit" readonly="">-->
+                            <!--</div>-->
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                            图片
+                        </div>
+
+                        <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
+                            <div class="am-form-group am-form-file">
+                                <button type="button"
+                                        class="am-btn am-btn-success am-btn-sm new_thumb upload_img">
+                                    <i class="am-icon-cloud-upload" id="loading"></i> 上传缩略图
+                                </button>
+                                <input type="file" id="image_upload">
+                                <input type="hidden" name="imgUrl" value="">
+                            </div>
+
+                            <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
+
+                            <div>
+                                <img src="" id="img_show" style="max-height: 200px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-g am-margin-top">
+                        <div class="am-u-sm-4 am-u-md-4 am-text-right">
+                            <button type="submit" class="am-btn am-btn-primary am-radius">提交保存</button>
+                            <buttom class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">返回</buttom>
+                        </div>
+                        <div class="am-u-sm-8 am-u-md-6 am-u-end col-end">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -257,20 +225,91 @@
 <script type="text/javascript" src="/vendor/ueditor/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
 <script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
-
-<script type="text/javascript">
-    var ue = UE.getEditor('container', {});
-
-    function getstring() {
-
-        document.getElementById('container').innerHTML = UE.getEditor('editor').getContent();
-
-//get.Content() 函数可以获得你所编辑的内容的html代码
-
-    }
-</script>
-
-
 <script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>   //图片上传
 <script src="/vendor/admin/js/upload.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
+<script src="/vendor/admin/js/jquery-ui-timepicker-addon.js"></script>
+<script src="/vendor/admin/js/jquery.ui.datepicker-zh-CN.js.js" type="text/javascript" charset="gb2312"></script>
+<script src="/vendor/admin/js/jquery-ui-timepicker-zh-CN.js"></script>
+
+<script type="text/javascript">
+    //     var ue = UE.getEditor('container', {});
+    //     function getstring() {
+    //         document.getElementById('container').innerHTML = UE.getEditor('editor').getContent();
+    // //get.Content() 函数可以获得你所编辑的内容的html代码
+    //
+    //     }
+
+    $(function () {
+        // 时间设置
+        $('.timepicker').datetimepicker({
+            timeFormat: "HH:mm:ss",
+            dateFormat: "yy-mm-dd",
+            minDate: 0,
+            maxDate: "+6M",
+        });
+        // 更改确定和编辑
+        $(".removeredaonlyno").click(function () {
+            var i = $(this).attr("res");
+            _this = $(this);
+            if (i == 0) {
+                $(this).attr("res", "1");
+                $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
+                $(this).parents(".changeinput").siblings(".changeinput").children('input').attr("readOnly", false);
+            } else {
+                if (confirm('是否要提交更改?')){
+                    var info = {
+                        'subject': $("input[name='subject']").val(),
+                        'startDate': $("input[name='startDate']").val(),
+                        'endDate': $("input[name='endDate']").val(),
+                        // 'liveRoomId': "",
+                        // 'stageName': $(this).parents('td').siblings('td').children('.stageName').val(),
+                        // 'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+                    }
+                    // console.log(info);return
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/Liveurls/saveliveclass',
+                        data: info,
+                        success: function (data) {
+                            // console.log(data);return;
+                            if (data.code == 0) {
+                                alert(data.msg);
+                                return false;
+                            }
+                            if (data.status == 1) {
+                                _this.attr("res", "0");
+                                _this.html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                                _this.parents('td').siblings('td').children('input').attr("readOnly", true);
+                                alert(data.msg);
+
+                                // window.location.reload();
+                            } else {
+                                alert(data.msg);
+                                return false
+                            }
+                        }
+                    })
+                }else {
+                    $(this).attr("res", "0");
+                    $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                    $(this).parents(".changeinput").siblings(".changeinput").children('input').attr("readOnly", true);
+                }
+            }
+        });
+        //选中回放输入框可输入
+        $("input[name='state']").change(function () {
+            if($(".ischecked").is(":checked")){
+                $(this).parents('label').siblings("label").children("input[name='huifangdizhi']").attr("readOnly", false);
+            }
+            if($(".nochecked").is(":checked")){
+                $(this).parents('label').siblings("label").children("input[name='huifangdizhi']").attr("readOnly", true);
+            }
+            // else {
+            //     $(this).parents('label').siblings("label").children("input[name='huifangdizhi']").attr("readOnly", true);
+            // }
+        });
+    });
+</script>
 {{/block}}

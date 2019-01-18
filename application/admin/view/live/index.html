@@ -65,6 +65,7 @@
                             <th style="" class="table-id">编号</th>
                             <th style="width: 30%;text-align: center;">直播间名称</th>
                             <th class="table-is-show am-hide-sm-only">专业方向</th>
+                            <th class="table-is-show am-hide-sm-only">价格</th>
                             <th class="table-sort-order am-hide-sm-only" style="">推荐排序</th>
                             <th class="table-sort-order am-hide-sm-only" style="">上下架</th>
                             <th class="table-set">操作</th>
@@ -79,6 +80,7 @@
                             <td>{{$live.id}}</td>
                             <td style="text-align: center;">{{$live.liveRoomName}}</td>
                             <td>{{$live.livepro.MAJOR_NAME}}</td>
+                            <td>{{$live.price}}</td>
                             <td class="am-hide-sm-only">
                                 <input type="text" style="width: 80px;" name="recommendSort[]" class="sort_order recommendSort"
                                        value="{{$live.recommendSort}}">

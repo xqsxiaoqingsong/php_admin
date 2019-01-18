@@ -17,6 +17,7 @@ class LiveRoomValidate extends Validate
         'brief' => 'require',
         'classHour' => 'require',
 //        'speaker' => 'require',
+        'price' => 'require',
         'recommendSort' => 'require|number',
         'imgUrl' => 'require',
         'detailsImgUrl' => 'require',
@@ -36,6 +37,7 @@ class LiveRoomValidate extends Validate
         'recommendSort.require' => '排序不能为空',
         'recommendSort.number' => '排序只能是数字',
 //        'speaker.require' => '权限不能为空',
+        'price.require' => '价格不能为空',
         'imgUrl.require' => '列表图片不能为空',
         'detailsImgUrl.require' => '详情图片不能为空',
         'details.require' => '详情不能为空',
@@ -43,7 +45,7 @@ class LiveRoomValidate extends Validate
 
     //场景设置
     protected $scene = [
-        'save' => ['liveRoomName','brief','classHour','recommendSort','imgUrl','detailsImgUrl','details'],//添加资讯
-        'update' => ['liveRoomName','brief','classHour','recommendSort','imgUrl','detailsImgUrl','details'],//编辑资讯
+        'save' => ['liveRoomName','brief','classHour','recommendSort','price','imgUrl','detailsImgUrl','details'],//添加资讯
+        'update' => ['liveRoomName','brief','classHour','recommendSort','price','imgUrl','detailsImgUrl','details'],//编辑资讯
     ];
 }

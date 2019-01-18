@@ -6,5 +6,5 @@ use think\Model;
 
 class LiveUrl extends Model
 {
-    protected $table = "ss_live_url";
+    protected $table = "l_liveclass";
 }

@@ -11,7 +11,7 @@
         <hr>
 
         <div class="am-g">
-                <div class="am-u-sm-12 am-u-md-4">
+                <div class="am-u-sm-12 am-u-md-2">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
                             <a type="button" class="am-btn am-btn-default" href="{{:Url('admin/Liveurls/create')}}">
@@ -25,24 +25,43 @@
                     </div>
                 </div>
             <form class="am-form-inline" role="form" method="get">
-                <div class="am-u-sm-12 am-u-md-4">
-                    <div class="am-form-group">
-                        <select data-am-selected="{btnSize: 'sm'}" name="category_id" id="">
-                            <option value="-1">所有栏目</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
+                <style>
+                    .teacher_search_span{
+                        font-size: 14px;
+                    }
+                    .am-selected{
+                        width: 120px;
+                    }
+                </style>
+                <div class="am-form-group">
+                    <span class="teacher_search_span">直播标题：</span>
+                    <input type="text" name="name" class="am-form-field am-input-sm" style="width: 120px" placeholder="直播标题"
+                           value="{{empty name='$condition.name'}}  {{else /}}{{$condition.name}}{{/empty}}">
+                </div>
+                <div class="am-form-group">
+                    <span class="teacher_search_span">主讲人：</span>
+                    <input type="text" name="speaker" class="am-form-field am-input-sm" style="width: 120px" placeholder="主讲人"
+                           value="{{empty name='$condition.speaker'}}  {{else /}}{{$condition.speaker}}{{/empty}}">
+                </div>
+                <div class="am-form-group">
+                    <span class="teacher_search_span">频道ID：</span>
+                    <input type="text" name="pindao_id" class="am-form-field am-input-sm" style="width: 120px" placeholder="频道ID"
+                           value="{{empty name='$condition.pindao_id'}}  {{else /}}{{$condition.pindao_id}}{{/empty}}">
+                </div>
+                <div class="am-form-group">
+                    <span class="teacher_search_span">专业方向：</span>
+                    <select data-am-selected="{btnSize: 'sm'}" name="category_id">
+                        <option value=""></option>
+                        {{foreach name="categories" id="category"}}
+                        <option value="{{$category.ID}}"
+                                {{empty name='$condition.category_id'}}  {{else /}} {{if $category.ID ==$condition.category_id}} selected {{/if}}{{/empty}}
+                        >{{$category.MAJOR_NAME}}</option>
+                        {{/foreach}}
+                    </select>
                 </div>
 
-                <div class="am-u-sm-12 am-u-md-4">
-                    <div class="am-input-group am-input-group-sm">
-                        <input type="text" name="title" class="am-form-field" placeholder="标题名" value="">
-                        <span class="am-input-group-btn">
-                        <button class="am-btn am-btn-default" type="submit">搜索</button>
-                            <a href="{{:Url('/admin/Lives/index')}}" class="am-btn am-btn-default am-btn-sm" type="button">重置</a>
-                    </span>
-                    </div>
-                </div>
+                <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
+                <a href="/admin/Liveurls" class="am-btn am-btn-default am-btn-sm">重置</a>
             </form>
         </div>
 
