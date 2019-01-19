@@ -43,15 +43,12 @@
                     <input type="text" name="speaker" class="am-form-field am-input-sm" style="width: 120px" placeholder="主讲人"
                            value="{{empty name='$condition.speaker'}}  {{else /}}{{$condition.speaker}}{{/empty}}">
                 </div>
-                <div class="am-form-group">
-                    <span class="teacher_search_span">频道ID：</span>
-                    <input type="text" name="pindao_id" class="am-form-field am-input-sm" style="width: 120px" placeholder="频道ID"
-                           value="{{empty name='$condition.pindao_id'}}  {{else /}}{{$condition.pindao_id}}{{/empty}}">
-                </div>
+
+
                 <div class="am-form-group">
                     <span class="teacher_search_span">专业方向：</span>
                     <select data-am-selected="{btnSize: 'sm'}" name="category_id">
-                        <option value=""></option>
+                        <option value="-1">选择专业</option>
                         {{foreach name="categories" id="category"}}
                         <option value="{{$category.ID}}"
                                 {{empty name='$condition.category_id'}}  {{else /}} {{if $category.ID ==$condition.category_id}} selected {{/if}}{{/empty}}
@@ -78,9 +75,8 @@
                             <!--<th class="table-type">缩略图</th>-->
                             <th class="table-author am-hide-sm-only">直播时间</th>
                             <th class="table-date am-hide-sm-only">结束时间</th>
-                            <th class="table-show am-hide-sm-only">是否显示</th>
+                            <th class="table-show am-hide-sm-only">主讲人</th>
                             <th class="table-show am-hide-sm-only">状态</th>
-                            <th class="table-sort-order am-hide-sm-only" style="width:10%">排序</th>
                             <th class="table-set">操作</th>
                         </tr>
                         </thead>
@@ -91,25 +87,34 @@
                             </td>
                             <td>{{$live.id}}</td>
                             <td>{{$live.liveClassName}}</td>
-                            <td>{{$live.subject}}</td>
-                            <!--<td><img src="{{$live.imgUrl}}" style="width:70px;height:50px;"></td>-->
-                            <td class="am-hide-sm-only">{{$live.startDate|date='Y-m-d H:i'}}</td>
-                            <td class="am-hide-sm-only">{{$live.endDate|date='Y-m-d H:i'}}</td>
-                            <td class="am-hide-sm-only" data-is_show="{{$live.state}}">
-                                {{eq name="live.state" value="1"}}
-                                <span class="am-icon-check change_is_show"></span>
-                                {{else/}}
-                                <span class="am-icon-close change_is_show"></span>
-                                {{/eq}}
+
+                            <td style="font-size: 12px">
+                                {{empty name="$live.liveRoomName"}}
+                                未绑定课程
+                                {{else /}}
+                                [{{$live.liveRoomName}}]
+                                {{/empty}}
+                            </td>
+
+                            <td class="am-hide-sm-only">
+                                {{$live.startDate}}
+                            </td>
+                            <td class="am-hide-sm-only">
+                                {{$live.endDate}}
+                            </td>
+
+                            <td class="am-hide-sm-only">
+                                {{$live.speaker}}
+
                             </td>
                             <td class="am-hide-sm-only">{{if $live.state == 0 }} <span class="am-badge am-badge-secondary  am-round">未开播</span>
                                 {{elseif $live.state == 1 /}}<span
                                         class="am-badge am-badge-success am-round">正在直播</span>
                                 {{else /}} <span class="am-badge am-badge-warning am-round">已完成</span>
                                 {{/if}}</td>
-                            <td class="am-hide-sm-only">
-                                <input type="text" style="width: 100px;" name="sort_order[]" class="sort_order"
-                                       value="{{$live.speaker}}"></td>
+
+
+
                             <td>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
@@ -161,11 +166,14 @@
             if (confirm('确定要删除吗?')) {
                 $.ajax({
                     type: 'DELETE',
-                    url: '/admin/Lives/delete/' + id,
+                    url: '/admin/Liveurls/delete/' + id,
                     data: {id: id},
-                    success: function () {
+                    success: function (data) {
                         // _this.parents('tr').fadeOut(300);
-                        _this.parents('tr').remove();
+                        alert(data.msg);
+                        if(data.status == 1){
+                            _this.parents('tr').remove();
+                        }
                     }
                 })
             }
@@ -190,12 +198,16 @@
             if (confirm('确定要删除吗?')) {
                 $.ajax({
                     type: 'DELETE',
-                    url: '/admin/Lives/delete_all/',
+                    url: '/admin/Liveurls/delete_all/',
                     data: check_id,
                     success: function (data) {
-                        $(".checked_id:checked").each(function () {
-                            $(this).parents("tr").remove();
-                        })
+                        alert(data.msg);
+                        if(data.status == 1){
+                            $(".checked_id:checked").each(function () {
+                                $(this).parents("tr").remove();
+                            })
+                        }
+
                         // console.log(data);
                     }
                 })

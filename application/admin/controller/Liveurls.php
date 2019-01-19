@@ -6,6 +6,7 @@ use app\admin\model\LiveUrl;
 use app\admin\model\Live;
 use think\Controller;
 use think\Request;
+use think\Db;
 
 class Liveurls extends Common
 {
@@ -27,10 +28,38 @@ class Liveurls extends Common
      *
      * @return \think\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lives = LiveUrl::paginate(10, false, ['query' => request()->param()]);
+        $where = function ($query) use ($request) {
+            //按名称
+            if ($request->param('name') and $request->param('name') != '') {
+                $search = "%" . $request->param('name') . "%";
+                $query->where('a.liveClassName', 'like', $search);
+            }
+
+            if ($request->param('speaker') and $request->param('speaker') != '') {
+                $search = "%" . $request->param('speaker') . "%";
+                $query->where('a.speaker', 'like', $search);
+            }
+
+            //按分类搜索
+            if ($request->param('category_id') and $request->param('category_id') != '-1') {
+                $query->where('d.majorId', $request->param('category_id'));
+            }
+        };
+
+        $lives = DB::table('l_liveclass a')
+            ->field('a.*,GROUP_CONCAT(d.liveRoomName) as liveRoomName')
+            ->join("l_liveclass_bind_livestage b", "a.id = b.liveclassId","LEFT")
+            ->join("l_livestage c","b.livestageId = c.id","LEFT")
+            ->join("l_liveroom d","c.liveRoomId = d.id","LEFT")
+            ->where($where)
+            ->group("a.id")
+            ->paginate(10, false, ['query' => request()->param()]);
+
         $count = $lives->total();
+        $condition = $request->param();
+        $this->assign('condition',$condition);
         return view('liveurl/index', compact('lives', 'count'));
         return json($lives);
     }
@@ -189,6 +218,22 @@ class Liveurls extends Common
      */
     public function delete($id)
     {
-        //
+        if(LiveUrl::destroy($id)){
+            $info = array('status' => 1, 'msg' => '删除成功');
+        }else{
+            $info = array('status' => 0, 'msg' => '删除失败');
+        }
+        return json($info);
+
+    }
+
+    public function delete_all(Request $request){
+        $ids = $request->param('checked_id');
+        if(LiveUrl::destroy($ids)){
+            $info = array('status' => 1, 'msg' => '删除成功');
+        }else{
+            $info = array('status' => 0, 'msg' => '删除失败');
+        }
+        return json($info);
     }
 }
