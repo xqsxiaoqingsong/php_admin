@@ -192,7 +192,7 @@
                                     </select>
                                 <td>
                                     <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
-                                            name="majorId">
+                                            name="stageId">
                                         {{foreach name="alllivestages" id="alllivestage"}}
                                         {{foreach $alllivestage.livestage as $onelivestage}}
                                         {{if $onelivestage.liveRoomId == $alllivestage.id}} <option value="{{$onelivestage.id}}">{{$onelivestage.stageName}}</option> {{/if}}
