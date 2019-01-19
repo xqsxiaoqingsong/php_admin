@@ -146,6 +146,80 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="am-g ">
+                            <div class="am-u-sm-10 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                <th style="width: 8%" class="table-id">编号</th>
+                                <th>专业方向</th>
+                                <th style="width: 40%">直播间名称</th>
+                                <th>权限分组</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="createstage">
+
+                            <tr data-id="{{}}" class="xParent">
+                                <style>
+                                    .createstage tr td{
+                                        padding-top: 0.1rem!important;
+                                        padding-bottom: 0.1rem!important;
+                                    }
+                                    .createstage .am-btn-toolbar{
+                                        margin-top: 2px;
+                                    }
+                                    .createstage tr td .am-btn-secondary{
+                                        color: #555555;
+                                    }
+                                </style>
+                                <td style="line-height: 37px"></td>
+                                <td>
+                                    <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                            name="majorId">
+                                        {{foreach name="categories" id="category"}}
+                                        <option value="{{$category.ID}}">{{$category.MAJOR_NAME}}</option>
+                                        {{/foreach}}
+                                    </select>
+                                </td>
+                                <td class="">
+                                    <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                            name="liveRoomId" class="selectliveroom" id="selectliveroom">
+                                        {{foreach name="alllives" id="alllive"}}
+                                        <option value="{{$alllive.id}}">{{$alllive.liveRoomName}}</option>
+                                        {{/foreach}}
+                                    </select>
+                                <td>
+                                    <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                            name="majorId">
+                                        {{foreach name="alllivestages" id="alllivestage"}}
+                                        {{foreach $alllivestage.livestage as $onelivestage}}
+                                        {{if $onelivestage.liveRoomId == $alllivestage.id}} <option value="{{$onelivestage.id}}">{{$onelivestage.stageName}}</option> {{/if}}
+                                        {{/foreach}}
+                                        {{/foreach}}
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-sm">
+                                            <a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"
+                                               href="javascript:;" res="0">
+                                                <span class="am-icon-pencil-square-o"></span> 编辑
+                                            </a>
+                                            <a class="delstage am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
+                                               href="javascript:;">
+                                                <span class="am-icon-trash-o"></span> 删除
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="am-g am-margin-top">
@@ -301,15 +375,16 @@
         //选中回放输入框可输入
         $("input[name='state']").change(function () {
             if($(".ischecked").is(":checked")){
-                $(this).parents('label').siblings("label").children("input[name='huifangdizhi']").attr("readOnly", false);
+                $(this).parents('label').siblings("label").children("input[name='playbackUrl']").attr("readOnly", false);
             }
             if($(".nochecked").is(":checked")){
-                $(this).parents('label').siblings("label").children("input[name='huifangdizhi']").attr("readOnly", true);
+                $(this).parents('label').siblings("label").children("input[name='playbackUrl']").attr("readOnly", true);
             }
             // else {
             //     $(this).parents('label').siblings("label").children("input[name='huifangdizhi']").attr("readOnly", true);
             // }
         });
+        //进入页面通过一级目录的更改权限更换
     });
 </script>
 {{/block}}

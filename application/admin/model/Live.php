@@ -21,4 +21,10 @@ class Live extends Model
     {
         return $this->belongsTo('Profession', 'majorId', 'ID');
     }
+
+    //直播间下的权限阶段
+    public function livestage()
+    {
+        return $this->hasMany('LiveStage','liveRoomId');
+    }
 }

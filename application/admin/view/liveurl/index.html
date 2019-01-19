@@ -90,26 +90,26 @@
                             <td><input type="checkbox" class="checked_id" name="checked_id[]" value="{{$live.id}}"/>
                             </td>
                             <td>{{$live.id}}</td>
-                            <td>{{$live.title}}</td>
-                            <td>{{$live.des}}</td>
-                            <!--<td><img src="{{$live.img}}" style="width:70px;height:50px;"></td>-->
-                            <td class="am-hide-sm-only">{{$live.livetime|date='Y-m-d H:i'}}</td>
-                            <td class="am-hide-sm-only">{{$live.overtime|date='Y-m-d H:i'}}</td>
-                            <td class="am-hide-sm-only" data-is_show="{{$live.is_show}}">
-                                {{eq name="live.is_show" value="1"}}
+                            <td>{{$live.liveClassName}}</td>
+                            <td>{{$live.subject}}</td>
+                            <!--<td><img src="{{$live.imgUrl}}" style="width:70px;height:50px;"></td>-->
+                            <td class="am-hide-sm-only">{{$live.startDate|date='Y-m-d H:i'}}</td>
+                            <td class="am-hide-sm-only">{{$live.endDate|date='Y-m-d H:i'}}</td>
+                            <td class="am-hide-sm-only" data-is_show="{{$live.state}}">
+                                {{eq name="live.state" value="1"}}
                                 <span class="am-icon-check change_is_show"></span>
                                 {{else/}}
                                 <span class="am-icon-close change_is_show"></span>
                                 {{/eq}}
                             </td>
-                            <td class="am-hide-sm-only">{{if $live.status == 0 }} <span class="am-badge am-badge-secondary  am-round">未开播</span>
-                                {{elseif $live.status == 1 /}}<span
+                            <td class="am-hide-sm-only">{{if $live.state == 0 }} <span class="am-badge am-badge-secondary  am-round">未开播</span>
+                                {{elseif $live.state == 1 /}}<span
                                         class="am-badge am-badge-success am-round">正在直播</span>
                                 {{else /}} <span class="am-badge am-badge-warning am-round">已完成</span>
                                 {{/if}}</td>
                             <td class="am-hide-sm-only">
                                 <input type="text" style="width: 100px;" name="sort_order[]" class="sort_order"
-                                       value="{{$live.sort_order}}"></td>
+                                       value="{{$live.speaker}}"></td>
                             <td>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">

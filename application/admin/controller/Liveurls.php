@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\LiveUrl;
-use app\api\model\Live;
+use app\admin\model\Live;
 use think\Controller;
 use think\Request;
 
@@ -17,6 +17,8 @@ class Liveurls extends Common
         return $this->assign([
             '_xfx_live' => 'am-in',   //展开
             '_liveurl' => 'am-active',   //高亮
+            'alllives'=>Live::all(),
+            'alllivestages'=>Live::with('livestage')->all(),
         ]);
     }
 
@@ -47,7 +49,7 @@ class Liveurls extends Common
     public function saveliveclass(Request $request)
     {
         if ($request->isPost()){
-            return json($request->param());
+//            return json($request->param());
             $data['room_start_datetime']=$request->param('startDate');
             $data['room_end_datetime']=$request->param('endDate');
             $data['teacher_token_for_room']=rand(100000,999999);
@@ -88,19 +90,29 @@ class Liveurls extends Common
             $result  = json_decode($return,true);
             if($result['code'] === '0')
             {
-                $data['roomId'] = $result['id'];
-                $data['roomNumber'] = $result['number'];
-                $data['startDate'] = $result['startDate'];
-                $data['endDate'] = $result['invalidDate'];
-                $data['teacherToken'] = $result['teacherToken'];
-                $data['tutorToken'] = $result['assistantToken'];
-                $data['studentToken'] = $result['studentToken'];
-                $data['studentClientToken'] = $result['studentClientToken'];
-                $data['teacherJoinUrl'] = $result['teacherJoinUrl'];
-                $data['studentJoinUrl'] = $result['studentJoinUrl'];
+                $datas['roomId'] = $result['id'];
+                $datas['roomNumber'] = $result['number'];
+                $datas['startDate'] = $request->param('startDate');
+                $datas['endDate'] = $request->param('endDate');
+                $datas['teacherToken'] = $result['teacherToken'];
+                $datas['tutorToken'] = $result['assistantToken'];
+                $datas['studentToken'] = $result['studentToken'];
+                $datas['studentClientToken'] = $result['studentClientToken'];
+                $datas['teacherJoinUrl'] = $result['teacherJoinUrl'];
+                $datas['studentJoinUrl'] = $result['studentJoinUrl'];
+                $datas['subject'] = $request->param('subject');
+                $datas['liveClassName'] = $request->param('liveClassName');
+                $datas['speaker'] = $request->param('speaker');
+                $datas['majorId'] = $request->param('majorId');
+                $datas['liveRoomId'] = $request->param('liveRoomId');
+                $datas['state'] = $request->param('state');
+                $datas['playbackUrl'] = $request->param('playbackUrl');
+                $datas['imgUrl'] = $request->param('imgUrl');
                 //$data['room_duration'] = $duration;
 
-                LiveUrl::create($data);
+
+                LiveUrl::create($datas);
+                $this->success('新增成功','index');
                 return true;
             }
             else
