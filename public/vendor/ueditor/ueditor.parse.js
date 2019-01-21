@@ -1,7 +1,7 @@
 /*!
  * UEditor
- * version: ueditor
- * build: Wed Aug 10 2016 11:06:03 GMT+0800 (CST)
+ * version: 1.3.6
+ * build: Wed Dec 25 2013 12:38:33 GMT+0800 (中国标准时间)
  */
 
 (function(){
@@ -366,12 +366,6 @@ UE.parse.register('insertcode',function(utils){
                     }
                 });
             });
-        }else{
-            utils.each(pres,function(pi){
-                if(pi && /brush/i.test(pi.className)){
-                    SyntaxHighlighter.highlight(pi);
-                }
-            });
         }
     }
 
@@ -537,6 +531,10 @@ UE.parse.register('table', function (utils) {
         }
     }
 });
+/*
+ * 图表parse插件
+ */
+
 UE.parse.register('charts',function( utils ){
 
     utils.cssRule('chartsContainerHeight','.edui-chart-container { height:'+(this.chartContainerHeight||300)+'px}');
@@ -721,7 +719,7 @@ UE.parse.register('charts',function( utils ){
 
     }
 
-    /**
+    /*
      * 渲染图表
      * @param container 图表容器节点对象
      * @param typeConfig 图表类型配置
@@ -778,7 +776,7 @@ UE.parse.register('charts',function( utils ){
 
     }
 
-    /**
+    /*
      * 创建图表的容器
      * 新创建的容器会替换掉对应的table对象
      * */
@@ -995,28 +993,23 @@ UE.parse.register('vedio',function(utils){
             cssurl = sourcePath + '/third-party/video-js/video-js.min.css',
             swfUrl = sourcePath + '/third-party/video-js/video-js.swf';
 
-        if(window.videojs) {
-            videojs.autoSetup();
-        } else {
-            utils.loadFile(document,{
-                id : "video_css",
-                tag : "link",
-                rel : "stylesheet",
-                type : "text/css",
-                href : cssurl
-            });
-            utils.loadFile(document,{
-                id : "video_js",
-                src : jsurl,
-                tag : "script",
-                type : "text/javascript"
-            },function(){
-                videojs.options.flash.swf = swfUrl;
-                videojs.autoSetup();
-            });
-        }
+        utils.loadFile(document,{
+            id : "video_css",
+            tag : "link",
+            rel : "stylesheet",
+            type : "text/css",
+            href : cssurl
+        });
+        utils.loadFile(document,{
+            id : "video_js",
+            src : jsurl,
+            tag : "script",
+            type : "text/javascript"
+        },function(){
+            videojs.options.flash.swf = swfUrl;
+        });
 
     }
 });
 
-})();
+})()

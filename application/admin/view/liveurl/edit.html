@@ -147,7 +147,6 @@
                             </div>
                         </div>
 
-
                         <div class="am-g " style="margin-top: 50px;">
                             <div class="am-u-sm-10 am-u-sm-centered">
                                 <table class="am-table  am-table-hover table-main">
@@ -328,44 +327,48 @@
                 $(this).html("<span class=\"am-icon-check-circle-o\"></span> 确定");
                 $(this).parents(".changeinput").siblings(".changeinput").children('input').attr("readOnly", false);
             } else {
-                if (confirm('是否要提交更改?')){
-                    var info = {
-                        'subject': $("input[name='subject']").val(),
-                        'startDate': $("input[name='startDate']").val(),
-                        'endDate': $("input[name='endDate']").val(),
-                        // 'liveRoomId': "",
-                        // 'stageName': $(this).parents('td').siblings('td').children('.stageName').val(),
-                        // 'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
-                    }
-                    // console.log(info);return
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/Liveurls/saveliveclass',
-                        data: info,
-                        success: function (data) {
-                            // console.log(data);return;
-                            if (data.code == 0) {
-                                alert(data.msg);
-                                return false;
-                            }
-                            if (data.status == 1) {
-                                _this.attr("res", "0");
-                                _this.html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
-                                _this.parents('td').siblings('td').children('input').attr("readOnly", true);
-                                alert(data.msg);
-
-                                // window.location.reload();
-                            } else {
-                                alert(data.msg);
-                                return false
-                            }
-                        }
-                    })
-                }else {
-                    $(this).attr("res", "0");
-                    $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
-                    $(this).parents(".changeinput").siblings(".changeinput").children('input').attr("readOnly", true);
-                }
+                $(this).attr("res", "0");
+                $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                $(this).parents(".changeinput").siblings(".changeinput").children('input').attr("readOnly", true);
+                //ajax提交暂时取消
+                // if (confirm('是否要提交更改?')){
+                //     var info = {
+                //         'subject': $("input[name='subject']").val(),
+                //         'startDate': $("input[name='startDate']").val(),
+                //         'endDate': $("input[name='endDate']").val(),
+                //         // 'liveRoomId': "",
+                //         // 'stageName': $(this).parents('td').siblings('td').children('.stageName').val(),
+                //         // 'recommendSort': $(this).parents('td').siblings('td').children('.sort_order').val(),
+                //     }
+                //     // console.log(info);return
+                //     $.ajax({
+                //         type: 'POST',
+                //         url: '/admin/Liveurls/saveliveclass',
+                //         data: info,
+                //         success: function (data) {
+                //             // console.log(data);return;
+                //             if (data.code == 0) {
+                //                 alert(data.msg);
+                //                 return false;
+                //             }
+                //             if (data.status == 1) {
+                //                 _this.attr("res", "0");
+                //                 _this.html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                //                 _this.parents('td').siblings('td').children('input').attr("readOnly", true);
+                //                 alert(data.msg);
+                //
+                //                 // window.location.reload();
+                //             } else {
+                //                 alert(data.msg);
+                //                 return false
+                //             }
+                //         }
+                //     })
+                // }else {
+                //     $(this).attr("res", "0");
+                //     $(this).html("<span class=\"am-icon-pencil-square-o\"></span> 编辑");
+                //     $(this).parents(".changeinput").siblings(".changeinput").children('input').attr("readOnly", true);
+                // }
             }
         });
         //选中回放输入框可输入
@@ -426,11 +429,32 @@
 
         //新增并取消td
         $(".createstagetd").click(function () {
-            var tr = $(".createstage").children("tr:first").html();
-            // console.log(tr);return
-            $(".createstage").append('<tr>'+tr+'</tr>');
-            tr += "";
-            
+            var li = "";
+            li +=
+                "<tr data-id=\"{{}}\" class=\"xParent\">\n" +
+                "                                        <td style=\"line-height: 37px\"></td>\n" +
+                "                                        <td class=\"\">\n" +
+                "                                            <select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                "                                                    name=\"liveRoomId[]\" class=\"selectliveroom\">\n" +
+                "                                                <option value=\"\"></option>\n" +
+                "                                            </select>\n" +
+                "                                        <td class=\"classstageid\" data-id=\"\">\n" +
+                "                                            <select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\" name=\"stageId[]\" class=\"tbstageajax\">\n" +
+                "                                                <option value=\""+ 1 +"\"></option>\n" +
+                "                                            </select>\n" +
+                "                                        </td>\n" +
+                "                                        <td>\n" +
+                "                                            <div class=\"am-btn-toolbar\">\n" +
+                "                                                <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                "                                                    <a class=\"delstage am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                "                                                       href=\"javascript:;\">\n" +
+                "                                                        <span class=\"am-icon-trash-o\"></span> 删除\n" +
+                "                                                    </a>\n" +
+                "                                                </div>\n" +
+                "                                            </div>\n" +
+                "                                        </td>\n" +
+                "                                    </tr>";
+            $(".createstage").append(li);//将拼接出来的加入到指定的模块
         })
     });
 </script>
