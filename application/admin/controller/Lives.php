@@ -6,6 +6,7 @@ use app\admin\model\Live;
 use app\admin\model\LiveCountprice;
 use app\admin\model\LiveStage;
 use app\admin\model\LiveStageprice;
+use app\admin\model\LiveUrl;
 use think\Controller;
 use think\Request;
 
@@ -226,16 +227,16 @@ class Lives extends Common
     {
         if ($request->isAjax()) {
 //            return json($request->param());
-            $liveroomid =$request->param('liveRoomId');
+            $liveroomid = $request->param('liveRoomId');
             $id = $request->param('id');
-            $stages =LiveStage::where('liveRoomId',$liveroomid)->count();
+            $stages = LiveStage::where('liveRoomId', $liveroomid)->count();
             //判断逻辑,先判断权限阶段是否存在,存在就继续判断是否存在发送过来的id,存在就是更新,不存在就是新建,然后判断输入数量是否超出范围,没有超出范围就继续执行常规操作.
             //注,新建的时候需要判断规则是否存在,更新暂时有纰漏
-            if ($stages > 0){
-                if (!$id){
-                    if ($request->param('count')<$stages+1 and $request->param('count')>1){
-                        $onlycountprice =  LiveCountprice::where(['liveRoomId' => $liveroomid, 'count' => $request->param('count')])->find();
-                        if ($onlycountprice){
+            if ($stages > 0) {
+                if (!$id) {
+                    if ($request->param('count') < $stages + 1 and $request->param('count') > 1) {
+                        $onlycountprice = LiveCountprice::where(['liveRoomId' => $liveroomid, 'count' => $request->param('count')])->find();
+                        if ($onlycountprice) {
                             $info = array('status' => 0, 'msg' => '该规则已存在!');
                             return json($info);
                         }
@@ -249,12 +250,12 @@ class Lives extends Common
                         } else {
                             $info = array('status' => 0, 'msg' => '插入失败');
                         }
-                    }else{
+                    } else {
                         $info = array('status' => 0, 'msg' => "单次购买数量超过限制(必须是2到$stages)");
                     }
                     return json($info);
-                }else{
-                    if ($request->param('count')<$stages+1 and $request->param('count')>1){
+                } else {
+                    if ($request->param('count') < $stages + 1 and $request->param('count') > 1) {
                         if ($request->param('price') == "") {
                             $info = array('status' => 0, 'msg' => '价格不能为空');
                             return json($info);
@@ -266,14 +267,14 @@ class Lives extends Common
                             $info = array('status' => 0, 'msg' => '更新失败');
                         }
                         return json($info);
-                    }else{
+                    } else {
                         $info = array('status' => 0, 'msg' => "单次购买数量超过限制(必须是2到$stages)");
                     }
                     return json($info);
                     return json($request->param());
                 }
-            }else{
-                $info =array('status' => 0, 'msg' => '请先添加权限阶段');
+            } else {
+                $info = array('status' => 0, 'msg' => '请先添加权限阶段');
                 return json($info);
             }
         }
@@ -314,6 +315,26 @@ class Lives extends Common
     public function delete($id)
     {
         //
+    }
+
+    //多条删除
+    public function delete_all(Request $request)
+    {
+        $ids = $request->param('checked_id');
+        foreach ($ids as $id){
+            $liveurl = LiveStage::where("liveRoomId",$id)->find();
+        }
+        if ($liveurl){
+            $info = array('status' => 0, 'msg' => '此直播间下面有阶段,删除失败,');
+            return json($info);
+        }
+//        return json($ids);
+        if (Live::destroy($ids)) {
+            $info = array('status' => 1, 'msg' => '删除成功');
+        } else {
+            $info = array('status' => 0, 'msg' => '删除失败');
+        }
+        return json($info);
     }
 
     //排序

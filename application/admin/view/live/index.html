@@ -171,6 +171,40 @@
         //     return false;
         // })
 
+        //全选反选
+        $(".checked_all").click(function () {
+            var checked = $(this).prop('checked');
+            $(".checked_id").prop('checked', checked);
+        })
+        //多条删除
+        $(".del_all").click(function () {
+            var length = $(".checked_id:checked").length;
+            if (length == 0) {
+                alert('请至少选择一条数据');
+                return false;
+            }
+            var check_id = $(".checked_id:checked").serialize();
+            // console.log(check_id);
+
+            if (confirm('确定要删除吗?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/Lives/delete_all/',
+                    data: check_id,
+                    success: function (data) {
+                        alert(data.msg);
+                        if(data.status == 1){
+                            $(".checked_id:checked").each(function () {
+                                $(this).parents("tr").remove();
+                            })
+                        }
+                        // console.log(data);
+                    }
+                })
+            }
+            return false;
+        })
+
         //排序
         $(".sort_order").change(function () {
             var id = $(this).parents('tr').attr('data-id');
