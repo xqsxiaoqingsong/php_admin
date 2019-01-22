@@ -81,6 +81,8 @@ class Liveurls extends Common
     {
         if ($request->isPost()) {
 //            return json($request->param());
+            $liveroomid = $request->param('liveRoomId');
+            $stageid = $request->param('stageId');
             $data['room_start_datetime'] = $request->param('startDate');
             $data['room_end_datetime'] = $request->param('endDate');
             $data['teacher_token_for_room'] = rand(100000, 999999);
@@ -142,10 +144,15 @@ class Liveurls extends Common
 
 
                 $liveurl = LiveUrl::create($datas);
-                $liveclassstage = LiveclassBelongLiveStage::create(['liveclassId' => $liveurl->id, 'livestageId' => $request->param('stageId')]);
+
+                foreach ($stageid as $item) {
+//                return $item;
+                    $liveclassstage = LiveclassBelongLiveStage::create(['livestageId' => $item, 'liveclassId' => $liveurl->id]);
+                }
+//                $liveclassstage = LiveclassBelongLiveStage::create(['liveclassId' => $liveurl->id, 'livestageId' => $request->param('stageId')]);
                 if ($liveurl) {
                     //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
-                    $this->success('恭喜您，更新成功', 'index', '', '1');
+                    $this->success('恭喜您，新增成功', 'index', '', '1');
                 } else {
                     //错误页面的默认跳转页面是返回前一页，通常不需要设置
                     $this->error('更新失败');
@@ -203,13 +210,13 @@ class Liveurls extends Common
         $live = LiveUrl::find($id);
         $stageid = LiveclassBelongLiveStage::where('liveclassId', $id)->value('livestageId');
         $liveroomid = LiveStage::where('id', $stageid)->value('liveRoomId');
-            $stages = db::query("SELECT b.id,b.stageName,b.liveRoomId,c.liveRoomName
+        $stages = db::query("SELECT b.id,b.stageName,b.liveRoomId,c.liveRoomName
                                         FROM
                                             l_liveclass_bind_livestage  a
                                          JOIN l_livestage b on a.livestageId=b.id
                                          JOIN l_liveroom c on b.liveRoomId=c.id
                                         WHERE a.liveclassId=$id;"
-                                );
+        );
 //        foreach ($stages as $key => $value){
 //            $ids = $value['id'];
 //            $liveroomids = LiveStage::where('id',$ids)->value('liveRoomId');
@@ -219,6 +226,7 @@ class Liveurls extends Common
         return view('/liveurl/edit', compact('live', 'stageid', 'liveroomid', 'stages'));
     }
 
+    //选择一级目录分类二级目录分类联动
     public function choosestage(Request $request)
     {
         if ($request->isAjax()) {
@@ -226,6 +234,18 @@ class Liveurls extends Common
             $info = array('stages' => $stages);
             return json($info);
 //            return json($request->param());
+        }
+    }
+
+    //新增时候直播间与权限联动
+    public function liveroomstage(Request $request)
+    {
+        if ($request->isAjax()){
+            //查出所有直播间
+            $liverooms = Live::all();
+            $stages = LiveStage::all();
+            $info = array('liverooms'=>$liverooms,'stages' => $stages);
+            return json($info);
         }
     }
 
@@ -238,9 +258,13 @@ class Liveurls extends Common
      */
     public function update(Request $request, $id)
     {
+//        return json($request->param());
 
         $liveroomid = $request->param('liveRoomId');
         $stageid = $request->param('stageId');
+//        if (count($liveroomid) !== count($stageid)){
+//            $this->error('权限不能为空', "edit", '', '1');
+//        }
 //        return json($liveroomid);
         $broadcastRoomId = LiveUrl::where('id', $id)->value('roomId');
 
@@ -283,19 +307,19 @@ class Liveurls extends Common
             $datas['imgUrl'] = $request->param('imgUrl');
 
             $liveclass = LiveUrl::where('id', $id)->update($datas);
-            LiveclassBelongLiveStage::where('liveclassId',$id)->delete();
+            LiveclassBelongLiveStage::where('liveclassId', $id)->delete();
 
 //            return json($liveclass);
-            foreach ($stageid as $item){
+            foreach ($stageid as $item) {
 //                return $item;
-                $liveclassstage = LiveclassBelongLiveStage::create(['livestageId'=>$item,'liveclassId'=>$id]);
+                $liveclassstage = LiveclassBelongLiveStage::create(['livestageId' => $item, 'liveclassId' => $id]);
             }
             if ($liveclass || $liveclassstage) {
                 //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
                 $this->success('恭喜您，更新成功', 'index', '', '1');
             } else {
                 //错误页面的默认跳转页面是返回前一页，通常不需要设置
-                $this->error('更新失败', 'index', '', '1');
+                $this->error('更新失败', '', '', '1');
             }
             return true;
         } else {

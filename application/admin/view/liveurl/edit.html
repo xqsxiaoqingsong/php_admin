@@ -2,9 +2,9 @@
 
 {{block name="css"}}
 <!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
-<link type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
-<link href="/vendor/admin/css/demos.css" rel="stylesheet" type="text/css"/>
-<link href="/vendor/admin/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css"/>
+<!--<link type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css" rel="stylesheet"/>-->
+<!--<link href="/vendor/admin/css/demos.css" rel="stylesheet" type="text/css"/>-->
+<!--<link href="/vendor/admin/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css"/>-->
 {{/block}}
 
 {{block name="content"}}
@@ -55,10 +55,10 @@
                         <div class="am-u-sm-2 am-fl changeinput">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-sm">
-                                    <a class="removeredaonlyno am-btn am-btn-default am-btn-xs am-text-secondary"
-                                       href="javascript:;" res="1">
-                                        <span class="am-icon-check-circle-o"></span> 确定
-                                    </a>
+                                    <!--<a class="removeredaonlyno am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                                       <!--href="javascript:;" res="1">-->
+                                        <!--<span class="am-icon-check-circle-o"></span> 确定-->
+                                    <!--</a>-->
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,6 @@
                                             </select>
                                         <td class="classstageid" data-id="{{$stage.id}}">
                                             <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}" name="stageId[]" class="tbstageajax">
-                                                <option value=""></option>
                                             </select>
                                         </td>
                                         <td>
@@ -296,11 +295,14 @@
 <script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
 <script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>   //图片上传
 <script src="/vendor/admin/js/upload.js"></script>
-<script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
-<script src="/vendor/admin/js/jquery-ui-timepicker-addon.js"></script>
-<script src="/vendor/admin/js/jquery.ui.datepicker-zh-CN.js.js" type="text/javascript" charset="gb2312"></script>
-<script src="/vendor/admin/js/jquery-ui-timepicker-zh-CN.js"></script>
+<!--<script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>-->
+<!--<script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>-->
+<!--<script src="/vendor/admin/js/jquery-ui-timepicker-addon.js"></script>-->
+<!--<script src="/vendor/admin/js/jquery.ui.datepicker-zh-CN.js.js" type="text/javascript" charset="gb2312"></script>-->
+<!--<script src="/vendor/admin/js/jquery-ui-timepicker-zh-CN.js"></script>-->
+<script src="/vendor/Amazeui/js/amazeui.datetimepicker.min.js"></script>
+<script src="/vendor/Amazeui/js/local/amazeui.datetimepicker.zh-CN.js"></script>
+
 
 <script type="text/javascript">
     //     var ue = UE.getEditor('container', {});
@@ -313,10 +315,12 @@
     $(function () {
         // 时间设置
         $('.timepicker').datetimepicker({
-            timeFormat: "HH:mm:ss",
-            dateFormat: "yy-mm-dd",
-            minDate: 0,
-            maxDate: "+6M",
+            format: 'yyyy-mm-dd hh:ii:00',
+            todayBtn:true,
+            autoclose :true ,
+            setStartDate:new Date(),
+            language:  'zh-CN',
+
         });
         // 更改确定和编辑
         $(".removeredaonlyno").click(function () {
@@ -384,11 +388,15 @@
             // }
         });
         //进入页面通过一级目录的更改权限更换
-        $(".createstage td li").click(function () {
+        // $(".createstage td li").click(function () {
+        $(".selectliveroom").change(function () {
+            // alert(123);return;
             var _this = $(this);
             var stageid = $(this).parents("td").siblings(".classstageid").attr("data-id");
             // console.log(stageid);return;
-            var id = $(this).attr('data-value');
+            var id = $(this).val();
+            // console.log(id);return;
+
 //选择一级目录分类二级目录分类联动
             $.ajax({
                 type: 'POST',
@@ -417,7 +425,8 @@
                 }
             })
         })
-       $('.createstage td .am-checked').trigger("click");
+       // $('.createstage td .am-checked').trigger("click");
+       $('.selectliveroom').trigger("change");
 
         //删除权限
         $(".delstage").click(function () {
@@ -429,32 +438,91 @@
 
         //新增并取消td
         $(".createstagetd").click(function () {
-            var li = "";
-            li +=
-                "<tr data-id=\"{{}}\" class=\"xParent\">\n" +
-                "                                        <td style=\"line-height: 37px\"></td>\n" +
-                "                                        <td class=\"\">\n" +
-                "                                            <select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
-                "                                                    name=\"liveRoomId[]\" class=\"selectliveroom\">\n" +
-                "                                                <option value=\"\"></option>\n" +
-                "                                            </select>\n" +
-                "                                        <td class=\"classstageid\" data-id=\"\">\n" +
-                "                                            <select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\" name=\"stageId[]\" class=\"tbstageajax\">\n" +
-                "                                                <option value=\""+ 1 +"\"></option>\n" +
-                "                                            </select>\n" +
-                "                                        </td>\n" +
-                "                                        <td>\n" +
-                "                                            <div class=\"am-btn-toolbar\">\n" +
-                "                                                <div class=\"am-btn-group am-btn-group-sm\">\n" +
-                "                                                    <a class=\"delstage am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
-                "                                                       href=\"javascript:;\">\n" +
-                "                                                        <span class=\"am-icon-trash-o\"></span> 删除\n" +
-                "                                                    </a>\n" +
-                "                                                </div>\n" +
-                "                                            </div>\n" +
-                "                                        </td>\n" +
-                "                                    </tr>";
-            $(".createstage").append(li);//将拼接出来的加入到指定的模块
+            //选择直播间和权限联动
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Liveurls/liveroomstage',
+                data: {},
+                success: function (data) {
+                    var liverooms = data.liverooms;
+                    var stages = data.stages;
+                    // console.log(data);return;
+                    var li = "";
+                    li +=
+                        "<tr data-id=\"{{}}\" class=\"xParent\">\n" +
+                        "                                        <td style=\"line-height: 37px\"></td>\n" +
+                        "                                        <td class=\"\">\n" +
+                        "                                            <select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\"\n" +
+                        "                                                    name=\"liveRoomId[]\" class=\"newselect newselectliveroom\">\n";
+                    $.each(liverooms, function (m, n) {
+                        li += "<option value=" + n.id  ;
+                        li +=  '>' + n.liveRoomName + "</option>";
+                    });
+                    li +=
+                        "                                            </select>\n" +
+                        "                                        <td class=\"classstageid\" data-id=\"\">\n" +
+                        "                                            <select data-am-selected=\"{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}\" name=\"stageId[]\" class=\"newselect tbstageajax selectstage\">\n" +
+
+                        // $.each(stages, function (m, n) {
+                        //     var stageid = n.liveRoomId;
+                        //     li += "<option value=" + n.id  ;
+                        //     li +=  '>' + n.stageName + "</option>";
+                        //     $.each(liverooms,function (l,k) {
+                        //         // console.log(k);return;
+                        //         var liveroomid = k.id;
+                        //         if (stageid == liveroomid){
+                        //             // console.log(123);return
+                        //             li += "<option value=" + n.id  ;
+                        //             li +=  '>' + n.stageName + "</option>";
+                        //         }
+                        //     });
+                        // });
+                        "                                            <option value='-1'>请选择</option>\n" +
+                        "                                            </select>\n" +
+                        "                                        </td>\n" +
+                        "                                        <td>\n" +
+                        "                                            <div class=\"am-btn-toolbar\">\n" +
+                        "                                                <div class=\"am-btn-group am-btn-group-sm\">\n" +
+                        "                                                    <a class=\"quxiao delstage am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only\"\n" +
+                        "                                                       href=\"javascript:;\">\n" +
+                        "                                                        <span class=\"am-icon-trash-o\"></span> 删除\n" +
+                        "                                                    </a>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                        </td>\n" +
+                        "                                    </tr>";
+                    $(".createstage").append(li);//将拼接出来的加入到指定的模块
+                    $(".quxiao").click(function () {
+                        $(this).parents("tr").remove();
+                    });
+                    $('.newselect').selected({
+                        btnWidth: '100%',
+                        btnSize: 'sm',
+                        btnStyle: 'secondary',
+                        maxHeight: '360px',
+                        searchBox: 1
+                    });
+                    $(".newselectliveroom").change(function () {
+                        var _this = $(this);
+                        var liveroomid = $(this).val();
+                        var li ="";
+                        // console.log(liveroomid);return
+                        $.each(stages, function (m, n) {
+                            var stageid = n.liveRoomId;
+                            // console.log(n);return;
+                            if (liveroomid == stageid){
+                                li += "<option value=" + n.id  ;
+                                // if (n.id == liveroomid){
+                                //     li +=   " selected "
+                                // }
+                                li +=  '>' + n.stageName + "</option>";
+                            }
+                        });
+                        _this.parents("td").siblings("td").children(".newselect").html(li);//将拼接出来的加入到指定的模块
+                    })
+                    $('.newselectliveroom').trigger("change");
+                }
+            })
         })
     });
 </script>
