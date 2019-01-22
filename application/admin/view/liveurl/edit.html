@@ -256,13 +256,13 @@
                                     <i class="am-icon-cloud-upload" id="loading"></i> 上传缩略图
                                 </button>
                                 <input type="file" id="image_upload">
-                                <input type="hidden" name="imgUrl" value="">
+                                <input type="hidden" name="imgUrl" value="{{$live.imgUrl}}">
                             </div>
 
                             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 
                             <div>
-                                <img src="" id="img_show" style="max-height: 200px;">
+                                <img src="{{$live.imgUrl}}" id="img_show" style="max-height: 200px;">
                             </div>
                         </div>
                     </div>
