@@ -15,7 +15,7 @@ class Messages extends Common
         parent::__construct();
         return $this->assign([
             'types' => MessageType::select(),
-            '_xfx_message' => 'am-in',   //展开
+            '_xfx_eduadmin' => 'am-in',   //展开
             '_message' => 'am-active',   //高亮
         ]);
     }

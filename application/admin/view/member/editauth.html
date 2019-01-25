@@ -1,0 +1,182 @@
+{{extend name="layout/application" /}}
+
+{{block name="css"}}
+<!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
+{{/block}}
+
+{{block name="content"}}
+<div class="admin-content">
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><a href="/admin/members">学员管理</a></strong> / <strong class="am-text-primary am-text-lg">学员权限管理</strong>
+            <!--<small>Create A New AdCategory</small>-->
+        </div>
+    </div>
+    <hr>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+            <form class="am-form" action="" method="post">
+                <input type="hidden" name="_token" value="">
+                <div class="am-g am-margin-top">
+                    <div class=" am-u-sm-2 am-text-right">
+                        学员姓名：
+                    </div>
+                    <div class=" am-u-sm-2">
+                        {{$user.REALNAME}}
+                    </div>
+                    <div class=" am-u-sm-2 am-text-right">
+                        学员手机号：
+                    </div>
+                    <div class=" am-u-sm-6">
+                        {{$user.PHONE}}
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top" style="margin-top: 2rem">
+                    <div class="am-u-sm-2 am-text-right">
+                        课程权限：
+                    </div>
+                    <div class=" am-u-sm-4 am-u-end col-end">
+                        <div class="am-btn-group am-btn-group-sm">
+                            <a type="button" class="am-btn am-btn-default am-text-success"
+                               href="{{:Url('admin/Members/createauth',['id'=>$user.ID])}}">
+                                <span class="am-icon-plus"></span> 新增
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-10 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                <th style="width: 8%" class="table-id">编号</th>
+                                <th>课程类型</th>
+                                <th>课程名称</th>
+                                <th>选择项</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbstageajax">
+                            {{foreach $coursestages as $coursestage}}
+                            <tr data-id="{{$coursestage.id}}" class="xParent">
+                                <td style="line-height: 37px">{{$coursestage.id}}</td>
+                                <td class="deltypeid" data-type="1">网课</td>
+                                <td class="delclassid" data-num="{{$coursestage.courseId}}">
+                                    {{$coursestage.stagecourse.courseName}}
+                                </td>
+                                <td>{{$coursestage.stageName}}</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-sm">
+                                            <a class="del am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
+                                               href="javascript:;">
+                                                <span class="am-icon-trash-o"></span> 关闭
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/foreach}}
+                            {{foreach $livestages as $livestage}}
+                            <tr data-id="{{$livestage.id}}" class="xParent">
+                                <td style="line-height: 37px">{{$livestage.id}}</td>
+                                <td class="deltypeid" data-type="2">直播课</td>
+                                <td class="delclassid" data-num="{{$livestage.liveRoomId}}">
+                                    {{$livestage.stagelive.liveRoomName}}
+                                </td>
+                                <td>{{$livestage.stageName}}</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-sm">
+                                            <!--<a class="removeredaonly am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                                               <!--href="javascript:;" res="0">-->
+                                                <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
+                                            <!--</a>-->
+                                            <a class="del am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"
+                                               href="javascript:;">
+                                                <span class="am-icon-trash-o"></span> 关闭
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/foreach}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top" style="margin-top: 2.6rem">
+                    <div class="am-u-sm-4 am-u-md-4 am-text-right">
+                        <buttom class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">返回</buttom>
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-6 am-u-end col-end">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="admin-content-footer" style="margin-top: 2rem">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
+</div>
+{{/block}}
+
+{{block name="js"}}
+<!--<script src="/vendor/markdown/editormd.min.js"></script>             //文本编辑器-->
+<!--<script src="/vendor/admin/js/editormd_config.js"></script>-->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        //单条删除
+        $(".del").click(function () {
+            var id = $(this).parents('tr').data('id');
+            var classid = $(this).parents('td').siblings('.delclassid').data('num');
+            var typeid = $(this).parents('td').siblings('.deltypeid').data('type');
+            // console.log(typeid);return;
+            var _this = $(this);
+            if (confirm('确定要删除吗?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/Members/delete/' + id,
+                    data: {
+                        id: id,
+                        classid :classid,
+                        typeid :typeid,
+                        userid :"{{$user.ID}}"
+                    },
+                    success: function (data) {
+                        // console.log(data);return
+                        if (data.status == 1) {
+                            alert(data.msg);
+                            // _this.parents('tr').fadeOut(300);
+                            _this.parents('tr').remove();
+                        } else {
+                            alert(data.msg);
+                            return false
+                        }
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+<script>
+
+</script>
+<!--//图片上传js-->
+<script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>
+<!--//普通模块图片上传js-->
+<!--<script src="/vendor/admin/js/upload.js"></script>-->
+<!--<script src="/vendor/admin/js/upload123.js"></script>-->
+<!--//课程信息图片js-->
+<script src="/vendor/admin/js/courseimgupload.js"></script>
+<script src="/vendor/admin/js/courseupload.js"></script>
+{{/block}}

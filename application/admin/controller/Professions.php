@@ -13,7 +13,7 @@ class Professions extends Common
         //分类共享
         parent::__construct();
         return $this->assign([
-            '_xfx_profession' => 'am-in',   //展开
+            '_xfx_eduadmin' => 'am-in',   //展开
             '_profession' => 'am-active',   //高亮
         ]);
     }

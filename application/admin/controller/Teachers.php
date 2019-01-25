@@ -13,7 +13,7 @@ class Teachers extends Common
         //分类共享
         parent::__construct();
         return $this->assign([
-            '_xfx_teacher' => 'am-in',   //展开
+            '_xfx_eduadmin' => 'am-in',   //展开
             '_teacher' => 'am-active',   //高亮
         ]);
     }

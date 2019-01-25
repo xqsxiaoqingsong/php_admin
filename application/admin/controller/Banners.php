@@ -13,7 +13,7 @@ class Banners extends Common
         //分类共享
         parent::__construct();
         return $this->assign([
-            '_xfx_banner' => 'am-in',   //展开
+            '_xfx_eduadmin' => 'am-in',   //展开
             '_banner' => 'am-active',   //高亮
         ]);
     }

@@ -2,11 +2,24 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\CourseOrder;
+use app\admin\model\LiveOrder;
+use app\admin\model\Member;
 use think\Controller;
 use think\Request;
 
-class MemberAuths extends Controller
+class Memberauths extends Controller
 {
+    public function __construct()
+    {
+        //分类共享
+        parent::__construct();
+        return $this->assign([
+            '_xfx_eduadmin' => 'am-in',   //展开
+            '_memberauth' => 'am-active',   //高亮
+        ]);
+    }
+
     /**
      * 显示资源列表
      *
@@ -14,7 +27,12 @@ class MemberAuths extends Controller
      */
     public function index()
     {
-        //
+//        $coursestages = CourseOrder::select()->toArray();
+//        $livestages = LiveOrder::select()->toArray();
+//        $allstages = array_merge($coursestages,$livestages);
+        $usercourse = CourseOrder::column('MEMBERID');
+        $userlive = LiveOrder::column('MEMBERID');
+        return json($usercourse);
     }
 
     /**

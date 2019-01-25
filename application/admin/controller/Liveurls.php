@@ -57,6 +57,7 @@ class Liveurls extends Common
             ->join("l_liveroom d", "c.liveRoomId = d.id", "LEFT")
             ->where($where)
             ->group("a.id")
+            ->order('id desc')
             ->paginate(10, false, ['query' => request()->param()]);
 
         $count = $lives->total();

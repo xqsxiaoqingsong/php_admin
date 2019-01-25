@@ -1,0 +1,284 @@
+{{extend name="layout/application" /}}
+
+{{block name="css"}}
+<!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
+{{/block}}
+
+{{block name="content"}}
+<div class="admin-content">
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf">
+            <strong class="am-text-primary am-text-lg"><a href="/admin/members">学员管理</a></strong> /
+            <strong class="am-text-primary am-text-lg"><a href="{{:Url('admin/Members/editauth',['id'=>$user.ID])}}">学员权限管理</a></strong>
+            /
+            <strong class="am-text-primary am-text-lg">添加学员权限</strong>
+            <!--<small>Create A New AdCategory</small>-->
+        </div>
+    </div>
+    <hr>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+            <form class="am-form" action="{{:Url('admin/Members/savestage',['id'=>$user.ID])}}" method="post">
+                <input type="hidden" name="_token" value="">
+                <div class="am-g am-margin-top">
+                    <div class=" am-u-sm-2 am-text-right">
+                        学员姓名：
+                    </div>
+                    <div class=" am-u-sm-2">
+                        {{$user.REALNAME}}
+                    </div>
+                    <div class=" am-u-sm-2 am-text-right">
+                        学员手机号：
+                    </div>
+                    <div class=" am-u-sm-6">
+                        {{$user.PHONE}}
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class=" am-u-sm-2 am-text-right">
+                        备注：
+                    </div>
+                    <div class=" am-u-sm-6 am-u-end col-end">
+                        <input type="text" class="am-input-sm" name="ORDERCODE" value="" placeholder="请输入订单编号">
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        课程分类：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                        <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                name="coursetype" style="display: none;" class="selectcourse">
+                            <option value="">顶级分类</option>
+                            <option value="1">网课</option>
+                            <option value="2">直播课</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        专业方向：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                        <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                name="professionid" style="display: none;" class="selectprofession">
+                            <option value="">顶级分类</option>
+                            <!--{{foreach name="categories" id="category"}}-->
+                            <!--<option value="{{$category.MAJOR_NAME}}">{{$category.MAJOR_NAME}}</option>-->
+                            <!--{{/foreach}}-->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        课程名称：
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                        <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                name="classid" style="display: none;" class="selectclass">
+                            <option value="">顶级分类</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="am-g am-margin-top" style="margin-top: 2rem">
+                    <div class="am-u-sm-2 am-text-right">
+                        课程权限选择项：
+                    </div>
+                    <div class=" am-u-sm-4 am-u-end col-end">
+                        <div class="am-btn-group am-btn-group-sm">
+                            <!--<a type="button" class="am-btn am-btn-default am-text-success"-->
+                               <!--href="{{:Url('admin/Members/createauth',['id'=>$user.ID])}}">-->
+                                <!--<span class="am-icon-plus"></span> 新增-->
+                            <!--</a>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-10 am-u-sm-centered">
+                        <table class="am-table  am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%;text-align: center" class="">选择</th>
+                                <th style="width: 40%;text-align: center">名称</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbstageajax">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="am-g am-margin-top" style="margin-top: 2.6rem">
+                    <div class="am-u-sm-4 am-u-md-4 am-text-right">
+                        <button type="submit" class="am-btn am-btn-primary am-radius">提交保存</button>
+                        <buttom style="margin-left: 1rem" class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">返回</buttom>
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-6 am-u-end col-end">
+                    </div>
+                </div>
+                <!--<?php echo $alllives;?>-->
+            </form>
+        </div>
+    </div>
+    <footer class="admin-content-footer" style="margin-top: 2rem">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
+</div>
+{{/block}}
+
+{{block name="js"}}
+<!--<script src="/vendor/markdown/editormd.min.js"></script>             //文本编辑器-->
+<!--<script src="/vendor/admin/js/editormd_config.js"></script>-->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
+
+<script type="text/javascript">
+    var $select = $('.selectprofession');
+    var $selectclass = $('.selectclass');
+    var $stagetd = $('.tbstageajax');
+    $(".selectcourse").on('change', function () {
+        var typeid = $(this).val();
+        var li = "";
+        // console.log(typeid);
+        $.ajax({
+            type: 'POST',
+            url: '/admin/Members/createauthselect',
+            data: {
+                typeid: typeid,
+                userid:"{{$user.ID}}"
+            },
+            success: function (data) {
+                // console.log(data);return;
+                $.each(data.profession, function (m, n) {
+                    var num = n.ID;
+                    var name = n.MAJOR_NAME;
+                    li +=
+                        "<option value=\"" + num + "\">" + name + "</option>"
+                })
+                // 关键点：触发 select 的 `chosen:updated` 事件
+                $select.html(li);
+                $select.trigger('chosen:updated');
+                $select.on('change', function () {
+                    // alert(123);
+                    var professionid = $(this).val();
+                    var courseli = "";
+                    // console.log(professionid);return
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/Members/createauthselect',
+                        data: {
+                            typeid: typeid,
+                            professionid: professionid,
+                            userid:"{{$user.ID}}"
+                        },
+                        success: function (data) {
+                            // console.log(data);return;
+                            //判断接受的是在线课程还是直播
+                            if (data.courses) {
+                                $.each(data.courses, function (m, n) {
+                                    var num = n.id;
+                                    var name = n.courseName;
+                                    courseli +=
+                                        "<option value=\"" + num + "\">" + name + "</option>"
+                                })
+                            }
+                            if (data.lives) {
+                                $.each(data.lives, function (m, n) {
+                                    var num = n.id;
+                                    var name = n.liveRoomName;
+                                    courseli +=
+                                        "<option value=\"" + num + "\">" + name + "</option>"
+                                })
+                            }
+                            // 关键点：触发 select 的 `chosen:updated` 事件
+                            $selectclass.html(courseli);
+                            $selectclass.trigger('chosen:updated');
+                            $selectclass.on('change', function () {
+                                var classid = $(this).val();
+                                var stageli ="";
+                                // console.log(classid);return;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/admin/Members/createauthselect',
+                                    data: {
+                                        typeid: typeid,
+                                        professionid: professionid,
+                                        classid : classid,
+                                        userid:"{{$user.ID}}"
+                                    },
+                                    success: function (data) {
+                                        // console.log(data);return;
+                                        //判断接受的是在线课程还是直播
+                                        if (data.coursestages) {
+                                            $.each(data.coursestages, function (m, n) {
+                                                var num = n.id;
+                                                var name = n.stageName;
+                                                stageli +=
+                                                    "<tr data-id=\""+num+"\" class=\"xParent\">\n" +
+                                                    "                            <td style='text-align: center;'><input type=\"checkbox\" " ;
+                                                $.each(data.userstage, function (l, k) {
+                                                    if (k == num){
+                                                        stageli +=   " checked "
+                                                    }
+                                                });
+                                                stageli +=
+                                                    "class=\"checked_id\" name=\"checked_id[]\" value=\""+num+"\"/>\n" +
+                                                    "                            <td style='text-align: center;'>"+name+"</td>\n" +
+                                                    "                        </tr>";
+                                            })
+                                        }
+                                        if (data.livestages) {
+                                            $.each(data.livestages, function (m, n) {
+                                                var num = n.id;
+                                                var name = n.stageName;
+                                                stageli +=
+                                                    "<tr data-id=\""+num+"\" class=\"xParent\">\n" +
+                                                    "                            <td style='text-align: center;'><input type=\"checkbox\" " ;
+                                                $.each(data.userstage, function (l, k) {
+                                                    if (k == num){
+                                                        stageli +=   " checked "
+                                                    }
+                                                });
+                                                stageli +=
+                                                    "class=\"checked_id\" name=\"checked_id[]\" value=\""+num+"\"/>\n" +
+                                                    "                            <td style='text-align: center;'>"+name+"</td>\n" +
+                                                    "                        </tr>";
+                                            })
+                                        }
+                                        // 关键点：触发 select 的 `chosen:updated` 事件
+                                        $stagetd.html(stageli);
+                                        $stagetd.trigger('chosen:updated');
+                                    }
+                                })
+                            })
+                        }
+                    })
+                })
+            }
+        })
+    });
+
+</script>
+<script>
+
+</script>
+<!--//图片上传js-->
+<script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>
+<!--//普通模块图片上传js-->
+<!--<script src="/vendor/admin/js/upload.js"></script>-->
+<!--<script src="/vendor/admin/js/upload123.js"></script>-->
+<!--//课程信息图片js-->
+<script src="/vendor/admin/js/courseimgupload.js"></script>
+<script src="/vendor/admin/js/courseupload.js"></script>
+{{/block}}
