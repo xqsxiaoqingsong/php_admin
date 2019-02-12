@@ -81,23 +81,59 @@ class Members extends Common
     {
         $validate = Validate('MemberValidate');
         if (!$validate->scene('save')->check($request->param())) {
-            $this->error($validate->getError(), '', '', 1);
+            $this->error($validate->getError());
         };
-        $result = Member::create([
-            'REALNAME' => $request->param('REALNAME'),
-            'MEMBERNAME' => $request->param('MEMBERNAME'),
-            'PHONE' => $request->param('PHONE'),
-            'PASSWORD' => $request->param('PASSWORD'),
-            'MAJORNAME' => $request->param('MAJOR_NAME'),
-            'HEADURL' => $request->param('image')
-        ]);
-        if ($result) {
-            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
-            $this->success('恭喜您，新增成功', 'index', '', 1);
-        } else {
-            //错误页面的默认跳转页面是返回前一页，通常不需要设置
-            $this->error('新增失败', '', '', 1);
+
+        if ($request->isPost()) {
+//            return json($request->param());
+            $parameters = array(
+                'realName' => $request->param('realName'), //真实姓名
+                'memberName' => $request->param('memberName'), //昵称
+                'phone' => $request->param('phone'), //手机
+                'password' => $request->param('password'), //密码
+                'majorName' => $request->param('majorName'), //专业方向
+            );
+
+//            $baseUrl = "http://xfxerj.gensee.com/integration/site";
+
+            $url = "https://www.xfxerj.com/wrdp-web/face/memberPC/registerphp";
+            $return = $this->curlByPost($parameters, $url);
+            $result = json_decode($return, true);
+//            return json($result);
+            if ($result['Code'] === '0') {
+                $this->success('恭喜您，新增成功', 'index', '', '1');
+            } else {
+                $this->error('更新失败');
+            }
         }
+
+//        $result = Member::create([
+//            'REALNAME' => $request->param('REALNAME'),
+//            'MEMBERNAME' => $request->param('MEMBERNAME'),
+//            'PHONE' => $request->param('PHONE'),
+//            'PASSWORD' => $request->param('PASSWORD'),
+//            'MAJORNAME' => $request->param('MAJOR_NAME'),
+//            'HEADURL' => $request->param('image')
+//        ]);
+//        if ($result) {
+//            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+//            $this->success('恭喜您，新增成功', 'index', '', 1);
+//        } else {
+//            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+//            $this->error('新增失败', '', '', 1);
+//        }
+    }
+
+    public function curlByPost($parameters, $url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $parameters);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
     }
 
     /**
