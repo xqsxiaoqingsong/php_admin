@@ -55,8 +55,7 @@
                         <option value=""></option>
                         {{foreach name="categories" id="category"}}
                         <option value="{{$category.MAJOR_NAME}}"
-                                {{empty name='$condition.category_id' }} {{else
-                        /}} {{if $category.ID ==$condition.category_id}} selected {{/if}}{{/empty}}
+                                {{empty name='$condition.category_id' }} {{else/}} {{if $category.MAJOR_NAME ==$condition.category_id}} selected {{/if}}{{/empty}}
                         >{{$category.MAJOR_NAME}}</option>
                         {{/foreach}}
                     </select>

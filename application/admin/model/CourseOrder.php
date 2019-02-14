@@ -17,4 +17,24 @@ class CourseOrder extends Model
     // 定义时间戳字段名
     protected $createTime = 'CREATTIME';
     protected $updateTime = 'CREATTIME';
+
+    //订单所属用户
+    public function usercourse()
+    {
+        return $this->belongsTo('Member', 'MEMBERID');
+//        return $this->belongsTo('Member', 'MEMBERID')->bind('PHONE,REALNAME');
+    }
+
+    //订单所属用户
+    public function usercourseclass()
+    {
+        return $this->belongsTo('Course', 'COURSEMANAGEID');
+    }
+
+    
+
+    public function selectCourseOrder($where = '')
+    {
+        return $this->query("select * from t_courseorder c INNER JOIN t_member d on c.MEMBERID=d.ID INNER JOIN c_course f on c.COURSEMANAGEID=f.id ".$where);
+    }
 }
