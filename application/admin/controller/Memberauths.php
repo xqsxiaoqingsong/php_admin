@@ -123,7 +123,7 @@ class Memberauths extends Common
             ->join("c_course f", "c.COURSEMANAGEID=f.id")
             ->join("t_cnmedicinemajor m", "f.majorId=m.ID")
             ->where($where)
-            ->paginate(5, false, ['query' => request()->param()]);
+            ->paginate(10, false, ['query' => request()->param()]);
         //分页出来的数据不是纯数组的格式,在循环的时候需要用数据对象的形式进行处理
         $coursestages = $allcoursestages->items();
 //        echo CourseOrder::getLastSql();die;
@@ -143,7 +143,7 @@ class Memberauths extends Common
             ->join("l_liveroom b", "a.LIVEROOMID=b.id", "LEFT")
             ->join("t_cnmedicinemajor m", "b.majorId=m.ID", "LEFT")
             ->where($map)
-            ->paginate(5, false, ['query' => request()->param()]);
+            ->paginate(10, false, ['query' => request()->param()]);
         //分页出来的数据不是纯数组的格式,在循环的时候需要用数据对象的形式进行处理
         $livestages = $alllivestages->items();
         foreach ($livestages as $key => $liveval) {
