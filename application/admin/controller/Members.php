@@ -173,14 +173,28 @@ class Members extends Common
         if (!$validate->scene('update')->check($request->param())) {
             $this->error($validate->getError());
         };
-        $result = $user->where('ID', $id)->update([
-            'REALNAME' => $request->param('REALNAME'),
-            'MEMBERNAME' => $request->param('MEMBERNAME'),
-            'PHONE' => $request->param('PHONE'),
-            'PASSWORD' => $request->param('PASSWORD'),
-            'MAJORNAME' => $request->param('MAJOR_NAME'),
-            'HEADURL' => $request->param('image')
-        ]);
+        if ($request->param('image') == "") {
+            $image = 'http://img.xfxerj.com/20190125/e7fbf80ad3edf70b83a33379847602b8.jpg';
+            $result = $user->where('ID', $id)->update([
+                'REALNAME' => $request->param('REALNAME'),
+                'MEMBERNAME' => $request->param('MEMBERNAME'),
+                'PHONE' => $request->param('PHONE'),
+                'PASSWORD' => $request->param('PASSWORD'),
+                'MAJORNAME' => $request->param('MAJOR_NAME'),
+                'HEADURL' => $image
+            ]);
+        }
+        if ($request->param('image') and $request->param('image') != '') {
+            $result = $user->where('ID', $id)->update([
+                'REALNAME' => $request->param('REALNAME'),
+                'MEMBERNAME' => $request->param('MEMBERNAME'),
+                'PHONE' => $request->param('PHONE'),
+                'PASSWORD' => $request->param('PASSWORD'),
+                'MAJORNAME' => $request->param('MAJOR_NAME'),
+                'HEADURL' => $request->param('image')
+            ]);
+        }
+
 //        return redirect('index');
 //        $this->success('恭喜您，更新成功了', 'index');
         if ($result) {
@@ -277,7 +291,7 @@ class Members extends Common
         $classid = $request->param('classid');
 //        return json($request->param());
 
-        if (!$request->param('checked_id')){
+        if (!$request->param('checked_id')) {
             $this->error('请勾选选择项', "/admin/members/createauth/id/$id", '', 1);
         }
         if ($request->param('coursetype') == 1) {

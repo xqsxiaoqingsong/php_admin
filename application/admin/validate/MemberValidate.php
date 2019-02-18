@@ -56,6 +56,6 @@ class MemberValidate extends Validate
     //场景设置
     protected $scene = [
         'save' => ['realName','memberName','phone','password','majorName'],//添加
-        'update' => ['REALNAME','MEMBERNAME','PHONE','PASSWORD','MAJOR_NAME','image'],//编辑用户
+        'update' => ['REALNAME','MEMBERNAME','PHONE','PASSWORD','MAJOR_NAME',],//编辑用户
     ];
 }
