@@ -85,8 +85,8 @@
                         <!--<li><a href="#tab3">商品相册</a></li>-->
                     <!--</ul>-->
                     <ul class="am-nav am-nav-tabs">
-                        <li class="am-active"><a href="javascript:;">网课</a></li>
-                        <li><a href="/admin/Memberauths/indexlive">直播课</a></li>
+                    <li><a href="/admin/Memberauths">网课</a></li>
+                    <li class="am-active"><a href="javascript:;">直播课</a></li>
                     </ul>
                     <div class="am-tabs-bd" style="border: none">
                         <div class="am-tab-panel am-fade am-in am-active" id="tab1"
@@ -101,10 +101,6 @@
                                         .am-selected {
                                             width: 120px;
                                         }
-
-                                        .am-table > tbody > tr > td {
-                                            line-height: 2.6;
-                                        }
                                     </style>
                                     <div class="am-u-sm-12">
                                         <div class="am-form-group">
@@ -122,162 +118,17 @@
                                                    value="{{empty name='$condition.phone'}}  {{else /}}{{$condition.phone}}{{/empty}}">
                                         </div>
                                         <!--<div class="am-form-group">-->
-                                            <!--<span class="teacher_search_span">专业方向：</span>-->
-                                            <!--<select data-am-selected="{btnSize: 'sm'}" name="category_id">-->
-                                                <!--<option value=""></option>-->
-                                                <!--{{foreach name="categories" id="category"}}-->
-                                                <!--<option value="{{$category.MAJOR_NAME}}"-->
-                                                        <!--{{empty name='$condition.category_id' }} {{else-->
-                                                <!--/}} {{if $category.MAJOR_NAME ==$condition.category_id}} selected-->
-                                                <!--{{/if}}{{/empty}}-->
-                                                <!--&gt;{{$category.MAJOR_NAME}}</option>-->
-                                                <!--{{/foreach}}-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                        <div class="am-form-group">
-                                            <span class="teacher_search_span">课程名称：</span>
-                                            <input type="text" class="am-form-field am-input-sm" name="coursename"
-                                                   style="width: 160px"
-                                                   placeholder="课程名称"
-                                                   value="{{empty name='$condition.coursename'}}  {{else /}}{{$condition.coursename}}{{/empty}}">
-                                        </div>
-                                    </div>
-                                    <div class="am-u-sm-12" style="margin-top: 1rem">
-                                        <div class="am-form-group">
-                                            <span class="teacher_search_span">备注：</span>
-                                            <input type="text" class="am-form-field am-input-sm" name="courseordercode"
-                                                   style="width: 120px"
-                                                   placeholder="备注"
-                                                   value="{{empty name='$condition.courseordercode'}}  {{else /}}{{$condition.courseordercode}}{{/empty}}">
-                                        </div>
-                                        <div class="am-form-group">
-                                            <span class="teacher_search_span">创建时间：</span>
-                                            <input type="text" class="am-form-field am-input-sm timepicker "
-                                                   name="coursestartdate"
-                                                   placeholder="点击选择日期" autocomplete="off"
-                                                   value="{{empty name='$condition.coursestartdate'}}  {{else /}}{{$condition.coursestartdate}}{{/empty}}">
-                                            <i class="am-icon-calendar"></i>&nbsp;----&nbsp;
-                                            <input type="text" class="am-form-field am-input-sm timepicker"
-                                                   name="courseenddate"
-                                                   placeholder="点击选择日期" autocomplete="off"
-                                                   value="{{empty name='$condition.courseenddate'}}  {{else /}}{{$condition.courseenddate}}{{/empty}}">
-                                            <i class="am-icon-calendar"></i>
-                                        </div>
-                                        <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
-                                        <a href="/admin/memberauths" class="am-btn am-btn-default am-btn-sm">重置</a>
-                                    </div>
-                                </form>
-                                <div class="am-u-sm-12 am-u-md-2" style="margin-top: 1rem">
-                                    <div class="am-btn-toolbar">
-                                        <div class="am-btn-group am-btn-group-xs">
-                                            <a type="button" class="delallcourse am-btn am-btn-default"
-                                               href="javascript:;">
-                                                <span class="am-icon-plus"></span> 关闭权限
-                                            </a>
-                                            <!--<a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"-->
-                                            <!--href="javascript:;">-->
-                                            <!--<span class="am-icon-trash-o"></span> 删除-->
-                                            <!--</a>-->
-                                            <!--<button type="button" class="am-btn am-btn-success" id="show_all">-->
-                                            <!--<span class="am-icon-arrows-alt"></span> 展开所有-->
-                                            <!--</button>-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <table class="am-table  am-table-hover table-main">
-                                <thead>
-                                <tr>
-                                    <!--<th class="table-check"><input type="checkbox" class="checked_allcourse"/></th>-->
-                                    <th class="table-check">&nbsp;&nbsp;</th>
-                                    <th style="width: 7%" class="table-id">编号</th>
-                                    <th style="">学员</th>
-                                    <th>手机号</th>
-                                    <th>课程分类</th>
-                                    <th>课程名称</th>
-                                    <th>选择项</th>
-                                    <th>创建时间</th>
-                                    <th>备注</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {{foreach name="coursestages" id="coursestage"}}
-                                {{foreach $coursestage.STAGEID as $coursestageid}}
-                                <tr data-id="{{$coursestage.ID}}" class="xParent">
-                                    <td class="delstageid" data-stagecourse="{{$coursestageid.id}}"
-                                        name="coursestageid[]" value="{{$coursestageid.id}}">
-                                        <label class="am-checkbox am-warning"><input type="checkbox"
-                                                                                     class="checked_idcourse"
-                                                                                     name="checked_id[]" data-am-ucheck
-                                                                                     value="{{$coursestage.ID}}"/></label>
-                                    </td>
-                                    <td>{{$coursestage.ID}}</td>
-                                    <td class="deluserid" data-usercourse="{{$coursestage.MEMBERID}}">
-                                        {{$coursestage.REALNAME}}
-                                    </td>
-                                    <td>{{$coursestage.PHONE}}</td>
-                                    <td class="deltypeid" data-type="1">网课</td>
-                                    <td class="delclassid" data-num="{{$coursestage.COURSEMANAGEID}}">
-                                        {{$coursestage.courseName}}
-                                    </td>
-                                    <td>{{$coursestageid.stageName}}</td>
-                                    <td>{{$coursestage.CREATTIME}}</td>
-                                    <td>{{$coursestage.ORDERCODE}}</td>
-                                </tr>
-                                {{/foreach}}
-                                {{/foreach}}
-                                </tbody>
-                            </table>
-                            <div class="am-cf">
-                                <!--共 {{:count($coursestages)}} 条记录-->
-                                <div class="am-fr">
-                                    <ul class="am-pagination">
-                                        {{$allcoursestages|raw}}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="am-tab-panel am-fade" id="tab2" style="min-height: 400px;padding-top: 20px">
-                            <div class="am-g">
-                                <form class="am-form-inline" role="form" method="get">
-                                    <style>
-                                        .teacher_search_span {
-                                            font-size: 14px;
-                                        }
-
-                                        .am-selected {
-                                            width: 120px;
-                                        }
-                                    </style>
-                                    <div class="am-u-sm-12">
-                                        <div class="am-form-group">
-                                            <span class="teacher_search_span">真实姓名：</span>
-                                            <input type="text" name="name" class="am-form-field am-input-sm"
-                                                   style="width: 120px"
-                                                   placeholder="姓名"
-                                                   value="{{empty name='$condition.name'}}  {{else /}}{{$condition.name}}{{/empty}}">
-                                        </div>
-                                        <div class="am-form-group">
-                                            <span class="teacher_search_span">手机号：</span>
-                                            <input type="text" class="am-form-field am-input-sm" name="phone"
-                                                   style="width: 120px"
-                                                   placeholder="联系方式"
-                                                   value="{{empty name='$condition.phone'}}  {{else /}}{{$condition.phone}}{{/empty}}">
-                                        </div>
-                                        <!--<div class="am-form-group">-->
-                                            <!--<span class="teacher_search_span">专业方向：</span>-->
-                                            <!--<select data-am-selected="{btnSize: 'sm'}" name="category_id">-->
-                                                <!--<option value=""></option>-->
-                                                <!--{{foreach name="categories" id="category"}}-->
-                                                <!--<option value="{{$category.MAJOR_NAME}}"-->
-                                                        <!--{{empty name='$condition.category_id' }} {{else-->
-                                                <!--/}} {{if $category.MAJOR_NAME ==$condition.category_id}} selected-->
-                                                <!--{{/if}}{{/empty}}-->
-                                                <!--&gt;{{$category.MAJOR_NAME}}</option>-->
-                                                <!--{{/foreach}}-->
-                                            <!--</select>-->
+                                        <!--<span class="teacher_search_span">专业方向：</span>-->
+                                        <!--<select data-am-selected="{btnSize: 'sm'}" name="category_id">-->
+                                        <!--<option value=""></option>-->
+                                        <!--{{foreach name="categories" id="category"}}-->
+                                        <!--<option value="{{$category.MAJOR_NAME}}"-->
+                                        <!--{{empty name='$condition.category_id' }} {{else-->
+                                        <!--/}} {{if $category.MAJOR_NAME ==$condition.category_id}} selected-->
+                                        <!--{{/if}}{{/empty}}-->
+                                        <!--&gt;{{$category.MAJOR_NAME}}</option>-->
+                                        <!--{{/foreach}}-->
+                                        <!--</select>-->
                                         <!--</div>-->
                                         <div class="am-form-group">
                                             <span class="teacher_search_span">课程名称：</span>
@@ -329,7 +180,147 @@
                                     </div>
                                 </div>
                             </div>
+                            <table class="am-table  am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                    <th class="table-check">&nbsp;&nbsp;</th>
+                                    <th style="width: 7%" class="table-id">编号</th>
+                                    <th style="">学员</th>
+                                    <th>手机号</th>
+                                    <th>课程分类</th>
+                                    <th>课程名称</th>
+                                    <th>选择项</th>
+                                    <th>创建时间</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{foreach name="livestages" id="livestage"}}
+                                {{foreach $livestage.STAGEID as $stageid}}
+                                <tr data-id="{{$livestage.ID}}" class="xParent">
+                                    <td class="delstageid" data-stage="{{$stageid.id}}" name="stageid[]"
+                                        value="{{$stageid.id}}">
+                                        <label class="am-checkbox am-warning"><input type="checkbox" class="checked_id"
+                                                                                     name="checked_id[]" data-am-ucheck
+                                                                                     value="{{$livestage.ID}}"/></label>
+                                    </td>
+                                    <td data-order="{{$livestage.ID}}" class="delid">{{$livestage.ID}}</td>
+                                    <td class="deluserid" data-user="{{$livestage.MEMBERID}}">{{$livestage.REALNAME}}
+                                    </td>
+                                    <td>{{$livestage.PHONE}}</td>
+                                    <td class="deltypeid" data-type="2">直播课</td>
+                                    <td class="delclassid" data-num="{{$livestage.LIVEROOMID}}">
+                                        {{$livestage.liveRoomName}}
+                                    </td>
+                                    <td>{{$stageid.stageName}}</td>
+                                    <td>{{$livestage.CREATTIME}}</td>
+                                    <td>{{$livestage.ORDERCODE}}</td>
+                                </tr>
+                                {{/foreach}}
+                                {{/foreach}}
+                                </tbody>
+                            </table>
+                            <div class="am-cf">
+                                <!--共 {{:count($livestages)}} 条记录-->
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+                                        {{$alllivestages|raw}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="am-tab-panel am-fade" id="tab2" style="min-height: 400px;padding-top: 20px">
+                            <div class="am-g">
+                                <form class="am-form-inline" role="form" method="get">
+                                    <style>
+                                        .teacher_search_span {
+                                            font-size: 14px;
+                                        }
+
+                                        .am-selected {
+                                            width: 120px;
+                                        }
+                                    </style>
+                                    <div class="am-u-sm-12">
+                                        <div class="am-form-group">
+                                            <span class="teacher_search_span">真实姓名：</span>
+                                            <input type="text" name="name" class="am-form-field am-input-sm"
+                                                   style="width: 120px"
+                                                   placeholder="姓名"
+                                                   value="{{empty name='$condition.name'}}  {{else /}}{{$condition.name}}{{/empty}}">
+                                        </div>
+                                        <div class="am-form-group">
+                                            <span class="teacher_search_span">手机号：</span>
+                                            <input type="text" class="am-form-field am-input-sm" name="phone"
+                                                   style="width: 120px"
+                                                   placeholder="联系方式"
+                                                   value="{{empty name='$condition.phone'}}  {{else /}}{{$condition.phone}}{{/empty}}">
+                                        </div>
+                                        <!--<div class="am-form-group">-->
+                                        <!--<span class="teacher_search_span">专业方向：</span>-->
+                                        <!--<select data-am-selected="{btnSize: 'sm'}" name="category_id">-->
+                                        <!--<option value=""></option>-->
+                                        <!--{{foreach name="categories" id="category"}}-->
+                                        <!--<option value="{{$category.MAJOR_NAME}}"-->
+                                        <!--{{empty name='$condition.category_id' }} {{else-->
+                                        <!--/}} {{if $category.MAJOR_NAME ==$condition.category_id}} selected-->
+                                        <!--{{/if}}{{/empty}}-->
+                                        <!--&gt;{{$category.MAJOR_NAME}}</option>-->
+                                        <!--{{/foreach}}-->
+                                        <!--</select>-->
+                                        <!--</div>-->
+                                        <div class="am-form-group">
+                                            <span class="teacher_search_span">课程名称：</span>
+                                            <input type="text" class="am-form-field am-input-sm" name="livename"
+                                                   style="width: 160px"
+                                                   placeholder="课程名称"
+                                                   value="{{empty name='$condition.livename'}}  {{else /}}{{$condition.livename}}{{/empty}}">
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-12" style="margin-top: 1rem">
+                                        <div class="am-form-group">
+                                            <span class="teacher_search_span">备注：</span>
+                                            <input type="text" class="am-form-field am-input-sm" name="liveordercode"
+                                                   style="width: 120px"
+                                                   placeholder="备注"
+                                                   value="{{empty name='$condition.liveordercode'}}  {{else /}}{{$condition.liveordercode}}{{/empty}}">
+                                        </div>
+                                        <div class="am-form-group">
+                                            <span class="teacher_search_span">创建时间：</span>
+                                            <input type="text" class="am-form-field am-input-sm timepicker "
+                                                   name="livestartdate"
+                                                   placeholder="点击选择日期" autocomplete="off"
+                                                   value="{{empty name='$condition.livestartdate'}}  {{else /}}{{$condition.livestartdate}}{{/empty}}">
+                                            <i class="am-icon-calendar"></i>&nbsp;----&nbsp;
+                                            <input type="text" class="am-form-field am-input-sm timepicker"
+                                                   name="liveenddate"
+                                                   placeholder="点击选择日期" autocomplete="off"
+                                                   value="{{empty name='$condition.liveenddate'}}  {{else /}}{{$condition.liveenddate}}{{/empty}}">
+                                            <i class="am-icon-calendar"></i>
+                                        </div>
+                                        <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
+                                        <a href="/admin/memberauths" class="am-btn am-btn-default am-btn-sm">重置</a>
+                                    </div>
+                                </form>
+                                <div class="am-u-sm-12 am-u-md-2" style="margin-top: 1rem">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <a type="button" class="delall am-btn am-btn-default" href="javascript:;">
+                                                <span class="am-icon-plus"></span> 关闭权限
+                                            </a>
+                                            <!--<a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"-->
+                                            <!--href="javascript:;">-->
+                                            <!--<span class="am-icon-trash-o"></span> 删除-->
+                                            <!--</a>-->
+                                            <!--<button type="button" class="am-btn am-btn-success" id="show_all">-->
+                                            <!--<span class="am-icon-arrows-alt"></span> 展开所有-->
+                                            <!--</button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="am-table  am-table-hover table-main">
                                 <thead>
                                 <tr>
