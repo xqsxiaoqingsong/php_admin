@@ -6,5 +6,5 @@ use think\Model;
 
 class BookCountPrice extends Model
 {
-    //
+    protected $table = "t_bookcountprice";
 }

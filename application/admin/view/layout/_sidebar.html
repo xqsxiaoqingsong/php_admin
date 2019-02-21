@@ -15,6 +15,13 @@
                     <li><a href="{{:Url('/admin/Coursedesigns/index')}}" class="{{$_coursedesign ?? ''}}"><span class="am-icon-check"></span> 课程设计</a></li>
                 </ul>
             </li>
+            <li><a href="javascript:;" class="{{$_face ?? ''}}"><span class="am-icon-pencil-square-o"></span> 面授培训</a></li>
+            <li><a class="am-cf" data-am-collapse="{target: '#collapse-book'}"><span class="am-icon-sign-out"></span> 图书资源<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <ul class="am-list am-collapse admin-sidebar-sub {{$_xfx_book ?? ''}}" id="collapse-book">
+                    <li><a href="{{:Url('/admin/Books/index')}}" class="{{$_book ?? ''}}"><span class="am-icon-book"></span> 图书信息管理</a></li>
+                    <!--<li><a href="{{:Url('/admin/Books/bookorder')}}" class="{{$_book ?? ''}}"><span class="am-icon-book"></span> 图书信息管理</a></li>-->
+                </ul>
+            </li>
             <li><a class="am-cf" data-am-collapse="{target: '#collapse-eduadmin'}"><span class="am-icon-table"></span> 教务管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                 <ul class="am-list am-collapse admin-sidebar-sub {{$_xfx_eduadmin ?? ''}}" id="collapse-eduadmin">
                     <li><a href="/admin/professions" class="{{$_profession ?? ''}}"><span class="am-icon-sign-out"></span> 专业管理</a></li>
@@ -25,8 +32,6 @@
                     <li><a href="/admin/banners" class="{{$_banner ?? ''}}"><span class="am-icon-sign-out"></span> banner轮播图</a></li>
                 </ul>
             </li>
-            <li><a href="javascript:;" class="{{$_face ?? ''}}"><span class="am-icon-pencil-square-o"></span> 面授培训</a></li>
-            <li><a href="javascript:;"><span class="am-icon-sign-out"></span> 图书资源</a></li>
         </ul>
 
         <div class="am-panel am-panel-default admin-sidebar-panel">
