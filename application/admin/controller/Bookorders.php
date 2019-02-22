@@ -56,11 +56,12 @@ class Bookorders extends Common
             if ($request->param('category_id') and $request->param('category_id') != "-1") {
                 $query->where('c.STATUS', $request->param('category_id'));
             }
-            if ($request->param('category_id') =="0" and $request->param('category_id') != "-1"){
+            if ($request->param('category_id') == "0" and $request->param('category_id') != "-1") {
                 $query->where('c.STATUS', $request->param('category_id'));
             }
         };
 
+//        return json($request->param());
 //        $orders = BookOrder::with(['bookorderuser'=>$map])->where($where)->order('CREATTIME DESC')->paginate(10, false, ['query' => request()->param()]);
 //        $orders = BookOrder::with('bookorderuser')->where($where)->order('CREATTIME DESC')->paginate(10, false, ['query' => request()->param()]);
         $orders = DB::table('t_booksorder c')
@@ -70,13 +71,26 @@ class Bookorders extends Common
             ->where($where)
             ->order('CREATTIME DESC')
             ->paginate(10, false, ['query' => request()->param()]);
-
 //        return json($orders);
         $count = $orders->total();
         //返回搜索条件,然后在前端进行 empty +if 判断显示出来
         $condition = $request->param();
+//        return json($condition);
+        //判断是进行导出excel还是展示页面
+//        return json($request->param());
+        if ($orders and $request->param('export') == 'export') {
+            $order = DB::table('t_booksorder c')
+                //设置需要查询的字段,不然主键字段相同
+                ->field('c.*,d.REALNAME,d.PHONE as userPHONE')
+                ->join("t_member d", "c.MEMBERID=d.ID")
+                ->where($where)
+                ->order('CREATTIME DESC')
+                ->select();
+            $this->exportorder($order);
+        } else {
+            return view('bookorder/index', compact('orders', 'count', 'condition'));
+        }
 //        return json($teachers);
-        return view('bookorder/index', compact('orders', 'count', 'condition'));
     }
 
     //更改发货状态
@@ -90,59 +104,18 @@ class Bookorders extends Common
         $status->save();
     }
 
-    public function  exportDayInner(Request $request){
-        return json($request->param());
-        $where = function ($query) use ($request) {
-            //按名称
-            if ($request->param('name') and $request->param('name') != '') {
-                $search = "%" . $request->param('name') . "%";
-                $query->where('c.BOOKNAME', 'like', $search);
-            }
-            //按学员姓名
-            if ($request->param('username') and $request->param('username') != '') {
-                $search = "%" . $request->param('username') . "%";
-                $query->where("d.REALNAME", 'like', $search);
-            }
-            //按学员电话
-            if ($request->param('phone') and $request->param('phone') != '') {
-                $search = "%" . $request->param('phone') . "%";
-                $query->where('c.PHONE', 'like', $search);
-            }
-            //按创建时间
-            if ($request->param('startdate') and $request->param('enddate')) {
-                $query->whereBetweenTime('c.creatTime', $request->param('startdate'), $request->param('enddate'));
-            }
-            if ($request->param('startdate') and $request->param('enddate') == '') {
-                $query->whereTime('c.creatTime', '>=', $request->param('startdate'));
-            }
-            if ($request->param('startdate') == '' and $request->param('enddate')) {
-                $query->whereTime('c.creatTime', '<', $request->param('enddate'));
-            }
-            //按状态
-            if ($request->param('category_id') and $request->param('category_id') != "-1") {
-                $query->where('c.STATUS', $request->param('category_id'));
-            }
-            if ($request->param('category_id') =="0" and $request->param('category_id') != "-1"){
-                $query->where('c.STATUS', $request->param('category_id'));
-            }
-        };
-
-//        $orders = DB::table('t_booksorder c')
+    //导出excel
+    public function exportorder($order)
+    {
+        //导出所有数据
+//        $innerdata = DB::table('t_booksorder c')
 //            //设置需要查询的字段,不然主键字段相同
 //            ->field('c.*,d.REALNAME,d.PHONE as userPHONE')
 //            ->join("t_member d", "c.MEMBERID=d.ID")
-//            ->where($where)
 //            ->order('CREATTIME DESC')
-//            ->paginate(10, false, ['query' => request()->param()]);
-
-        $innerdata = DB::table('t_booksorder c')
-            //设置需要查询的字段,不然主键字段相同
-            ->field('c.*,d.REALNAME,d.PHONE as userPHONE')
-            ->join("t_member d", "c.MEMBERID=d.ID")
-            ->where($where)
-            ->order('CREATTIME DESC')
-            ->select();
+//            ->select();
 //        return json($innerdata);
+
         $table = '';
         $table .= "<table>
             <thead>
@@ -161,18 +134,15 @@ class Bookorders extends Common
                 </tr>
             </thead>
             <tbody>";
-        foreach ($innerdata as $v) {
-            if ($v['STATUS'] ==0){
-                $asd = array($v['STATUS'],'0');
-                $aasd = array($v['STATUS'],'未发货');
-                array_replace($asd,$aasd);
+        foreach ($order as $v) {
+            $status = $v['STATUS'];
+            if ($status == '0') {
+                $text = '未发货';
+                $status = $text;
+            } else {
+                $text = '已发货';
+                $status = $text;
             }
-            if ($v['STATUS'] =='1'){
-                $asd = array($v['STATUS'],'1');
-                $aasd = array($v['STATUS'],'已发货');
-                array_replace($asd,$aasd);
-            }
-//            return json($v);
             $table .= "<tr>
                     <td class='name'>{$v['ID']}</td>
                     <td class='name'>{$v['BOOKNAME']}</td>
@@ -181,18 +151,17 @@ class Bookorders extends Common
                     <td class='name'>{$v['ORDERCODE']}</td>
                     <td class='name'>{$v['REALNAME']}</td>
                     <td class='name'>{$v['userPHONE']}</td>
-                    <td class='name'>{$v['PROVINCE']}</td>
+                    <td class='name'>{$v['PROVINCE']}{$v['CITY']}{$v['AREA']}{$v['DETAILADDRESS']}</td>
                     <td class='name'>{$v['REMARK']}</td>
                     <td class='name'>{$v['creatTime']}</td>
-                    <td class='name'>
-                                {{if '{{$v['STATUS']}}' == 0}}未发货{{else/}}已发货{{/if}}
+                    <td class='name'>{$status}
                             </td>
                 </tr>";
         }
 
         $table .= "</tbody>
         </table>";
-        return json($table);
+//        return json($table);
 //通过header头控制输出excel表格
         header("Pragma: public");
         header("Expires: 0");
@@ -204,6 +173,33 @@ class Bookorders extends Common
         header('Content-Disposition:attachment;filename="图书订单.xls"');
         header("Content-Transfer-Encoding:binary");
         echo $table;
+    }
+
+    public function daochu()
+    {
+//        $head = array('编号','姓名','年龄','出生年月');
+//
+//        $data = array(
+//            array('001','zs',10,'1991-1-1'),
+//            array('002','李四',10,'1991-1-1'),
+//            array('003','王五',10,'1991-1-1'),
+//        );
+//        $this->putCsv('putCsv.csv', $data, $head);
+    }
+
+    public function putCsv($csvFileName, $data, $head = '', $line = 0, $offset = 0)
+    {
+        $handle = fopen($csvFileName, "w");//写方式打开
+        if (!$handle) {
+            return '文件打开失败';
+        }
+        //判断是否定义头标题
+        if (!empty($head)) {
+            $re = fputcsv($handle, $head);//该函数返回写入字符串的长度。若出错，则返回 false。。
+        }
+        foreach ($data as $key => $value) {
+            $re = fputcsv($handle, $value);//该函数返回写入字符串的长度。若出错，则返回 false。。
+        }
     }
 
     /**

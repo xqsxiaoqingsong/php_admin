@@ -12,7 +12,7 @@
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form class="am-form-inline" role="form" method="get">
+                <form class="am-form-inline" role="form" method="get" id="searchorder">
                     <style>
                         .teacher_search_span {
                             font-size: 14px;
@@ -32,6 +32,7 @@
                             text-align: center;
                         }
                     </style>
+                    <input type="hidden" name="export" value="">
                     <div class="am-form-group">
                         <span class="teacher_search_span">图书名称：</span>
                         <input type="text" name="name" class="am-form-field am-input-sm" style="width: 160px"
@@ -68,37 +69,41 @@
                         <select data-am-selected="{btnSize: 'sm'}" name="category_id">
                             <option value=""></option>
                             <option value="-1"
-                            {{empty name='$condition.category_id' }} {{else/}} {{if -1 ==$condition.category_id}} selected {{/if}}{{/empty}}
+                                    {{empty name='$condition.category_id' }} {{else
+                            /}} {{if -1 ==$condition.category_id}} selected {{/if}}{{/empty}}
                             >全部</option>
                             <option value="0"
-                            {{empty name='$condition.category_id' }} {{else/}} {{if 0 ==$condition.category_id}} selected {{/if}}{{/empty}}
+                                    {{empty name='$condition.category_id' }} {{else
+                            /}}{{if '0' ===$condition.category_id}} selected {{/if}}{{/empty}}
                             >未发货</option>
                             <option value="1"
-                            {{empty name='$condition.category_id' }} {{else/}} {{if 1 ==$condition.category_id}} selected {{/if}}{{/empty}}
+                                    {{empty name='$condition.category_id' }} {{else
+                            /}} {{if 1 ==$condition.category_id}} selected {{/if}}{{/empty}}
                             >已发货</option>
-
-
                         </select>
                     </div>
-                    <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
+                    <!--<button type="button" class="am-btn am-btn-default am-btn-sm searchcondition" value="查询">查询</button>-->
+                    <button type="submit" class="am-btn am-btn-default am-btn-sm" value="查询">查询</button>
                     <a href="/admin/Bookorders" class="am-btn am-btn-default am-btn-sm">重置</a>
-                </form>
-                <div class="am-u-sm-12 am-u-md-2" style="margin-top: 2rem">
-                    <div class="am-btn-toolbar">
-                        <div class="am-btn-group am-btn-group-xs">
-                            <a type="button" class="daochu am-btn am-btn-default" href="javascript:;">
-                                <span class="am-icon-sign-out"></span> 导出
-                            </a>
-                            <!--<a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"-->
-                            <!--href="javascript:;">-->
-                            <!--<span class="am-icon-trash-o"></span> 删除-->
-                            <!--</a>-->
-                            <!--<button type="button" class="am-btn am-btn-success" id="show_all">-->
-                            <!--<span class="am-icon-arrows-alt"></span> 展开所有-->
-                            <!--</button>-->
+
+                    <div class="am-u-sm-12" style="margin-top: 2rem">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                <a type="button" class="daochu am-btn am-btn-default" href="javascript:;" value="导出">
+                                    <!--<a type="button" class="am-btn am-btn-default" href="{{:Url('/admin/Bookorders/exportorder')}}">-->
+                                    <span class="am-icon-sign-out" value="导出"></span> 导出
+                                </a>
+                                <!--<a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"-->
+                                <!--href="javascript:;">-->
+                                <!--<span class="am-icon-trash-o"></span> 删除-->
+                                <!--</a>-->
+                                <!--<button type="button" class="am-btn am-btn-success" id="show_all">-->
+                                <!--<span class="am-icon-arrows-alt"></span> 展开所有-->
+                                <!--</button>-->
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -112,8 +117,8 @@
                                                                                                  data-am-ucheck
                                                                                                  class="checked_all"/></label>
                             </th>
-                            <th style="width: 5%" class="table-id">编号</th>
-                            <th style="width: 20%;">图书名称</th>
+                            <th class="table-id">编号</th>
+                            <th>图书名称</th>
                             <th>订单详情</th>
                             <th>数量</th>
                             <th>支付订单号</th>
@@ -249,7 +254,7 @@
                     },
                     success: function () {
                         _this.toggleClass('am-btn-success am-btn-danger');
-                        if (content =="未发货"){
+                        if (content == "未发货") {
                             _this.html("已发货");
                         } else {
                             _this.html("未发货");
@@ -260,36 +265,29 @@
             return false;
         })
 
+        //
+        $(".searchcondition").click(function () {
+            var res =$(this).val();
+            if (res == "查询"){
+                $("#searchorder").submit();
+            }else {
+                return false
+            }
+        })
+        //导出提交from表单
         $(".daochu").click(function () {
-            // var id='';
-            // var url = window.location.search;
-            // if(url.indexOf("?")!=-1)
-            // {
-            //     var str = url.substr(1)
-            //     strs = str.split("&");
-            //     for(i=0;i<strs.length;i++)
-            //     {
-            //         if([strs[i].split("=")[0]]=='id') id=unescape(strs[i].split("=")[1]);
-            //     }
-            // }
-
-            if (confirm('确定要更改上下架状态吗?')) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/admin/Bookorders/exportDayInner/',
-                    data: {
-                        attr: "{{$orders}}",
-                    },
-                    success: function (data) {
-                        console.log(data);return;
-                        _this.toggleClass('am-btn-success am-btn-danger');
-                        if (content =="未发货"){
-                            _this.html("已发货");
-                        } else {
-                            _this.html("未发货");
-                        }
-                    }
-                })
+            if (confirm('确定要导出吗')) {
+                var str = $(this).attr('value');
+                // console.log(str);return;
+                if (str == "导出") {
+                    $("input[name=export]").val('export');
+                    $("#searchorder").submit();
+                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                    },1000);
+                } else {
+                    $("input[name=export]").val('');
+                }
             }
             return false;
         })
