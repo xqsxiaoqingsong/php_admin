@@ -16,4 +16,11 @@ class Banner extends Model
     // 定义时间戳字段名
     protected $createTime = 'PUSHTIME';
 //    protected $updateTime = 'updated_at';
+
+    //直播所属专业
+    public function bannerpro()
+    {
+        return $this->belongsTo('Profession', 'MAJORID', 'ID');
+    }
+
 }

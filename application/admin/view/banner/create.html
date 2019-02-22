@@ -35,6 +35,20 @@
                 <!--</div>-->
                 <!--</div>-->
                 <!--</div>-->
+                <div class="am-g am-margin-top">
+                    <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                        专业方向
+                    </div>
+                    <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                        <select data-am-selected="{btnWidth: '100%',  btnStyle: 'secondary', btnSize: 'sm', maxHeight: 360, searchBox: 1}"
+                                name="majorId" style="display: none;">
+                            <option value="">顶级分类</option>
+                            {{foreach name="categories" id="category"}}
+                            <option value="{{$category.ID}}">{{$category.MAJOR_NAME}}</option>
+                            {{/foreach}}
+                        </select>
+                    </div>
+                </div>
 
                 <div class="am-g am-margin-top">
                     <div class="am-u-sm-4 am-u-md-2 am-text-right">

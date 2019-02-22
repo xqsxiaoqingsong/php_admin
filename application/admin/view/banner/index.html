@@ -54,6 +54,7 @@
                         <tr>
                             <th style="width: 10%" class="table-id">编号</th>
                             <th style="width: 20%;">名称</th>
+                            <th>专业方向</th>
                             <th>缩略图</th>
                             <!--<th>MAJORID</th>-->
                             <!--<th>CONTENTURL</th>-->
@@ -67,6 +68,7 @@
                         <tr data-id="{{$banner.ID}}" class="xParent">
                             <td>{{$banner.ID}}</td>
                             <td>{{$banner.BANNERNAME}}</td>
+                            <td>{{$banner.bannerpro.MAJOR_NAME}}</td>
                             <td><img src="{{$banner.IMGURL}}" alt="" width="100"></td>
                             <!--<td>{{$banner.MAJORID}}</td>-->
                             <!--<td>{{$banner.CONTENTURL}}</td>-->
