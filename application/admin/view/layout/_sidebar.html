@@ -19,7 +19,7 @@
             <li><a class="am-cf" data-am-collapse="{target: '#collapse-book'}"><span class="am-icon-sign-out"></span> 图书资源<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                 <ul class="am-list am-collapse admin-sidebar-sub {{$_xfx_book ?? ''}}" id="collapse-book">
                     <li><a href="{{:Url('/admin/Books/index')}}" class="{{$_book ?? ''}}"><span class="am-icon-book"></span> 图书信息管理</a></li>
-                    <!--<li><a href="{{:Url('/admin/Books/bookorder')}}" class="{{$_book ?? ''}}"><span class="am-icon-book"></span> 图书信息管理</a></li>-->
+                    <li><a href="{{:Url('/admin/Bookorders/index')}}" class="{{$_bookorder ?? ''}}"><span class="am-icon-book"></span> 图书订单管理</a></li>
                 </ul>
             </li>
             <li><a class="am-cf" data-am-collapse="{target: '#collapse-eduadmin'}"><span class="am-icon-table"></span> 教务管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>

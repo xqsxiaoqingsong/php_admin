@@ -1,0 +1,298 @@
+{{extend name="layout/application" /}}
+{{block name="content"}}
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">图书订单管理</strong>
+                <!--<small>Table</small>-->
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <form class="am-form-inline" role="form" method="get">
+                    <style>
+                        .teacher_search_span {
+                            font-size: 14px;
+                        }
+
+                        .am-selected {
+                            width: 120px;
+                        }
+
+                        .am-table > tbody > tr > td {
+                            line-height: 2.6;
+                            text-align: center;
+                        }
+
+                        .am-table > thead > tr > th {
+                            line-height: 3;
+                            text-align: center;
+                        }
+                    </style>
+                    <div class="am-form-group">
+                        <span class="teacher_search_span">图书名称：</span>
+                        <input type="text" name="name" class="am-form-field am-input-sm" style="width: 160px"
+                               placeholder="图书名称"
+                               value="{{empty name='$condition.name'}}  {{else /}}{{$condition.name}}{{/empty}}">
+                    </div>
+                    <div class="am-form-group">
+                        <span class="teacher_search_span">学员姓名：</span>
+                        <input type="text" name="username" class="am-form-field am-input-sm" style="width: 160px"
+                               placeholder="学员姓名"
+                               value="{{empty name='$condition.username'}}  {{else /}}{{$condition.username}}{{/empty}}">
+                    </div>
+                    <div class="am-form-group">
+                        <span class="teacher_search_span">学员电话：</span>
+                        <input type="text" name="phone" class="am-form-field am-input-sm" style="width: 160px"
+                               placeholder="学员电话"
+                               value="{{empty name='$condition.phone'}}  {{else /}}{{$condition.phone}}{{/empty}}">
+                    </div>
+                    <div class="am-form-group">
+                        <span class="teacher_search_span">创建时间：</span>
+                        <input type="text" class="am-form-field am-input-sm timepicker "
+                               name="startdate"
+                               placeholder="点击选择日期" autocomplete="off"
+                               value="{{empty name='$condition.startdate'}}  {{else /}}{{$condition.startdate}}{{/empty}}">
+                        <i class="am-icon-calendar"></i>&nbsp;----&nbsp;
+                        <input type="text" class="am-form-field am-input-sm timepicker"
+                               name="enddate"
+                               placeholder="点击选择日期" autocomplete="off"
+                               value="{{empty name='$condition.enddate'}}  {{else /}}{{$condition.enddate}}{{/empty}}">
+                        <i class="am-icon-calendar"></i>
+                    </div>
+                    <div class="am-form-group">
+                        <span class="teacher_search_span">状态：</span>
+                        <select data-am-selected="{btnSize: 'sm'}" name="category_id">
+                            <option value=""></option>
+                            <option value="-1"
+                            {{empty name='$condition.category_id' }} {{else/}} {{if -1 ==$condition.category_id}} selected {{/if}}{{/empty}}
+                            >全部</option>
+                            <option value="0"
+                            {{empty name='$condition.category_id' }} {{else/}} {{if 0 ==$condition.category_id}} selected {{/if}}{{/empty}}
+                            >未发货</option>
+                            <option value="1"
+                            {{empty name='$condition.category_id' }} {{else/}} {{if 1 ==$condition.category_id}} selected {{/if}}{{/empty}}
+                            >已发货</option>
+
+
+                        </select>
+                    </div>
+                    <button type="submit" class="am-btn am-btn-default am-btn-sm">查询</button>
+                    <a href="/admin/Bookorders" class="am-btn am-btn-default am-btn-sm">重置</a>
+                </form>
+                <div class="am-u-sm-12 am-u-md-2" style="margin-top: 2rem">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <a type="button" class="daochu am-btn am-btn-default" href="javascript:;">
+                                <span class="am-icon-sign-out"></span> 导出
+                            </a>
+                            <!--<a class="del_all am-btn am-btn-default am-btn-xs delete_all am-text-danger am-hide-sm-only"-->
+                            <!--href="javascript:;">-->
+                            <!--<span class="am-icon-trash-o"></span> 删除-->
+                            <!--</a>-->
+                            <!--<button type="button" class="am-btn am-btn-success" id="show_all">-->
+                            <!--<span class="am-icon-arrows-alt"></span> 展开所有-->
+                            <!--</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <form class="am-form">
+                    <table class="am-table  am-table-hover table-main">
+                        <thead>
+                        <tr>
+                            <th class="table-check"><label class="am-checkbox am-warning"><input type="checkbox"
+                                                                                                 data-am-ucheck
+                                                                                                 class="checked_all"/></label>
+                            </th>
+                            <th style="width: 5%" class="table-id">编号</th>
+                            <th style="width: 20%;">图书名称</th>
+                            <th>订单详情</th>
+                            <th>数量</th>
+                            <th>支付订单号</th>
+                            <th>学员姓名</th>
+                            <th>学员电话</th>
+                            <th>收货地址</th>
+                            <th>备注信息</th>
+                            <th>创建时间</th>
+                            <th>状态</th>
+                            <!--<th style="text-align: left">操作</th>-->
+                            <!--<th class="table-is-show am-hide-sm-only">是否显示</th>-->
+                            <!--<th class="table-sort-order am-hide-sm-only" style="width:8%">排序</th>-->
+                            <!--<th class="table-set">操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{foreach $orders as $order}}
+                        <tr data-id="{{$order.ID}}" class="xParent">
+                            <td><label class="am-checkbox am-warning"><input type="checkbox" class="checked_id"
+                                                                             name="checked_id[]" data-am-ucheck
+                                                                             value="{{$order.ID}}"/></label></td>
+                            <td>{{$order.ID}}</td>
+                            <td>{{$order.BOOKNAME}}</td>
+                            <td>{{$order.STAGEID}}</td>
+                            <td>{{$order.NUMBER}}</td>
+                            <td>{{$order.ORDERCODE}}</td>
+                            <td>{{$order.REALNAME}}</td>
+                            <td>{{$order.PHONE}}</td>
+                            <td>{{$order.PROVINCE}}{{$order.CITY}}{{$order.AREA}}{{$order.DETAILADDRESS}}</td>
+                            <td>{{$order.REMARK}}</td>
+                            <td>{{$order.creatTime|date="Y-m-d H:i"}}</td>
+                            <td data-is_show="STATUS">
+                                {{eq name="order.STATUS" value="1"}}
+                                <a type="button" class="change_is_show am-btn am-btn-success am-radius">已发货</a>
+                                <!--<a type="button" class="change_is_show am-btn am-btn-success am-radius" onclick="javascript:this.innerHTML=(this.innerHTML=='已发货'?'未发货':'已发货')">已发货</a>-->
+                                {{else/}}
+                                <a type="button" class="change_is_show am-btn am-btn-danger am-radius">未发货</a>
+                                <!--<a type="button" class="change_is_show am-btn am-btn-danger am-radius" onclick="javascript:this.innerHTML=(this.innerHTML=='未发货'?'已发货':'未发货')">未发货</a>-->
+                                {{/eq}}
+                            </td>
+                            <!--<td>-->
+                            <!--<div class="am-btn-toolbar">-->
+                            <!--<div class="am-btn-group am-btn-group-xs">-->
+                            <!--<a class="am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                            <!--href="{{:Url('admin/Courses/edit',['id'=>$order.ID])}}">-->
+                            <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
+                            <!--</a>-->
+                            <!--<a class="del am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
+                            <!--href="javascript:;">-->
+                            <!--<span class="am-icon-trash-o"></span> 删除-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                        </tr>
+                        {{/foreach}}
+                        </tbody>
+                    </table>
+                </form>
+                <div class="am-cf">
+                    共 {{:count($orders)}} 条记录
+                    <div class="am-fr">
+                        <ul class="am-pagination">
+                            {{$orders|raw}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="admin-content-footer">
+        <hr>
+        <p class="am-padding-left">© 2019 WHXFX</p>
+    </footer>
+
+</div>
+{{/block}}
+
+{{block name="js"}}
+<!--时间插件-->
+<script src="/vendor/Amazeui/js/amazeui.datetimepicker.min.js"></script>
+<script src="/vendor/Amazeui/js/local/amazeui.datetimepicker.zh-CN.js"></script>
+<script>
+    $(function () {
+        // 时间设置
+        $('.timepicker').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:00',
+            todayBtn: true,
+            autoclose: true,
+            //禁止选择时间
+            // startDate: new Date(),
+            language: 'zh-CN',
+            //最小视图模式
+            // minView: 'month',
+            todayHighlight: true,
+        });
+
+        //全选反选
+        $(".checked_all").click(function () {
+            var checked = $(this).prop('checked');
+            $(".checked_id").prop('checked', checked);
+        })
+
+        // $(".change_is_show").toggle(
+        //     function () {
+        //         var id = $(this).parents('tr').attr('data-id');
+        //         var attr = $(this).parents('td').data('is_show');
+        //         console.log(attr);
+        //     },
+        //     function () {
+        //         var id = $(this).parents('tr').attr('data-id');
+        //         var attr = $(this).parents('td').data('is_show');
+        //         console.log(attr);
+        //     }
+        // );
+
+        //是否显示
+        $(".change_is_show").click(function () {
+            var id = $(this).parents('tr').attr('data-id');
+            var attr = $(this).parents('td').data('is_show');
+            var content = $(this).html();
+            // console.log(content);return
+            var _this = $(this);
+
+            if (confirm('确定要更改上下架状态吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Bookorders/change_show/' + id,
+                    data: {
+                        id: id,
+                        attr: attr
+                    },
+                    success: function () {
+                        _this.toggleClass('am-btn-success am-btn-danger');
+                        if (content =="未发货"){
+                            _this.html("已发货");
+                        } else {
+                            _this.html("未发货");
+                        }
+                    }
+                })
+            }
+            return false;
+        })
+
+        $(".daochu").click(function () {
+            // var id='';
+            // var url = window.location.search;
+            // if(url.indexOf("?")!=-1)
+            // {
+            //     var str = url.substr(1)
+            //     strs = str.split("&");
+            //     for(i=0;i<strs.length;i++)
+            //     {
+            //         if([strs[i].split("=")[0]]=='id') id=unescape(strs[i].split("=")[1]);
+            //     }
+            // }
+
+            if (confirm('确定要更改上下架状态吗?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Bookorders/exportDayInner/',
+                    data: {
+                        attr: "{{$orders}}",
+                    },
+                    success: function (data) {
+                        console.log(data);return;
+                        _this.toggleClass('am-btn-success am-btn-danger');
+                        if (content =="未发货"){
+                            _this.html("已发货");
+                        } else {
+                            _this.html("未发货");
+                        }
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+{{/block}}
