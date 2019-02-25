@@ -66,12 +66,8 @@ class Activity extends Controller
     {
 //        header("Access-Control-Allow-Origin: http://a.com"); // 允许a.com发起的跨域请求
         header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="推荐承诺书123.doc"; charset=gb2312');
-        header('Content-Transfer-Encoding: binary');
-        header('Access-Control-Expose-Headers: filename=""; charset=gb2312');
-// load the file to send:
-//        readfile('推荐承诺书.doc');
+        header('Access-Control-Expose-Headers: filename="推荐承诺书.doc"');
+
         $download = new \think\response\Download('推荐承诺书.doc');
         return $download->name('推荐承诺书.doc');
     }
