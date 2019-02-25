@@ -16,9 +16,9 @@ class Activity extends Controller
             $name = $request->param('name');
             $phone = $request->param('phone');
             $province = $request->param('province');
-            $majorid = $request->param('majorid');
-            $type = $request->param('type');
-            $activityname = $request->param('activityname');
+            $major = $request->param('major');
+            $type = $request->param('activityType');
+            $activityname = $request->param('activityName');
             $validate = Validate('UserValidate');
             if (!$validate->scene('save')->check($request->param())) {
 //                $this->error($validate->getError());
@@ -36,7 +36,7 @@ class Activity extends Controller
                 'USERNAME' => $name,
                 'PHONE' => $phone,
                 'ADDRESS' => $province,
-                'MAJORID' => $majorid,
+                'MAJORNAME' => $major,
                 'ACTIVITYTYPE' => $type,
                 'ACTIVITYNAME' => $activityname,
             ]);
@@ -45,7 +45,7 @@ class Activity extends Controller
                     'ApiUrl' => 'http://test.xfxerj.com/api/activity/createuserinfo',
                     'Code' => '0',
                     'Data' => array(),
-                    'Msg' => '修改成功',
+                    'Msg' => '添加成功',
                     'Time' => time());
                 return json($info);
             } else {
@@ -53,7 +53,7 @@ class Activity extends Controller
                     'ApiUrl' => 'http://test.xfxerj.com/api/activity/createuserinfo',
                     'Code' => '1',
                     'Data' => array('name' => ''),
-                    'Msg' => '修改失败',
+                    'Msg' => '添加失败',
                     'Time' => time());
                 return json($info);
             }
