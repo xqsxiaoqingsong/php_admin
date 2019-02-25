@@ -64,6 +64,7 @@ class Activity extends Controller
     //下载文件
     public function downloadfile(Request $request)
     {
+        header("Access-Control-Allow-Origin:*"); // 允许a.com发起的跨域请求
 //        if ($request->isPost()) {
             $download = new \think\response\Download('推荐承诺书.doc');
             return $download->name('推荐承诺书.doc');
