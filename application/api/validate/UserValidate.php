@@ -23,6 +23,7 @@ class UserValidate extends Validate
         'phone' => 'require|mobile',
         'password' => 'require',
         'majorName' => 'require',
+        'name' => 'require',
 //        'TEACHERNAME' => 'require|unique:t_teacher',
         'image' => 'require',
     ];
