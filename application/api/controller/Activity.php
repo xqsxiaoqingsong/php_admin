@@ -69,7 +69,7 @@ class Activity extends Controller
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="推荐承诺书.doc"');
         header('Content-Transfer-Encoding: binary');
-        header('Access-Control-Expose-Headers; filename="推荐承诺书.doc"');
+
 
 // load the file to send:
         readfile('推荐承诺书.doc');
