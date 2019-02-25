@@ -69,10 +69,9 @@ class Activity extends Controller
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="推荐承诺书123.doc"; charset=gb2312');
         header('Content-Transfer-Encoding: binary');
-        header('filename:推荐承诺书.doc;charset=gb2312');
-
+        header('Access-Control-Expose-Headers: filename=""; charset=gb2312');
 // load the file to send:
-        readfile('推荐承诺书.doc');
+//        readfile('推荐承诺书.doc');
         $download = new \think\response\Download('推荐承诺书.doc');
         return $download->name('推荐承诺书.doc');
     }
