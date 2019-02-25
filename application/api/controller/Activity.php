@@ -63,10 +63,10 @@ class Activity extends Controller
     //下载文件
     public function downloadfile(Request $request)
     {
-        if ($request->isPost()) {
+//        if ($request->isPost()) {
             $download = new \think\response\Download('推荐承诺书.doc');
             return $download->name('推荐承诺书.doc');
-        }
+//        }
     }
 
     /**
