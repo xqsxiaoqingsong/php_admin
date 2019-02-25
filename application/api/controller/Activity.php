@@ -41,7 +41,7 @@ class Activity extends Controller
                 'ACTIVITYTYPE' => $type,
                 'ACTIVITYNAME' => $activityname,
             ]);
-            if (false !== $result) {
+            if ($result) {
                 $info = array(
                     'ApiUrl' => 'http://test.xfxerj.com/api/activity/createuserinfo',
                     'Code' => '0',
