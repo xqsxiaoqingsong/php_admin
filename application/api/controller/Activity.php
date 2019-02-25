@@ -12,6 +12,7 @@ class Activity extends Controller
     //添加用户信息
     public function createuserinfo(Request $request)
     {
+        header("Access-Control-Allow-Origin:*"); // 允许a.com发起的跨域请求
         if ($request->isPost()) {
             $name = $request->param('name');
             $phone = $request->param('phone');
