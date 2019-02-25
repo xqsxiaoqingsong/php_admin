@@ -20,7 +20,7 @@ class UserValidate extends Validate
         'MAJOR_NAME' => 'require',
         'realName' => 'require',
         'memberName' => 'require',
-        'phone' => 'require|mobile|unique:t_member',
+        'phone' => 'require|mobile',
         'password' => 'require',
         'majorName' => 'require',
 //        'TEACHERNAME' => 'require|unique:t_teacher',
