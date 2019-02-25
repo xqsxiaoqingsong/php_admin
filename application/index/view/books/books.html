@@ -1,0 +1,100 @@
+{include file='public/header'}
+
+<link rel="stylesheet" href="/static/css/books.css">
+
+    <!-- 面包屑路径导航 -->
+    <div class="breadcrumb-path">
+      <div class="wrap">
+        <ol class="breadcrumb">
+          <li><a href="/index.html">首页</a></li>
+          <li class="active">图书资源</li>
+        </ol>
+      </div>
+    </div>
+    <!-- 筛选区域 -->
+    <div class="filter">
+      <ul class="wrap">
+        <li class="filter-group">
+          <b>图书类别：</b>
+          <div class="btn-group js-major-type" data-toggle="buttons">
+            <label class="btn btn-custom-nostyle {if condition="$type eq '0'"/}active{/if}" onclick="goToUrl('/books/0/{$majorId}')">
+              <input type="radio" name="books-type" value="0" id="option1" autocomplete="off"> 全部
+            </label>
+            <label class="btn btn-custom-nostyle {if condition="$type eq '1'"/}active{/if}"  onclick="goToUrl('/books/1/{$majorId}')">
+              <input type="radio" name="books-type" id="option2" autocomplete="off"> 图书
+            </label>
+            <label class="btn btn-custom-nostyle {if condition="$type eq '2'"/}active{/if}"  onclick="goToUrl('/books/2/{$majorId}')">
+              <input type="radio" name="books-type" id="option3" autocomplete="off"> 学习包
+            </label>
+          </div>
+        </li>
+        <li class="filter-group">
+          <b>图书内容：</b>
+          <div class="btn-group js-major-id" data-toggle="buttons">
+            <label class="btn btn-custom-nostyle {if condition="!$majorId"/}active{/if}" onclick="goToUrl('/books/{$type}/0')">
+            <input type="radio" name="options" value="0" >全部
+            </label>
+            {volist name="dataMajorList" id="vo" /}
+            <label class="btn btn-custom-nostyle {if condition="$majorId eq $vo['id']"/}active{/if}"  onclick="goToUrl('/books/{$type}/{$vo.id}')">
+            <input type="radio" name="options" value="{$vo.id}"  > {$vo.majorName}
+            </label>
+            {/volist}
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- 列表区域 -->
+    <div class="content-list">
+      <div class="row wrap js-col-box">
+        {volist name="list" id="vo"/}
+        <div class="col-md-3 js-col-item">
+          <div class="content-col">
+            <div class="imgbox">
+              <a href="/bookDetail/{$vo.id}"><img src="{$vo.imgUrl}"></a>
+            </div>
+            <div class="col-des">
+              <h4 class="title">{$vo.bookName}</h4>
+              <div class="price">
+                <b class="real-price">
+                  <span class="real-price-number">售价：￥{$vo.realPrice}</span>
+                </b>
+                <a href="/bookDetail/{$vo.id}" target="_blank"><span class="class-number">了解详情</span></a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        {/volist}
+      </div>
+
+      <!-- 空数据区域 -->
+      <div class="blank">
+        <p>暂无数据</p>
+      </div>
+      <!-- 分页 -->
+      <div class="paginationBar">
+        <div class="wrap">
+          <div aria-label="Page navigation" class="page-navigation">
+            <div class="pagination clearfix">
+              {:trim($plistpage,'"')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- footer -->
+
+{include file='public/footer'}
+
+  </div>
+  <script src="/static/js/commonJs/jquery-1.9.1.min.js"></script>
+  <!--<script src="../js/commonJs/jQuery.XDomainRequest.js"></script>-->
+  <script src="/static/js/commonJs/bootstrap-3.3.7.min.js"></script>
+  <script src="/static/js/commonJs/jquery.pagination.js"></script>
+  <script src="/static/js/commonJs/jquery.validate.js"></script>
+  <script src="/static/js/commonJs/common.js"></script>
+  <script src="/static/js/books.js"></script>
+</body>
+
+</html>

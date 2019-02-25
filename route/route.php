@@ -9,11 +9,31 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+Route::domain('qwe','index');
 
-Route::get('hello/:name', 'index/hello');
+Route::get('tcmspecialty/:major/:major_name/:id', 'index/theme');
+/*Route::controller('Index','index/index');*/
+Route::get('register','login/register');
+
+Route::post('login','login/login');
+Route::post('logout','login/logout');
+
+Route::get('live/:id','live/index');
+Route::get('liveDetail/:id','live/liveDetail');
+Route::get('livePlay/:liveId/:liveClassId','live/livePlay');
+
+Route::get('online/:id','online/index');
+Route::get('onlineDetail/:id','online/onlineDetail');
+
+Route::get('ftf/:id','ftf/index');
+Route::get('ftfDetail/:id','ftf/detail');
+
+
+Route::get('books/:type/:id','books/index');
+Route::get('bookDetail/:id','books/bookDetail');
+Route::get('examination/majorid/:id','examination/index');
+Route::get('ftf/majorid/:id','ftf/index');
+
 
 return [
 

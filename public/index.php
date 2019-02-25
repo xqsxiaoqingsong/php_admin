@@ -18,7 +18,6 @@ require __DIR__ . '/../thinkphp/base.php';
 //定义应用目录
 define('EXTEND_PATH','../extend');
 
-
 // 支持事先使用静态方法设置Request对象和Config对象
 
 // 执行应用并响应

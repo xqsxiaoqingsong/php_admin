@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新方向直播间</title>
+    <script src="/static/js/commonJs/jquery-1.9.1.min.js"></script>
+
+</head>
+<body>
+<iframe id="iFrameForVideo" width="100%" height="90%" src="" frameborder="0"></iframe>
+<script type="text/javascript">
+    $(function(){
+        var url="{$live_subject.url_for_student_enter_room}";
+        var nickName="{$nickname}";
+        var token="{$live_subject.student_web_token_for_room|MD5=###}";
+        var fullUrl=url+"?token="+token+"&nickname="+nickName+"&sec=md5&uid="+"{$genseeUid}";
+        document.getElementById('iFrameForVideo').src=fullUrl;
+    })
+</script>
+</body>
+
+</html>

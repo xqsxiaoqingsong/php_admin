@@ -1,0 +1,137 @@
+{include file='public/header'}
+
+<link rel="stylesheet" href="/static/css/online.css">
+<link rel="stylesheet" href="/static/css/commonCss/iconfont/iconfont.css">
+
+    <!-- 面包屑路径导航 -->
+    <div class="breadcrumb-path">
+      <div class="wrap">
+        <ol class="breadcrumb">
+          <li><a href="/">首页</a></li>
+          <li class="active">线上课程</li>
+        </ol>
+      </div>
+    </div>
+    <!-- 筛选区域 -->
+    <div class="filter">
+      <ul class="wrap">
+        <li class="filter-group">
+          <b>课程筛选：</b>
+          <span class="total-number">共找到{:count($list)}门课</span>
+          </span>
+        </li>
+        <li class="filter-group">
+          <b>课程内容：</b>
+          <div class="btn-group js-major-id" data-toggle="buttons">
+             <label class="btn btn-custom-nostyle {if condition="!$majorId"/}active{/if}" onclick="goToUrl('/online')">
+              <input type="radio" name="options" value="0" >全部
+            </label>
+
+            {volist name="dataMajorList" id="vo" /}
+            <label class="btn btn-custom-nostyle {if condition="$majorId eq $vo['id']"/}active{/if}"  onclick="goToUrl('/online/{$vo.id}')">
+              <input type="radio" name="options" value="{$vo.id}"  > {$vo.majorName}
+            </label>
+            {/volist}
+          </div>
+        </li>
+<!--
+        <li class="filter-group">
+          <b>课程价格：</b>
+          <div class="btn-group js-charge-type" data-toggle="buttons">
+            <label class="btn btn-custom-nostyle active" data-id="全部">
+              <input type="radio" name="options" id="option1" autocomplete="off" checked> 全部
+            </label>
+            <label class="btn btn-custom-nostyle" data-id="收费">
+              <input type="radio" name="options" id="option2" autocomplete="off"> 收费
+            </label>
+            <label class="btn btn-custom-nostyle" data-id="免费">
+              <input type="radio" name="options" id="option3" autocomplete="off"> 免费
+            </label>
+          </div>
+        </li>
+-->
+      </ul>
+    </div>
+    <!-- 列表区域 -->
+    <div class="content-list">
+      <div class="row wrap js-col-box">
+
+        {volist name="list" id="vo"/}
+        <div class="col-md-3 js-col-item">
+          <div class="content-col">
+            <div class="imgbox">
+                <a class="title" target="_blank" href="/onlineDetail/{$vo.id}">
+                    <img src="{$vo.imgUrl}">
+                </a>
+            </div>
+            <div class="col-des">
+              <a class="title" target="_blank" href="/onlineDetail/{$vo.id}">{$vo.courseName}</a>
+              <div class="price clearfix">
+                <b class="real-price">
+                  <span class="real-price-number">{$vo.price}</span>
+                </b>
+                <span class="class-number">课时：{$vo.classHour}</span>
+              </div>
+              <div class="main-speaker">
+                <span class="speaker">讲师：{$vo.speaker}</span>
+                <span class="learn-members">{$vo.studyNumber}人在学</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/volist}
+        <!-- <div class="col-md-3 js-col-item">
+          <div class="content-col">
+            <div class="imgbox">
+              <img src="../images/online.jpeg">
+            </div>
+            <div class="col-des">
+              <a class="title">【伴读通关班】2019执业中药师新题课-药一</a>
+              <div class="price clearfix">
+                <b class="real-price">
+                  <span class="real-price-number">￥399</span>
+                </b>
+                <span class="original-price">￥268</span>
+                <span class="class-number">课时:32</span>
+              </div>
+              <div class="main-speaker">
+                <span class="speaker">主讲人：新方向精品讲师</span>
+                <span class="learn-members">16人在学</span>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+      </div>
+    </div>
+    <!-- 空数据区域 -->
+    <div class="blank">
+      <p>暂无数据</p>
+    </div>
+
+    <!-- 分页 -->
+    <div class="paginationBar">
+      <div class="wrap">
+        <div aria-label="Page navigation" class="page-navigation">
+          <div class="pagination clearfix">
+            {:trim($plistpage,'"')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+{include file='public/footer'}
+
+
+</div>
+  <script src="/static/js/commonJs/jquery-1.9.1.min.js"></script>
+  <script src="/static/js/commonJs/bootstrap-3.3.7.min.js"></script>
+  <script src="/static/js/commonJs/jquery.pagination.js"></script>
+  <script src="/static/js/commonJs/jquery.validate.js"></script>
+  <script src="/static/js/commonJs/common.js"></script>
+  <script src="/static/js/online.js"></script>
+
+</body>
+
+</html>

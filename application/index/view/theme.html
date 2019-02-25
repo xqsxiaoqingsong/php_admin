@@ -1,0 +1,306 @@
+{include file='public/theme_header'}
+<link rel="stylesheet" href="/static/css/theme.css">
+
+<!-- 面包屑路径导航 -->
+    <div class="breadcrumb-path">
+      <div class="wrap">
+        <ol class="breadcrumb">
+          <li><a href="/">首页</a></li>
+          <li class="active">{$majorName}</li>
+        </ol>
+      </div>
+    </div>
+
+    {notempty name='banners' /}
+    <!-- banner -->
+    <div class="banner">
+      <div class="row wrap ">
+        <!-- 轮播图 -->
+        <div class="col-md-12">
+          <div id="banner" class="carousel slide " data-ride="carousel">
+            <div class="carousel-inner js-banner-box" role="listbox">
+              {volist name='banners' id='vo' /}
+              <div class="item {if condition='$key eq 0'/}active{/if}">
+                <div class="imgbox">
+                  <img src="{$vo.imgUrl}" title="{$vo.bannerName}" data-contentUrl="{$vo.contentUrl}" data-majorId="{$vo.majorId}">
+                </div>
+              </div>
+              {/volist}
+            </div>
+            <!-- 左右控制 -->
+            <span class="iconfont icon-xiangzuo " href="#banner" role="button" data-slide="prev">
+            </span>
+            <span class="iconfont icon-xiangyou " href="#banner" role="button" data-slide="next">
+            </span>
+            <!-- 空数据区域 -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {/notempty}
+
+    <!-- 直播教室、面授培训、考务资讯、列表区域 -->
+    <div class="content-list">
+      <div class="row wrap clearfix">
+        <div class="left-box">
+          <!-- 直播教室 -->
+          <div class="live-left clearfix">
+            <div class="col-md-12">
+              <div class="top clearfix">
+                <span class="bg">直播教室</span>
+                <span class="more pull-right"><a href="/live/majorid/{$majorId}">更多></a></span>
+              </div>
+            </div>
+            <!-- 列表3个item -->
+              {notempty name="lives"/}
+
+              <div class="col-md-12 js-live-box no-padding">
+                {volist name="lives" id="vo" /}
+                      <div class="col-md-4 js-live-item">
+                        <div class="content-col">
+                          <div class="imgbox">
+                              <a href="/live/{$vo.id}" target="_blank">
+                                    <img src="{$vo.imgUrl}">
+                              </a>
+                          </div>
+                          <div class="col-des">
+                            <a class="title" target="_blank" href="/live/{$vo.id}">{$vo.liveRoomName}</a>
+                            <div class="price clearfix">
+                              <b class="real-price">
+                                <span class="real-price-number">{$vo.speaker}</span>
+                              </b>
+                              <span class="original-price"></span>
+                              <span class="class-number">课时:{$vo.classHour}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                {/volist}
+            </div>
+            {else/}
+            <!-- 空数据区域 -->
+            <div class="blank">
+              <p>暂无数据</p>
+            </div>
+
+              {/notempty}
+
+          </div>
+          <!-- 面授培训 -->
+          <div class="ftf-content content-list">
+            <div class="col-md-12">
+              <div class="top clearfix">
+                <span class="bg">面授培训</span>
+                <span class="more pull-right"><a href="/ftf/majorid/{$majorId}" target="_blank">更多></a></span>
+              </div>
+            </div>
+
+              {notempty name="ftfs"/}
+            <div class="col-md-12 no-padding js-ftf-box">
+                {volist name="ftfs" id="vo" length="3"/}
+                  <div class="col-md-4 js-ftf-item">
+                    <div class="content-col">
+                      <div class="imgbox">
+                        <img src="{$vo.pictureUrl}">
+                      </div>
+                      <div class="col-des">
+                        <a class="title" target="_blank" href="/ftf/{$vo.id}">{$vo.courseName}</a>
+                        <div class="price clearfix">
+                          <b class="real-price">
+                            <span class="real-price-number">¥{$vo.activityPrice}</span>
+                          </b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {/volist}
+            </div>
+              {else/}
+            <!-- 空数据区域 -->
+            <div class="blank">
+              <p>暂无数据</p>
+            </div>
+              {/notempty}
+          </div>
+        </div>
+        <!-- 考务动态 -->
+        <div class=" right-exam">
+          <div class="top">
+            <span class="bg">考务动态</span>
+            <span class="more pull-right"><a href="/examination/majorid/{$majorId}"></a>更多></span>
+          </div>
+          <div class="exam-content">
+              {notempty name="examinations"/}
+            <ul class="exam-list js-exam-box">
+                {volist name="examinations" id="vo"/}
+                <li class="exam-item js-exam-item">
+                <span class="title">报考动态</span>
+                <a href="/examination/{$vo.id}" class="des" target="_blank">{$vo.ziXunName}</a>
+                {if condition="$key lt 3" /}
+                <span class="status-tips">HOT</span>
+                {/if}
+              </li>
+                {/volist}
+            </ul>
+              {else/}
+            <!-- 空数据区域 -->
+            <div class="blank">
+              <p>暂无数据</p>
+            </div>
+              {/notempty}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 推荐课程 -->
+    <div class="content-list online-content">
+      <div class="row wrap ">
+        <div class="col-md-12">
+          <div class="top">
+            <span class="bg">推荐课程</span>
+            <span class="more pull-right"><a href="/online/majorid/{$majorId}">更多></a></span>
+          </div>
+        </div>
+
+        {notempty name="onlines" /}
+        <div class="col-md-12 no-padding js-online-box">
+          {volist name="onlines" id="vo"/}
+          <div class="col-md-3 js-online-item">
+            <div class="content-col">
+              <div class="imgbox">
+                  <a href="/online/{$vo.id}" target="_blank"><img src="{$vo.imgUrl}"></a>
+              </div>
+              <div class="col-des">
+                <a class="title" target="_blank" href="/online/{$vo.id}">{$vo.courseName}</a>
+                <div class="price clearfix">
+                  <b class="real-price">
+                    <span class="real-price-number">{$vo.price}</span>
+                  </b>
+                  <span class="class-number">课时:{$vo.classHour}</span>
+                </div>
+                <div class="main-speaker">
+                  <span class="speaker">主讲人:{$vo.speaker}</span>
+                  <span class="learn-members">{$vo.studyNumber}人在学</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/volist}
+        </div>
+        {else/}
+        <!-- 空数据区域 -->
+        <div class="blank">
+          <p>暂无数据</p>
+        </div>
+        {/notempty}
+      </div>
+    </div>
+
+    <!-- 推荐图书 -->
+    <div class="content-list book-content">
+      <div class="row wrap ">
+        <div class="col-md-12">
+          <div class="top">
+            <span class="bg">推荐图书</span>
+            <span class="more pull-right"><a href="/books/majorid/{$majorId}" target="_blank">更多</a>></span>
+          </div>
+        </div>
+
+          {notempty name="books" /}
+        <div class="col-md-12 no-padding js-book-box">
+            {volist name="books" id="vo"/}
+              <div class="col-md-3 js-book-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                      <a href="/books/{$vo.id}" target="_blank"><img src="{$vo.imgUrl}"></a>
+                  </div>
+                  <div class="col-des">
+                    <a class="title" target="_blank" href="/books/{$vo.id}">{$vo.bookName}</a>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">¥{$vo.realPrice}</span>
+                        <span class="check-detail-book"><a href="/books/{$vo.id}" target="_blank">查看详情</a></span>
+                      </b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {/volist}
+
+        </div>
+          {else/}
+        <!-- 空数据区域 -->
+        <div class="blank">
+          <p>暂无数据</p>
+        </div>
+          {/notempty}
+      </div>
+    </div>
+
+    <!-- 金牌名师 -->
+    <div class="content-list teacher-list">
+      <div class="row wrap ">
+        <div class="col-md-12">
+          <div class="top">
+            <span class="bg">推荐名师</span>
+          </div>
+        </div>
+        <!-- 轮播图 -->
+
+          {notempty name="teachers"/}
+        <div class="col-md-12 teacher-carousel no-padding">
+          <div id="carousel-teacher" class="carousel slide " data-ride="carousel">
+            <div class="carousel-inner js-teacher-box" role="listbox">
+                {volist  name="teachers" id="vo"  key="kk"/}
+                  <div class="item {if condition='$kk eq 1'/}active{/if}">
+                      {volist name="vo" id="v"}
+                    <div class="col-md-3 js-teacher-item">
+                      <div class="content-col">
+                        <div class="imgbox">
+                          <img src="{$v.imgUrl}">
+                        </div>
+                        <div class="col-des">
+                          <a class="name">{$v.teacherName}</a>
+                          <div class="des">
+                            <a> {$v.brief|msubstr=0,32,'utf-8'}</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      {/volist}
+                  </div>
+                {/volist}
+            </div>
+            <!-- 左右控制 -->
+            <span class="iconfont icon-xiangzuo " href="#carousel-teacher" role="button" data-slide="prev">
+            </span>
+            <span class="iconfont icon-xiangyou " href="#carousel-teacher" role="button" data-slide="next">
+            </span>
+
+          </div>
+        </div>
+          {else/}
+          <!-- 空数据区域 -->
+          <div class="blank">
+              <p>暂无数据</p>
+          </div>
+          {/notempty}
+      </div>
+    </div>
+
+    <!-- footer -->
+{include file='public/footer'}
+
+
+</div>
+  <script src="/static/js/commonJs/jquery-1.9.1.min.js"></script>
+  <script src="/static/js/commonJs/bootstrap-3.3.7.min.js"></script>
+  <script src="/static/js/commonJs/jquery.validate.js"></script>
+  <script src="/static/js/commonJs/common.js"></script>
+  <script src="/static/js/theme.js"></script>
+</body>
+
+</html>

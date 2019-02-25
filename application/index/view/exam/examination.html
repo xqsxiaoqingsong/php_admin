@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>武汉新方向教育-考务动态</title>
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <link href="../css/commonCss/bootstrap.css" rel="stylesheet">
+
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../css/commonCss/common.css">
+  <link rel="stylesheet" href="../css/examination.css">
+  <link rel="stylesheet" href="../css/commonCss/iconfont/iconfont.css">
+</head>
+
+<body>
+  <!-- 登录弹出框 -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body-wrap">
+            <div class="touxiang">
+              <img src="../assets/imgs/logo1.png" alt>
+            </div>
+            <div class="join-group">
+                <a href="./joinGroup.html">加盟</a> 
+              </div>
+            <div class="login-form">
+              <form id="js-loginForm" class="form-horizontal">
+                <div class="form-group">
+                  <div class="form-input-box">
+                    <input type="text" class="form-control" name="phoneNumber" placeholder="请输入手机号" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-input-box">
+                    <input type="password" class="form-control" name="password" placeholder="请输入密码" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class=" col-sm-6">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="rem-psd"> 记住密码
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div>
+                      <a href="./findPassword.html" class="btn btn-link">忘记密码？</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary login-btn">登录</button>
+                </div>
+                <div class="form-group">
+                  <a href="./register.html" class="btn btn-default resgist-btn">没有账号，立即注册</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+
+      </div>
+      <!-- 登录失败 -->
+      <div class="alert alert-danger" role="alert">手机号或密码错误</div>
+    </div>
+  </div>
+  <!-- 退出登录确认框 -->
+  <div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <p class="msg">确定退出？</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary logout-confirm-btn">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid ">
+    <!-- 顶部 -->
+    <div class="toolBar">
+      <div class="wrap row">
+        <div class="col-md-2 branch-school">
+          <span>全国分校&nbsp;<span class="iconfont icon-xiangxia"></span></span>
+        </div>
+        <div class="col-md-2 top-app">
+          <span>新方向教育APP</span>
+          <div class="top-erweima">
+            <img src="../assets/imgs/top-app.png">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <span><span class="iconfont icon-dianhua"></span>&nbsp;客服电话：400-105-8699</span>
+        </div>
+        <div class="pull-right top-join-group">
+            <a href="./joinGroup.html">分校加盟</a>
+          </div>
+        <div class="col-md-4 pull-right">
+          <div class="logout-bar">
+            <span class="user-name"></span>
+            <span class="user-center-bar">
+              <span class="user-center-btn">个人中心
+                <i class="iconfont icon-xiangxia"></i>
+              </span>
+              <ul class="user-center-menu">
+                <li><a href="./usrMsg.html" class="user-msg">消息</a></li>
+                <li><a href="./userStudyRecord.html" class="user-study-center">学习中心</a></li>
+              </ul>
+            </span>
+            <em>|</em>
+            <span class="logout" data-toggle="modal" data-target="#logout-modal">退出</span>
+          </div>
+          <div class="login-bar">
+            <span class="login" data-toggle="modal" data-target="#login-modal">登录</span>
+            <em>|</em>
+            <span class="resgister">
+              <a href="./register.html">注册</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- logo 和 搜索-->
+    <div class="logoBar">
+      <div class="wrap row">
+        <!-- logo区域 -->
+        <div class="col-md-6 logo">
+            <a href="../index.html" class="logoLeft">
+              <img src="../assets/imgs/logo.jpg" alt="">
+            </a>
+          <span class="logoRight">一站式中医药学习服务平台</span>
+        </div>
+        <!-- 搜索框 -->
+        <div class="col-md-4 pull-right logoBarSearch">
+          <form class="">
+            <div class="logoBarSearch">
+              <div class="input-group">
+                <!-- <span class="input-group-addon"> -->
+                <span class="input-group-btn">
+                  <select class="form-control">
+                    <option selected>全部</option>
+                    <option>课程</option>
+                    <option>直播</option>
+                    <option>图书</option>
+                    <option>资讯</option>
+                  </select>
+                  <!-- <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">全部 <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">全部</a></li>
+                      <li><a href="#">课程</a></li>
+                      <li><a href="#">直播</a></li>
+                      <li><a href="#">图书</a></li>
+                      <li><a href="#">资讯</a></li>
+                    </ul>
+                  </div> -->
+                </span>
+                <span class="input-group-btn">
+                  <input type="text" class="form-control" placeholder="乡村百科">
+                </span>
+                <span class="input-group-btn">
+                  <button class="btn btn-default " type="button">搜索</button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- nav导航 -->
+    <div class="navbar navbar-default">
+      <div class="wrap">
+        <ul class="nav-box">
+          <li><a href="../index.html">首页</a></li>
+          <li><a href="./online.html">线上课程</a></li>
+          <li><a href="./live.html">直播教室</a></li>
+          <li><a href="./ftf.html">面授培训</a></li>
+          <li><a href="./books.html">图书资源</a></li>
+          <li><a class="nav-active" href="./examination.html">考务动态</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- 面包屑路径导航 -->
+    <div class="breadcrumb-path">
+      <div class="wrap">
+        <ol class="breadcrumb">
+          <li><a href="../index.html">首页</a></li>
+          <li class="active">考务动态</li>
+        </ol>
+      </div>
+    </div>
+    <!-- 筛选区域 -->
+    <div class="filter">
+      <ul class="wrap">
+        <li class="filter-group">
+          <b>课程筛选：</b>
+          <span class="total-number"></span>
+          </span>
+        </li>
+        <li class="filter-group">
+          <b>资讯类型：</b>
+          <div class="btn-group js-major-type" data-toggle="buttons">
+          </div>
+        </li>
+        <li class="filter-group">
+          <b>专业方向：</b>
+          <div class="btn-group js-major-id" data-toggle="buttons">
+            <!-- <label class="btn btn-custom-nostyle ">
+              <input type="radio" name="options" id="option1" autocomplete="off">全部
+            </label>
+            <label class="btn btn-custom-nostyle">
+              <input type="radio" name="options" id="option2" autocomplete="off"> 中药师
+            </label> -->
+          </div>
+        </li>
+
+      </ul>
+    </div>
+    <!-- 列表区域 -->
+    <div class="content-list">
+      <div class="row wrap ">
+        <div class="left col-md-8">
+          <ul class="js-col-box">
+            <li class="js-col-item">
+              <div class="content-col clearfix">
+                <a class="title" href="javascript:;">2019年哪些人能报考中医助理医师资格考试？</a>
+                <p class="col-des">参加中医执业助理医师资格考试的考生分为二类，一类是具有国家承认学历的高中等中医药院校毕业生；一类是国家认可的以师承方式学习的人员。</p>
+                <div class="bottom pull-right">
+                  <span class="time">2018-12-07 18:43:00</span>
+                  <span class="author">新方向</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- 空数据区域 -->
+          <div class="blank">
+            <p>暂无数据</p>
+          </div>
+
+          <!-- 分页 -->
+          <div class="paginationBar">
+            <div aria-label="Page navigation" class="page-navigation">
+              <div class="pagination clearfix">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- 右侧推荐 -->
+        <div class="right col-md-3 pull-right">
+          <div class="recommend">
+            <div class="header">
+              <span>面授推荐:</span>
+            </div>
+            <div class="row right-content js-col-box">
+              <div class="col-md-12 js-col-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                    <img src="../images/online.jpeg">
+                  </div>
+                  <div class="col-des">
+                    <h4 class="title">【伴读通关班】2019执业中药师新题课-药一</h4>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">￥399</span>
+                      </b>
+                      <span class="original-price">￥268</span>
+                      <span class="class-number">课时:32</span>
+                    </div>
+                    <div class="main-speaker">
+                      <span class="speaker">主讲人：新方向精品讲师</span>
+                      <span class="learn-members">16人在学</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 js-col-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                    <img src="../images/online.jpeg">
+                  </div>
+                  <div class="col-des">
+                    <h4 class="title">【伴读通关班】2019执业中药师新题课-药一</h4>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">￥399</span>
+                      </b>
+                      <span class="original-price">￥268</span>
+                      <span class="class-number">课时:32</span>
+                    </div>
+                    <div class="main-speaker">
+                      <span class="speaker">主讲人：新方向精品讲师</span>
+                      <span class="learn-members">16人在学</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 js-col-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                    <img src="../images/online.jpeg">
+                  </div>
+                  <div class="col-des">
+                    <h4 class="title">【伴读通关班】2019执业中药师新题课-药一</h4>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">￥399</span>
+                      </b>
+                      <span class="original-price">￥268</span>
+                      <span class="class-number">课时:32</span>
+                    </div>
+                    <div class="main-speaker">
+                      <span class="speaker">主讲人：新方向精品讲师</span>
+                      <span class="learn-members">16人在学</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- footer -->
+  <div class="footer">
+    <div class="wrap">
+      <div class="footerContent row">
+        <div class="col-md-6 footerLi">
+          <div class="row">
+            <div class="col-md-3 col-md-offset-3 footer-img">
+              <img src="../assets/imgs/zhongyi.jpg">
+            </div>
+            <div class="col-md-6 footer-weixin">
+              <p>微信订阅号：</p>
+              <p class="footer-weixin-group">新方向中医学堂</p>
+              <p>提供中医从业培训、中医技术学习、中医学术交流等中医行业服务</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 footerLi">
+          <div class="row">
+            <div class="col-md-3 col-md-offset-3 footer-img">
+              <img src="../assets/imgs/jiaoyu.jpg">
+            </div>
+            <div class="col-md-6 footer-weixin">
+              <p>微信服务号：</p>
+              <p class="footer-weixin-group">新方向教育集团</p>
+              <p>提供优质学习和资讯服务，了解新方向最新动态</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 copyright">
+          <p>武汉新方向教育科技有限责任公司 版权所有 鄂ICP备14019396号-2</p>
+          <a class="clearfix" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002782">
+            <img src="../assets/imgs/gongan.png" />
+            <span>鄂公网安备 42011102002782号</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <script src="../js/commonJs/jquery-1.9.1.min.js"></script>
+  <script src="../js/commonJs/bootstrap-3.3.7.min.js"></script>
+  <script src="../js/commonJs/jquery.pagination.js"></script>
+  <script src="../js/commonJs/jquery.validate.js"></script>
+  <script src="../js/commonJs/common.js"></script>
+  <script src="../js/examination.js"></script>
+</body>
+
+</html>

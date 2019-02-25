@@ -1,0 +1,295 @@
+{include file='public/header'}
+<link rel="stylesheet" href="/static/css/liveDetail.css">
+    <link rel="stylesheet" href="/static/css/commonCss/iconfont/iconfont.css">
+
+    <!-- 面包屑路径导航 -->
+    <div class="breadcrumb-path">
+      <div class="wrap">
+        <ol class="breadcrumb">
+          <li><a href="/">首页</a></li>
+          <li><a href="/live">直播教室</a></li>
+          <li class="active">直播详情</li>
+        </ol>
+      </div>
+    </div>
+    <!-- 课程详情 -->
+    <div class="buy-content">
+      <div class="row wrap">
+        <div class="img-box col-md-4">
+          <img src="{$liveInfo.liveRoom.imgUrl}" alt="">
+        </div>
+        <div class="buy-des col-md-8">
+          <h4 class="title">{$liveInfo.liveRoom.liveRoomName}</h4>
+          <p>{$liveInfo.liveRoom.brief}</p>
+           <!--<div class="gifts">
+            <b>选择：</b>
+            <div>
+              全部 <input type="checkbox" name="gitf_all">
+              <input type="checkbox" name="gift" id="">
+            </div>
+          </div>-->
+
+          <div class="choose" v-show="classStageList">
+            <div class="radio">
+              类型：
+              <label>
+                <input type="radio" checked="checked" >直播授课</input>
+              </label>
+            </div>
+            <div class="checkbox">
+              <span>选择：</span>
+              <label class="checkbox-inline">
+                <input type="checkbox" name="classCheckAll" id="" >全选 &nbsp;
+              </label>
+              {volist name="$liveInfo['stage']" id="vo"/}
+              <label class="checkbox-inline">
+                <input type="checkbox"  name="classIdChecked" value="{$vo.id}">{$vo.stageName} &nbsp;
+              </label>
+
+              {/volist}
+            </div>
+          </div>
+
+
+          <div class="price-table clearfix">
+            <div class="real-price">¥ {$liveInfo.liveRoom.price}</div>
+            <div class="class-number">课时：{$liveInfo.liveRoom.classHour}</div>
+          </div>
+          <div class="buy-btns clearfix">
+            <button class="btn buy-now">立即购买</button>
+            <button class="btn buy-done" disabled>已购买</button>
+            <button class="btn buy-ask">咨询</button>
+            <span class="teacher"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 课程介绍 -->
+    <div class="online-des">
+      <div class="row wrap">
+        <!-- 左侧列表 -->
+        <div class="left col-md-8">
+          <ul class="left-nav clearfix">
+            <li class="active">直播介绍</li>
+            <li>回看/预告</li>
+          </ul>
+          <div class="left-content">
+            <div class="left-item escape-box" style="display: block">
+              {:trim($liveInfo.liveRoom.details,'"')}
+            </div>
+            <div class="left-item left-list">
+              <ul class="zhibo-list">
+                {volist name="liveClassList" id="vo" /}
+                <li class="zhibo-item">
+                  <div class="zhibo-des">
+                    <span class="zhibo-time ellipsis">{$vo.startDate}</span>
+                    <span class="zhibo-stage ellipsis">{$vo.stageName}</span>
+                    <span class="zhibo-speaker ellipsis">讲师：{$vo.speaker}</span>
+                  </div>
+                  <div class="zhibo-content">
+                    <span class="zhibo-title">{$vo.liveClassName}</span>
+                    <!-- 直播状态state  0预告  1直播中  2本地回放 3直播回放-->
+                    <span class="zhibo-btns">
+                       {if condition="$vo['state'] eq '0'"/}
+                        <button type="button" size="mini" class="btn btn-default" liveId="{$liveId}" isPay="{$vo['isPay'] ? $vo['isPay'] : '0'}" state="{$vo.state}" classid="{$vo.id}">
+                          预告
+                        </button>
+                        {elseif  condition="$vo['state'] eq '1'"/}
+                        <button type="button" size="mini" class="btn btn-primary"  liveId="{$liveId}" isPay="{$vo['isPay'] ? $vo['isPay'] : '0'}" state="{$vo.state}" classid="{$vo.id}">
+                          直播中
+                        </button>
+                        {elseif  condition="$vo['state'] eq '2'"/}
+                        <button type="button" size="mini" class="btn btn-warning"   liveId="{$liveId}" isPay="{$vo['isPay'] ? $vo['isPay'] : '0'}" state="{$vo.state}" classid="{$vo.id}">
+                          回看
+                        </button>
+                        {elseif  condition="$vo['state'] eq '3'"/}
+                        <button type="button" size="mini" class="btn btn-success"   liveId="{$liveId}" isPay="{$vo['isPay'] ? $vo['isPay'] : '0'}" state="{$vo.state}" classid="{$vo.id}">
+                          回看
+                        </button>
+                        {/if}
+                      </span>
+                  </div>
+                </li>
+                {/volist}
+              </ul>
+
+
+
+
+
+              <!-- 空数据区域 -->
+              <div class="blank">
+                <p>暂无数据</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 右侧推荐 -->
+<!--
+        <div class="right col-md-3 pull-right">
+          <div class="recommend">
+            <div class="header">
+              <span>直播推荐</span>
+            </div>
+            <div class="right-content js-col-box">
+              <div class="col-md-12 js-col-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                    <img src="/static/images/online.jpeg">
+                  </div>
+                  <div class="col-des">
+                    <h4 class="title">【伴读通关班】2019执业中药师新题课-药一</h4>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">￥399</span>
+                      </b>
+                      <span class="original-price">￥268</span>
+                      <span class="class-number">课时:32</span>
+                    </div>
+                    <div class="main-speaker">
+                      <span class="speaker">主讲人：新方向精品讲师</span>
+                      <span class="learn-members">16人在学</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 js-col-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                    <img src="/static/images/online.jpeg">
+                  </div>
+                  <div class="col-des">
+                    <h4 class="title">【伴读通关班】2019执业中药师新题课-药一</h4>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">￥399</span>
+                      </b>
+                      <span class="original-price">￥268</span>
+                      <span class="class-number">课时:32</span>
+                    </div>
+                    <div class="main-speaker">
+                      <span class="speaker">主讲人：新方向精品讲师</span>
+                      <span class="learn-members">16人在学</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 js-col-item">
+                <div class="content-col">
+                  <div class="imgbox">
+                    <img src="/static/images/online.jpeg">
+                  </div>
+                  <div class="col-des">
+                    <h4 class="title">【伴读通关班】2019执业中药师新题课-药一</h4>
+                    <div class="price clearfix">
+                      <b class="real-price">
+                        <span class="real-price-number">￥399</span>
+                      </b>
+                      <span class="original-price">￥268</span>
+                      <span class="class-number">课时:32</span>
+                    </div>
+                    <div class="main-speaker">
+                      <span class="speaker">主讲人：新方向精品讲师</span>
+                      <span class="learn-members">16人在学</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+-->
+      </div>
+    </div>
+
+
+{include file='public/footer'}
+
+  </div>
+
+
+  <script src="/static/js/commonJs/jquery-1.9.1.min.js"></script>
+  <script src="/static/js/commonJs/bootstrap-3.3.7.min.js"></script>
+  <script src="/static/js/commonJs/jquery.validate.js"></script>
+  <script src="/static/js/commonJs/common.js"></script>
+  <script src="/static/js/liveDetail.js"></script>
+
+<div class="modal fade" id="videoPlayer_w" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 100%;height: 100%;">
+    <div class="modal-content" style="width: 100%;height: 100%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body" style="width: 100%;height: 100%">
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+
+</body>
+<script>
+    // 课程介绍 选项卡
+    $('.left-nav li').click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $('.left-content .left-item').eq($(this).index()).show().siblings().hide();
+    });
+
+    $(function () {
+        $('.zhibo-btns .btn').click(function (e) {
+            var liveId = $(this).attr('liveId');
+            var id = $(this).attr('classid');
+            var isPay = $(this).attr('isPay');
+            var state = $(this).attr('state');
+            if(isPay == false){
+                e.preventDefault();
+                alert('请先购买课程。');
+                return false;
+            }
+            if(state == '0'){
+                e.preventDefault();
+                alert('直播尚未开始，请稍后。');
+                return false;
+            }
+
+            $.ajax({
+                url: "{:url('Live/checkLiveRole')}",
+                type: "POST",
+                dataType:"json",
+                data: {liveId,id},
+                success: function (res) {
+                    //未登录
+                    if(res.Code == '5'){
+                        $('.login').click();
+                        return false;
+                    }
+                    if(res.Code == '1' || res.Code == '0'){
+                        alert(res.Msg);
+                        return false;
+                    }
+
+                    //直播弹窗
+                    if(res.Code == 3){
+                        var frame_html = "<iframe id=\"iFrameForVideo\" width=\"100%\" height=\"90%\" src="+res.entry.fullUrl+ " frameborder=\"0\"></iframe>\n";
+                        //$('#iFrameForVideo').attr('src',res.entry.fullUrl);
+                        $('#videoPlayer_w .modal-body').html(frame_html);
+                        $('#videoPlayer_w .modal-title').text(res.entry.liveClassName);
+                        $('#videoPlayer_w').modal('show');
+                    }
+
+
+                }
+            })
+        })
+    });
+
+    // 模态窗消失时，关闭视频    
+    $('#videoPlayer_w').on('hidden.bs.modal', function() {
+        //关闭直播
+        $('#videoPlayer_w .modal-body').html('');
+        alert("视频停止播放");
+    });
+</script>
+</html>
