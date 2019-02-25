@@ -67,8 +67,9 @@ class Activity extends Controller
 //        header("Access-Control-Allow-Origin: http://a.com"); // 允许a.com发起的跨域请求
         header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
         header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="推荐承诺书.doc"; charset=utf-8');
+        header('Content-Disposition: attachment; filename="推荐承诺书123.doc"; charset=utf-8');
         header('Content-Transfer-Encoding: binary');
+        header('filename:推荐承诺书.doc');
 
 // load the file to send:
         readfile('推荐承诺书.doc');
