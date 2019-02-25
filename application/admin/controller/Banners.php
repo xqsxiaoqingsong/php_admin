@@ -49,7 +49,7 @@ class Banners extends Common
      */
     public function save(Request $request)
     {
-        return json($request->param());
+//        return json($request->param());
         $validate = Validate('BannerValidate');
         if (!$validate->scene('save')->check($request->param())) {
             $this->error($validate->getError());

@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\api\model\Activityuser;
 use think\Controller;
 use think\Request;
+use think\Validate;
 
 class Activity extends Controller
 {
