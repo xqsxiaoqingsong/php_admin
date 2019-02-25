@@ -6,7 +6,7 @@ use app\api\model\Activityuser;
 use think\Controller;
 use think\Request;
 
-class Activity extends Common
+class Activity extends Controller
 {
     //添加用户信息
     public function createuserinfo(Request $request)
