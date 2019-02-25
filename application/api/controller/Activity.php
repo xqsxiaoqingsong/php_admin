@@ -12,7 +12,7 @@ class Activity extends Controller
     //添加用户信息
     public function createuserinfo(Request $request)
     {
-        if ($request->isPost()){
+        if ($request->isPost()) {
             $name = $request->param('name');
             $phone = $request->param('phone');
             $province = $request->param('province');
@@ -57,6 +57,15 @@ class Activity extends Controller
                     'Time' => time());
                 return json($info);
             }
+        }
+    }
+
+    //下载文件
+    public function downloadfile(Request $request)
+    {
+        if ($request->isPost()) {
+            $download = new \think\response\Download('推荐承诺书.doc');
+            return $download->name('推荐承诺书.doc');
         }
     }
 
