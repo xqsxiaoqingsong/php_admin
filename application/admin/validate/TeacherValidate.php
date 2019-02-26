@@ -39,7 +39,7 @@ class TeacherValidate extends Validate
 
     //场景设置
     protected $scene = [
-        'save' => ['CNMEDICINEMAJORID','TEACHERNAME','PHONE','image','BRIEF'],//添加
-        'update' => ['CNMEDICINEMAJORID','PHONE','image','BRIEF'],//编辑用户
+        'save' => ['CNMEDICINEMAJORID','TEACHERNAME','image','BRIEF'],//添加
+        'update' => ['CNMEDICINEMAJORID','image','BRIEF'],//编辑用户
     ];
 }

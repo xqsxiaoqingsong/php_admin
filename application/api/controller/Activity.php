@@ -73,21 +73,26 @@ class Activity extends Controller
         return $download->name('推荐承诺书.doc');
     }
 
+    //选项卡数据
     public function tabinfo(Request $request)
     {
         header("Access-Control-Allow-Origin:*"); // 允许a.com发起的跨域请求
         if ($request->isPost()) {
             $id = $request->param('id');
-            if ($id){
-                $activitys = Activityinfo::find($id);
-                if (isset($activitys)){
+            if ($id) {
+                $activitys = Activityinfo::field(['title','titletwo','titlethree'],true)->find($id);
+                $titleone = Activityinfo::where('id',$id)->value('title');
+                $titletwo = Activityinfo::where('id',$id)->value('titletwo');
+                $titlethree = Activityinfo::where('id',$id)->value('titlethree');
+                $activitys['infolist'] = array_merge($titleone,$titletwo,$titlethree);
+                if (isset($activitys)) {
                     $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
                         'Code' => '0',
                         'Data' => $activitys,
                         'Msg' => '获取详情成功',
                         'Time' => time());
                     return json($info);
-                }else{
+                } else {
                     $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
                         'Code' => '1',
                         'Data' => '',
@@ -95,7 +100,7 @@ class Activity extends Controller
                         'Time' => time());
                     return json($info);
                 }
-            }else{
+            } else {
                 $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
                     'Code' => '1',
                     'Data' => '',
@@ -106,6 +111,117 @@ class Activity extends Controller
         }
     }
 
+    //选项卡下载
+    //西药1
+    public function xiyaoyi1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaoyi/2018考前最后一卷（西药一）.pdf");
+        return $download->name('2018考前最后一卷（西药一）.pdf');
+
+    }
+
+    public function xiyaoyi2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaoyi/2018年真题（西药一）.pdf");
+        return $download->name('2018年真题（西药一）.pdf');
+    }
+
+    public function xiyaoyi3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaoyi/历年真题.pdf");
+        return $download->name('历年真题（西药一）.pdf');
+    }
+
+    //西药综合
+    public function xiyaozonghe1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaozonghe/西药综合2018考前最后一卷.pdf");
+        return $download->name('西药综合2018考前最后一卷.pdf');
+    }
+
+    public function xiyaozonghe2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaozonghe/2018年西药综合真题.pdf");
+        return $download->name('2018年西药综合真题.pdf');
+    }
+
+    public function xiyaozonghe3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaozonghe/历年真题（西药综合）.pdf");
+        return $download->name('历年真题（西药综合）.pdf');
+    }
+
+    //中药1
+    public function zhongyaoyi1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaoyi/中药一2018年考前最后一卷（含解析）.pdf");
+        return $download->name('中药一2018年考前最后一卷（含解析）.pdf');
+    }
+
+    public function zhongyaoyi2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaoyi/2018年真题（中药一）.pdf");
+        return $download->name('2018年真题（中药一）.pdf');
+    }
+
+    public function zhongyaoyi3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaoyi/历年真题（中药一）.pdf");
+        return $download->name('历年真题（中药一）.pdf');
+    }
+
+    //中药二
+    public function zhongyaoer1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaoer/中药二2018年考前最后一卷（含解析）.pdf");
+        return $download->name('中药二2018年考前最后一卷（含解析）.pdf');
+    }
+
+    public function zhongyaoer2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaoer/2018年真题（中药二）.pdf");
+        return $download->name('2018年真题（中药二）.pdf');
+    }
+
+    public function zhongyaoer3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaoer/历年真题（中药二）.pdf");
+        return $download->name('历年真题（中药二）.pdf');
+    }
+
+    //中药综合
+    public function zhongyaozonghe1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaozonghe/2018中药综合考前最后一卷（含解析）.pdf");
+        return $download->name('2018中药综合考前最后一卷（含解析）.pdf');
+    }
+
+    public function zhongyaozonghe2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaozonghe/2018年真题（中药综合）.pdf");
+        return $download->name('2018年真题（中药综合）.pdf');
+    }
+
+    public function zhongyaozonghe3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/zhongyaozonghe/历年真题（中药综合）.pdf");
+        return $download->name('历年真题（中药综合）.pdf');
+    }
     /**
      * 显示资源列表
      *
