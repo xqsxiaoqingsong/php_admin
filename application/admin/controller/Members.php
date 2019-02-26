@@ -169,6 +169,9 @@ class Members extends Common
     public function update(Request $request, $id)
     {
         $user = Member::find($id);
+        $uuid = $user['UUID'];
+        $newpassword = strtoupper(md5($request->param('PASSWORD').$uuid));
+//        return json($newpassword);
         $validate = Validate('MemberValidate');
         if (!$validate->scene('update')->check($request->param())) {
             $this->error($validate->getError());
@@ -179,7 +182,8 @@ class Members extends Common
                 'REALNAME' => $request->param('REALNAME'),
                 'MEMBERNAME' => $request->param('MEMBERNAME'),
                 'PHONE' => $request->param('PHONE'),
-                'PASSWORD' => $request->param('PASSWORD'),
+                'PASSWORD' => $newpassword,
+                'NEWPASSWORD' => $newpassword,
                 'MAJORNAME' => $request->param('MAJOR_NAME'),
                 'HEADURL' => $image
             ]);
@@ -189,7 +193,8 @@ class Members extends Common
                 'REALNAME' => $request->param('REALNAME'),
                 'MEMBERNAME' => $request->param('MEMBERNAME'),
                 'PHONE' => $request->param('PHONE'),
-                'PASSWORD' => $request->param('PASSWORD'),
+                'PASSWORD' => $newpassword,
+                'NEWPASSWORD' => $newpassword,
                 'MAJORNAME' => $request->param('MAJOR_NAME'),
                 'HEADURL' => $request->param('image')
             ]);
