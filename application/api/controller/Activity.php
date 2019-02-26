@@ -81,10 +81,10 @@ class Activity extends Controller
             $id = $request->param('id');
             if ($id) {
                 $activitys = Activityinfo::find($id);
-                $titleone = Activityinfo::where('id',$id)->value('title');
-                $titletwo = Activityinfo::where('id',$id)->value('titletwo');
-                $titlethree = Activityinfo::where('id',$id)->value('titlethree');
-                $activitys['infolist'] = array_merge($titleone,$titletwo,$titlethree);
+//                $titleone = Activityinfo::where('id',$id)->value('title');
+//                $titletwo = Activityinfo::where('id',$id)->value('titletwo');
+//                $titlethree = Activityinfo::where('id',$id)->value('titlethree');
+//                $activitys['infolist'] = array_merge($titleone,$titletwo,$titlethree);
                 if (isset($activitys)) {
                     $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
                         'Code' => '0',
