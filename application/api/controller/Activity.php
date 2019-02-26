@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\api\model\Activitydowonload;
 use app\api\model\Activityinfo;
 use app\api\model\Activityuser;
+use app\api\model\Activityvideo;
 use think\Controller;
 use think\Request;
 use think\Validate;
@@ -74,14 +75,14 @@ class Activity extends Controller
         return $download->name('推荐承诺书.doc');
     }
 
-    //选项卡数据
+    //第三页选项卡数据
     public function tabinfo(Request $request)
     {
         header("Access-Control-Allow-Origin:*"); // 允许a.com发起的跨域请求
         if ($request->isPost()) {
             $id = $request->param('id');
             if ($id) {
-                $activitys = Activityinfo::field(['title','titletwo','titlethree'],true)->find($id);
+                $activitys = Activityinfo::field(['title', 'titletwo', 'titlethree'], true)->find($id);
                 $titleone = Activityinfo::where('id', $id)->value('title');
                 $titletwo = Activityinfo::where('id', $id)->value('titletwo');
                 $titlethree = Activityinfo::where('id', $id)->value('titlethree');
@@ -110,6 +111,40 @@ class Activity extends Controller
                     'Code' => '1',
                     'Data' => '',
                     'Msg' => '获取列表失败,缺少参数id',
+                    'Time' => time());
+                return json($info);
+            }
+        }
+    }
+
+    //第四页选项卡数据
+    public function fourtabinfo(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许a.com发起的跨域请求
+        if ($request->isPost()) {
+            $id = $request->param('fourId');
+            if ($id) {
+                $videos = Activityvideo::where('fourId',$id)->select();
+                if (isset($videos)) {
+                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/fourtabinfo',
+                        'Code' => '0',
+                        'Data' => $videos,
+                        'Msg' => '获取视频成功',
+                        'Time' => time());
+                    return json($info);
+                } else {
+                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/fourtabinfo',
+                        'Code' => '1',
+                        'Data' => '',
+                        'Msg' => '获取视频失败,没有相关数据',
+                        'Time' => time());
+                    return json($info);
+                }
+            } else {
+                $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/fourtabinfo',
+                    'Code' => '1',
+                    'Data' => '',
+                    'Msg' => '获取视频失败,缺少参数id',
                     'Time' => time());
                 return json($info);
             }
