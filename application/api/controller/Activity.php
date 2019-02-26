@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\api\model\Activityinfo;
 use app\api\model\Activityuser;
 use think\Controller;
 use think\Request;
@@ -77,6 +78,31 @@ class Activity extends Controller
         header("Access-Control-Allow-Origin:*"); // 允许a.com发起的跨域请求
         if ($request->isPost()) {
             $id = $request->param('id');
+            if ($id){
+                $activitys = Activityinfo::find($id);
+                if (isset($activitys)){
+                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+                        'Code' => '0',
+                        'Data' => $activitys,
+                        'Msg' => '获取详情成功',
+                        'Time' => time());
+                    return json($info);
+                }else{
+                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+                        'Code' => '1',
+                        'Data' => '',
+                        'Msg' => '获取详情失败,没有相关数据',
+                        'Time' => time());
+                    return json($info);
+                }
+            }else{
+                $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+                    'Code' => '1',
+                    'Data' => '',
+                    'Msg' => '获取列表失败,缺少参数id',
+                    'Time' => time());
+                return json($info);
+            }
         }
     }
 
