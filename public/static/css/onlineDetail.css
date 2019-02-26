@@ -1,0 +1,279 @@
+/* 面包屑导航 */
+.breadcrumb-path {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.breadcrumb {
+  background: #fff;
+  margin: 0;
+}
+
+/* 课程详情 */
+.buy-content .wrap {
+  background: #eee;
+  padding: 30px;
+}
+.buy-content .img-box img{
+  width: 100%;
+}
+.buy-des .title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.buy-des p {
+  font-size: 16px;
+  line-height: 26px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.gifts b {
+  font-weight: 600;
+}
+
+.price-table {
+  background: #fff;
+  height: 56px;
+  border-radius: 4px;
+  position: relative;
+  padding: 10px 20px;
+  overflow: hidden;
+}
+
+.price-table .real-price {
+  font-weight: 600;
+  color: red;
+}
+
+.price-table .original-price {
+  font-size: 12px;
+  text-decoration: line-through;
+}
+
+.price-table .class-number {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  margin-top: -28px;
+  line-height: 56px;
+}
+
+.buy-btns {
+  margin: 20px 0;
+  font-size: 16px;
+  position: relative;
+}
+
+.buy-btns .buy-now:hover,
+.buy-btns .buy-ask:hover {
+  opacity: .8;
+  color: #fff;
+}
+
+.buy-now {
+  background: rgb(255, 26, 0);
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(255, 26, 0, 1) 0%, rgba(242, 141, 0, 1) 0%, rgba(255, 26, 0, 1) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(255, 26, 0, 1) 0%, rgba(242, 141, 0, 1) 0%, rgba(255, 26, 0, 1) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(255, 26, 0, 1) 0%, rgba(242, 141, 0, 1) 0%, rgba(255, 26, 0, 1) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1a00', endColorstr='#ff1a00', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+  color: #fff;
+  font-size: 16px;
+}
+
+.buy-done {
+  background: #ccc;
+  color: #666;
+  font-size: 16px;
+  display: none;
+}
+
+.buy-ask {
+  background: rgb(21, 173, 219);
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(21, 173, 219, 1) 0%, rgba(45, 201, 229, 1) 0%, rgba(18, 126, 234, 1) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(21, 173, 219, 1) 0%, rgba(45, 201, 229, 1) 0%, rgba(18, 126, 234, 1) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(21, 173, 219, 1) 0%, rgba(45, 201, 229, 1) 0%, rgba(18, 126, 234, 1) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#15addb', endColorstr='#127eea', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+  color: #fff;
+  font-size: 16px;
+}
+
+.buy-btns .teacher {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -12px;
+}
+
+/* 课程介绍 */
+.online-des {
+  margin-top: 50px;
+}
+
+.left-nav {
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 2px solid #ccc;
+}
+
+.left-nav li {
+  text-align: center;
+  display: inline-block;
+  padding: 0 20px;
+  font-size: 18px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.left-nav li.active {
+  color: #2073b7;
+  border-bottom: 2px solid #409eff;
+}
+
+.left-nav li:hover {
+  color: #2073b7;
+  cursor: pointer;
+}
+
+.left-content {
+  margin-top: 20px;
+}
+
+.left-item {
+  display: none;
+}
+
+.left-item.active{
+  display: block !important;
+}
+
+/* 课程列表 */
+.tree-data .iconfont{
+  color: #aaa;
+  padding-right: 10px;
+}
+.sub-layer{
+  display: none;
+}
+.tree-data a{
+  display: inline-block;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+}
+.tree-data a:hover{
+  text-decoration: underline;
+}
+
+
+/* 右侧推荐 */
+.recommend .header {
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 2px solid #ccc;
+  text-align: center;
+  font-size: 18px;
+}
+
+.right-content {
+  margin-top: 20px;
+}
+
+.content-col {
+  margin-bottom: 30px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  /* border: 1px solid #bbb; */
+}
+
+.content-col:hover {
+  box-shadow: 1px 1px 6px #ccc;
+  transform: translateY(-10px);
+  transition: all 0.5s;
+}
+
+.content-col .title:hover {
+  text-decoration: underline;
+  color: #337ab7;
+}
+
+.imgbox img {
+  width: 100%;
+}
+
+.col-des {
+  padding: 14px 14px 4px;
+}
+
+.col-des .title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.col-des .real-price {
+  color: red;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.col-des .real-price .real-price-number {
+  font-size: 16px;
+}
+
+.original-price {
+  font-size: 12px;
+  text-decoration: line-through;
+  padding-left: 10px;
+  color: #666;
+}
+
+.class-number {
+  float: right;
+}
+
+.main-speaker {
+  font-size: 14px;
+  line-height: 26px;
+  position: relative;
+}
+
+.speaker {
+  display: inline-block;
+  /* 省略号设置 */
+  overflow: hidden;
+  white-space: nowrap;
+  width: 66%;
+  text-overflow: ellipsis;
+}
+
+.learn-members {
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 33.99%;
+  text-align: right;
+  text-overflow: ellipsis;
+}

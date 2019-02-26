@@ -1,0 +1,297 @@
+/* 面包屑导航 */
+.breadcrumb-path {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.breadcrumb {
+  background: #fff;
+  margin: 0;
+}
+
+/* banner */
+.banner .carousel-inner {
+  height: 540px;
+  cursor: pointer;
+}
+
+.banner .carousel {
+  /* width: 100%; */
+}
+
+.banner .carousel .icon-xiangyou:hover,
+.banner .carousel .icon-xiangzuo:hover{
+  color: #ccdbff !important;
+}
+.banner .carousel .icon-xiangzuo {
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  color: #a7bffb;
+  font-size: 40px;
+  width: 40px;
+  left: 30px;
+}
+
+.banner .carousel .icon-xiangyou {
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  color: #a7bffb;
+  width: 40px;
+  font-size: 40px;
+  right: 30px;
+}
+
+
+/* 列表区域 */
+.content-list {
+  margin: 50px 0 0;
+  /* min-height: 450px; */
+}
+
+.top {
+  border-bottom: 2px solid #2073b7;
+  margin-bottom: 20px;
+}
+
+.top span.bg {
+  display: inline-block;
+  /* width: 120px; */
+  padding: 0 10px 0 20px;
+  height: 36px;
+  line-height: 36px;
+  background-color: #2073b7;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  position: relative;
+}
+
+span.bg:after {
+  content: '';
+  position: absolute;
+  right: -24px;
+  border-right: 24px solid transparent;
+  border-bottom: 36px solid #2073b7;
+}
+.top .more{
+  height: 36px;
+  line-height: 36px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.top .more:hover{
+  color: #2073b7;
+}
+
+
+/* 直播教室、考务资讯、面授培训列表区域 */
+.content-list .left-box{
+  float: left;
+  width: 70%;
+}
+
+/* 考务资讯 */
+.right-exam{
+  width: 28%;
+  float: right;
+}
+.exam-item{
+  height: 20px;
+  line-height: 20px;
+  margin: 14px 0;
+}
+.exam-item .title{
+  background: #2073b7;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-right: 2px;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.exam-item .des{
+  display: inline-block;
+  /* 省略号设置 */
+  overflow: hidden;
+  white-space: nowrap;
+  width: 70%;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.exam-item .des:hover{
+  text-decoration: underline;
+}
+.status-tips{
+  background: #f51515;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #fff;
+  padding: 0 2px;
+  vertical-align: middle;
+}
+
+/* 推荐图书 */
+.book-content .imgbox{
+  height: 270px;
+}
+/* 列表元素 */
+.content-col {
+  /* margin-bottom: 30px; */
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #eee;
+}
+
+.content-col:hover {
+  box-shadow: 1px 1px 6px #ccc;
+  transform: translateY(-10px);
+  transition: all 0.5s;
+}
+
+.content-col .title:hover {
+  text-decoration: underline;
+  color: #337ab7;
+}
+.imgbox{
+  height: 200px;
+}
+.imgbox img {
+  width: 100%;
+}
+
+.col-des {
+  padding: 14px;
+  font-size: 14px;
+}
+
+.col-des .title {
+  font-weight: 400;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  min-height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.col-des .real-price {
+  color: red;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.col-des .real-price .real-price-number {
+  font-size: 14px;
+}
+
+.original-price {
+  font-size: 12px;
+  text-decoration: line-through;
+  padding-left: 10px;
+  color: #666;
+  display: none;
+}
+.class-number{
+  float: right;
+}
+.main-speaker{
+  font-size: 14px;
+  line-height: 26px;
+  position: relative;
+}
+.speaker{
+  display: inline-block;
+  /* 省略号设置 */
+  overflow: hidden;
+  white-space: nowrap;
+  width: 66%;
+  text-overflow: ellipsis;
+}
+.learn-members{
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 33.99%;
+  text-align: right;
+  text-overflow: ellipsis;
+}
+.check-detail-book{
+  float: right;
+  color: #606266;
+}
+.check-detail-book a{
+  color: #606266;
+  font-weight: normal;
+}
+/* 空数据区域 */
+.blank {
+  height: 100px;
+  text-align: center;
+  color: #6f7180;
+  display: none;
+}
+
+/* 金牌名师轮播图 */
+.teacher-list .carousel-inner {
+  margin: 20px 0;
+}
+
+.teacher-list .carousel {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.teacher-list .carousel .icon-xiangyou:hover,
+.teacher-list .carousel .icon-xiangzuo:hover{
+  color: #2073b7 !important;
+}
+.teacher-list .carousel .icon-xiangzuo {
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  color: #ccdbff;
+  font-size: 40px;
+  width: 40px;
+  left: -50px;
+}
+
+.teacher-list .carousel .icon-xiangyou {
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  color: #ccdbff;
+  width: 40px;
+  font-size: 40px;
+  right: -50px;
+}
+.teacher-list .content-col{
+  margin-bottom: 0;
+  height:320px;
+  overflow: hidden;
+}
+.teacher-list  .imgbox{
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  padding: 5px;
+  margin: 20px auto 0;
+}
+.teacher-list .name{
+  text-align: center;
+  font-weight: 600;
+  line-height: 50px;
+  display: block;
+}
+.teacher-list .col-des{
+  padding: 0 30px 30px;
+}
+.teacher-list a:hover{
+  text-decoration: underline;
+}

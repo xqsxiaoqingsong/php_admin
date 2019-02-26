@@ -1,0 +1,392 @@
+/* 面包屑导航 */
+.breadcrumb-path {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.breadcrumb {
+  background: #fff;
+  margin: 0;
+}
+
+
+
+/* 列表区域 */
+.content-list {
+  margin: 30px 0 0;
+  min-height: 450px;
+}
+
+.top {
+  border-bottom: 2px solid #2073b7;
+  margin-bottom: 20px;
+}
+
+.top span.bg {
+  display: inline-block;
+  /* width: 120px; */
+  padding: 0 10px 0 20px;
+  height: 36px;
+  line-height: 36px;
+  background-color: #2073b7;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  position: relative;
+}
+
+span.bg:after {
+  content: '';
+  position: absolute;
+  right: -24px;
+  border-right: 24px solid transparent;
+  border-bottom: 36px solid #2073b7;
+}
+
+
+/* 列表元素 */
+.content-col {
+  margin-bottom: 30px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #eee;
+}
+
+.content-col:hover {
+  box-shadow: 1px 1px 6px #ccc;
+  transform: translateY(-10px);
+  transition: all 0.5s;
+}
+
+.content-col .title:hover {
+  text-decoration: underline;
+  color: #337ab7;
+}
+.imgbox{
+  /* height: 200px; */
+}
+.imgbox img {
+  width: 100%;
+}
+
+.col-des {
+  padding: 14px 14px 4px;
+}
+
+.col-des .title {
+  font-weight: normal;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  min-height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.col-des .real-price {
+  color: red;
+  font-size: 13px;
+  line-height: 14px;
+  font-weight: normal;
+}
+
+.col-des .real-price .real-price-number {
+  font-size: 16px;
+}
+
+.original-price {
+  font-size: 12px;
+  padding-left: 10px;
+  color: #666;
+  float: right;
+}
+.class-number{
+  float: left;
+  font-size: 14px;
+  line-height: 35px;
+}
+.main-speaker{
+  font-size: 14px;
+  line-height: 26px;
+  position: relative;
+}
+.speaker{
+  display: inline-block;
+  /* 省略号设置 */
+  overflow: hidden;
+  white-space: nowrap;
+  width: 66%;
+  text-overflow: ellipsis;
+}
+.learn-members{
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 33.99%;
+  text-align: right;
+  text-overflow: ellipsis;
+}
+
+/* 空数据区域 */
+.blank {
+  height: 300px;
+  text-align: center;
+  color: #6f7180;
+  display: none;
+}
+
+
+/* 分页 */
+.page-navigation {
+  text-align: center;
+}
+.pagination {
+  position: relative;
+  text-align: center;
+  zoom: 1;
+}
+
+.pagination:before,
+.pagination:after {
+  content: "";
+  display: table;
+}
+
+.pagination span {
+  float: left;
+  margin: 0 5px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.pagination .active {
+  float: left;
+  margin: 0 5px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  background: #2073b7;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid #2073b7;
+}
+
+.pagination a {
+  float: left;
+  margin: 0 5px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  background: #fff;
+  border: 1px solid #ebebeb;
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.pagination a:hover {
+  color: #fff;
+  background: #2073b7;
+}
+
+.pagination .next,
+.pagination .prev {
+  font-family: "Simsun";
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.pagination .now,
+.pagination .count {
+  padding: 0 5px;
+  color: #2073b7;
+}
+
+.pagination  input {
+  float: left;
+  margin: 0 5px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #ebebeb;
+  outline: none;
+  color: #bdbdbd;
+  font-size: 14px;
+}
+.disabled{
+  cursor: not-allowed;
+  background: #ccc;
+}
+.disabled:hover{
+  cursor: not-allowed;
+  background: #ccc;
+}
+
+/* 列表选项卡 */
+.live-subnav {
+  line-height: 40px;
+  height: 40px;
+  border-bottom: 3px solid #ccc;
+}
+
+.live-subnav li {
+  line-height: 40px;
+  height: 40px;
+  display: inline-block;
+  padding: 0 20px;
+  text-align: center;
+  color: #303133;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.live-subnav li:hover {
+  cursor: pointer;
+  color: #2073b7;
+  /* border-bottom: 3px solid #409eff; */
+}
+
+.live-subnav .active {
+  color: #2073b7;
+  border-bottom: 3px solid #409eff;
+}
+
+/* 列表轮播图 */
+.carousel-caption {
+  position: relative;
+}
+
+.carousel-inner {
+  margin: 20px 0;
+}
+
+.carousel {
+  margin: 0 auto;
+}
+
+.carousel .icon-xiangyou:hover,
+.carousel .icon-xiangzuo:hover{
+  color: #2073b7 !important;
+}
+.carousel .icon-xiangzuo {
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  color: #ccdbff;
+  font-size: 40px;
+  width: 40px;
+  left: -50px;
+}
+
+.carousel .icon-xiangyou {
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  color: #ccdbff;
+  width: 40px;
+  font-size: 40px;
+  right: -50px;
+}
+
+
+/* 直播预告 */
+/* 12 56 9 10 */
+/* 34 78 11 12 */
+.js-pre-item:nth-of-type(4n+1){
+  background: #eee;
+}
+.js-pre-item:nth-of-type(4n+2){
+  background: #eee;
+}
+.pre-col {
+  padding: 20px 0;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.pre-col:hover {
+  box-shadow: 1px 1px 6px #ccc;
+  transform: translateY(-10px);
+  transition: all 0.5s;
+}
+
+.pre-col .imgbox {
+  overflow: hidden;
+  width: 44%;
+  float: left;
+  margin: 0 3%;
+}
+
+.pre-col .pre-des {
+  width: 49.99%;
+  float: left;
+}
+
+.pre-col .imgbox img {
+  height: 100%;
+  display: inline-block;
+}
+
+.pre-des .title:hover {
+  text-decoration: underline;
+  color: #337ab7;
+}
+
+.pre-des .title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 28px;
+  min-height: 56px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.pre-des .start-time{
+  overflow: hidden;
+  font-size: 14px;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.pre-des .speaker {
+  font-size: 14px;
+  padding-bottom: 10px;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 已购买 */
+.bought-list {
+  margin: 0 10px;
+  padding-top: 16px;
+}
+
+.bought-list li {
+  line-height: 30px;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bought-list li:hover {
+  text-decoration: underline;
+  color: #337ab7;
+  cursor: pointer;
+}

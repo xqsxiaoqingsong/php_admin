@@ -1,0 +1,317 @@
+/*
+KISSY CSS Reset
+理念：1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。
+2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题。
+3. reset 期望提供一套普适通用的基础样式。但没有银弹，推荐根据具体需求，裁剪和修改后再使用。
+特色：1. 适应中文；2. 基于最新主流浏览器。
+ */
+
+/** 清除内外边距 **/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+/* structural elements 结构元素 */
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+/* list elements 列表元素 */
+pre,
+/* text formatting elements 文本格式元素 */
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+/* form elements 表单元素 */
+th,
+td
+
+/* table elements 表格元素 */
+  {
+  margin: 0;
+  padding: 0;
+
+  /* 20181217添加添加  */
+  box-sizing: border-box;
+}
+
+/** 设置默认字体 **/
+body,
+button,
+input,
+select,
+textarea
+
+/* for ie */
+  {
+  font: 16px/1.5 Microsoft YaHei, arial, \5b8b\4f53, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+
+/* 将斜体扶正 */
+code,
+kbd,
+pre,
+samp {
+  font-family: courier new, courier, monospace;
+}
+
+/* 统一等宽字体 */
+small {
+  font-size: 12px;
+}
+
+/* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+/** 重置列表元素 **/
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/** 重置表单元素 **/
+legend {
+  color: #000;
+}
+
+/* for ie6 */
+fieldset,
+img {
+  border: 0;
+}
+
+/* img 搭车：让链接里的 img 无边框 */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 清除浮动 */
+.clearfix:after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+/* -----------------------------------Reset End------------------------------------ */
+/* .container-fluid{
+  height: 100vh;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  background-image: url('http://img.cixindata.com/@/default/all/0/083268e35f0b401abde69d17f3a0fe82.jpeg?e=1542354896&token=P7K5XWxYE65SJ3l0WZM-QGcgkf1uw3KjwEMy5sat:3HHOa3NNFfbgX0CKDrjmsSb7lJw= ');
+  background-size: cover;
+} */
+.container-fluid {
+  position: relative;
+  padding: 0;
+}
+
+.bg {
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.toolBar {
+  background: #fff;
+  line-height: 100px;
+  height: 100px;
+}
+
+.logo img {
+  width: 100%;
+}
+
+.register-btn {
+  display: none;
+}
+
+.toolBar .pull-right {
+  text-align: right;
+}
+
+.login-bar span {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.login-bar span:hover {
+  color: #134270
+}
+
+/* form框 */
+.content {
+  width: 400px;
+  height: 420px;
+  background-color: rgba(255, 255, 255, 0.829);
+  position: absolute;
+  top: 160px;
+  right: 160px;
+  box-shadow: 1px 1px 4px #ccc;
+}
+.touxiang {
+  width: 80px;
+  height: 80px;
+  padding: 5px;
+  z-index: 100;
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  margin-left: -41px;
+  background-color: #0280ba;
+  border-radius: 50%;
+}
+.touxiang img {
+  width: 100%;
+}
+.checkbox {
+  font-size: 14px;
+}
+.form-wrap {
+  padding: 60px;
+}
+.form-input-box{
+  position: relative;
+}
+/* 表单验证提示 */
+.content span.error {
+  color: #f56c6c;
+  padding-left: 16px;
+  position: absolute;
+  bottom: -13px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+
+
+/* 注册 */
+.register-wrap{
+  /* display: none; */
+}
+.verificate{
+  padding-left: 0;
+}
+.send-verificate{
+  padding-right: 0;
+}
+.send-verificate-btn{
+  width: 100%;
+}
+.register-form-btn{
+  width: 100%;
+}
+.register-wrap .alert-danger {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 160px;
+  /* height: 56px; */
+  margin-left: -80px;
+  margin-top: -28px;
+  font-weight: 600;
+  text-align: center;
+  display: none;
+}
+.register-wrap .checkbox a:hover {
+  text-decoration: underline;
+}
+
+
+/* 登录 */
+.login-wrap{
+  display: none;
+}
+
+.login-form-btn {
+  width: 100%;
+}
+.login-wrap .register-form-btn {
+  width: 100%;
+  background: #fff;
+}
+.login-wrap .alert-danger {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 160px;
+  /* height: 56px; */
+  margin-left: -80px;
+  margin-top: -28px;
+  font-weight: 600;
+  text-align: center;
+  display: none;
+}
+
