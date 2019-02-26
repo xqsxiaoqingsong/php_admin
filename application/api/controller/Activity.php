@@ -81,7 +81,7 @@ class Activity extends Controller
         if ($request->isPost()) {
             $id = $request->param('id');
             if ($id) {
-                $activitys = Activityinfo::find($id);
+                $activitys = Activityinfo::field(['title','titletwo','titlethree'],true)->find($id);
                 $titleone = Activityinfo::where('id', $id)->value('title');
                 $titletwo = Activityinfo::where('id', $id)->value('titletwo');
                 $titlethree = Activityinfo::where('id', $id)->value('titlethree');
@@ -93,7 +93,7 @@ class Activity extends Controller
                 if (isset($activitys)) {
                     $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
                         'Code' => '0',
-                        'Data' => array('left' => $activitys, 'rigit' => $downloads),
+                        'Data' => array('left' => $activitys, 'right' => $downloads),
                         'Msg' => '获取详情成功',
                         'Time' => time());
                     return json($info);
