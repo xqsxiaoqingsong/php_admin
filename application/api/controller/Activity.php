@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\api\model\Activitydowonload;
 use app\api\model\Activityinfo;
 use app\api\model\Activityuser;
 use think\Controller;
@@ -81,14 +82,18 @@ class Activity extends Controller
             $id = $request->param('id');
             if ($id) {
                 $activitys = Activityinfo::find($id);
-//                $titleone = Activityinfo::where('id',$id)->value('title');
-//                $titletwo = Activityinfo::where('id',$id)->value('titletwo');
-//                $titlethree = Activityinfo::where('id',$id)->value('titlethree');
-//                $activitys['infolist'] = array_merge($titleone,$titletwo,$titlethree);
+                $titleone = Activityinfo::where('id', $id)->value('title');
+                $titletwo = Activityinfo::where('id', $id)->value('titletwo');
+                $titlethree = Activityinfo::where('id', $id)->value('titlethree');
+                $array1 = array('listId' => 1, 'content' => $titleone);
+                $array2 = array('listId' => 2, 'content' => $titletwo);
+                $array3 = array('listId' => 3, 'content' => $titlethree);
+                $activitys['infolist'] = array_merge(array($array1, $array2, $array3));
+                $downloads = Activitydowonload::where('activityId', $id)->select();
                 if (isset($activitys)) {
                     $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
                         'Code' => '0',
-                        'Data' => $activitys,
+                        'Data' => array('left' => $activitys, 'rigit' => $downloads),
                         'Msg' => '获取详情成功',
                         'Time' => time());
                     return json($info);
@@ -115,10 +120,34 @@ class Activity extends Controller
     //西药1
     public function xiyaoyi1(Request $request)
     {
+//        $activitys = Activityinfo::field(['title','titletwo','titlethree'],true)->find(1);
+//        $titleone = Activityinfo::where('id', 1)->value('title');
+//        $titletwo = Activityinfo::where('id', 1)->value('titletwo');
+//        $titlethree = Activityinfo::where('id', 1)->value('titlethree');
+//        $array1 = array('listId' => 1, 'content' => $titleone);
+//        $array2 = array('listId' => 2, 'content' => $titletwo);
+//        $array3 = array('listId' => 3, 'content' => $titlethree);
+//        $activitys['infolist'] = array_merge(array($array1, $array2, $array3));
+//        $downloads = Activitydowonload::where('activityId', 1)->select();
+//        if (isset($activitys)) {
+//            $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+//                'Code' => '0',
+//                'Data' => array('left' => $activitys, 'rigit' => $downloads),
+//                'Msg' => '获取详情成功',
+//                'Time' => time());
+//            return json($info);
+//        } else {
+//            $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+//                'Code' => '1',
+//                'Data' => '',
+//                'Msg' => '获取详情失败,没有相关数据',
+//                'Time' => time());
+//            return json($info);
+//        }
+
         header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
         $download = new \think\response\Download("download/xiyaoyi/2018考前最后一卷（西药一）.pdf");
         return $download->name('2018考前最后一卷（西药一）.pdf');
-
     }
 
     public function xiyaoyi2(Request $request)
@@ -133,6 +162,50 @@ class Activity extends Controller
         header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
         $download = new \think\response\Download("download/xiyaoyi/历年真题.pdf");
         return $download->name('历年真题（西药一）.pdf');
+    }
+
+    //西药二
+    public function xiyaoer1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaoer/2018年真题（西药二）.pdf");
+        return $download->name('2018年真题（西药二）.pdf');
+    }
+
+    public function xiyaoer2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaoer/2018考前最后一卷.pdf");
+        return $download->name('2018考前最后一卷（西药二）.pdf');
+    }
+
+    public function xiyaoer3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/xiyaoer/历年真题.pdf");
+        return $download->name('历年真题（西药二）.pdf');
+    }
+
+    //法规
+    public function fagui1(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/fagui/2018考前最后一卷.pdf");
+        return $download->name('2018考前最后一卷(法规).pdf');
+    }
+
+    public function fagui2(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/fagui/2018年真题（法规）.pdf");
+        return $download->name('2018年真题（法规）.pdf');
+    }
+
+    public function fagui3(Request $request)
+    {
+        header("Access-Control-Allow-Origin:*"); // 允许任意域名发起的跨域请求
+        $download = new \think\response\Download("download/fagui/历年真题.pdf");
+        return $download->name('历年真题(法规).pdf');
     }
 
     //西药综合
@@ -222,6 +295,7 @@ class Activity extends Controller
         $download = new \think\response\Download("download/zhongyaozonghe/历年真题（中药综合）.pdf");
         return $download->name('历年真题（中药综合）.pdf');
     }
+
     /**
      * 显示资源列表
      *
