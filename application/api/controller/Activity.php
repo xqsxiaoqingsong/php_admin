@@ -80,7 +80,7 @@ class Activity extends Controller
         if ($request->isPost()) {
             $id = $request->param('id');
             if ($id) {
-                $activitys = Activityinfo::field(['title','titletwo','titlethree'],true)->find($id);
+                $activitys = Activityinfo::find($id);
                 $titleone = Activityinfo::where('id',$id)->value('title');
                 $titletwo = Activityinfo::where('id',$id)->value('titletwo');
                 $titlethree = Activityinfo::where('id',$id)->value('titlethree');
