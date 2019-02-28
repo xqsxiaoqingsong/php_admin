@@ -9,7 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::domain('qwe','index');
+Route::domain('www','index');
 
 Route::get('tcmspecialty/:major/:major_name/:id', 'index/theme');
 /*Route::controller('Index','index/index');*/
