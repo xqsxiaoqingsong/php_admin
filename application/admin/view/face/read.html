@@ -1,0 +1,223 @@
+{{extend name="layout/application" /}}
+
+{{block name="css"}}
+<!--<link rel="stylesheet" href="/vendor/markdown/css/editormd.min.css"/>     //文本编辑器-->
+{{/block}}
+
+{{block name="content"}}
+<div class="admin-content">
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">查看面授</strong> /
+            <!--<small>Create A New AdCategory</small>-->
+        </div>
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+            <form class="am-form" action="{{:Url('admin/Faces/update',['id'=>$face.ID])}}" method="post">
+                <input type="hidden" name="_token" value="">
+
+                <div class="am-tabs am-margin" data-am-tabs>
+                    <ul class="am-tabs-nav am-nav am-nav-tabs">
+                        <li class="am-active"><a href="#tab1">通用信息</a></li>
+                        <li><a href="#tab2">面授详情</a></li>
+                    </ul>
+
+                    <style>
+                        .am-form input[type=text][readonly]{
+                            cursor:pointer;
+                        }
+                        .am-form textarea[readonly]{
+                            cursor:pointer;
+                        }
+                    </style>
+                    <div class="am-tabs-bd">
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab1" style="min-height: 600px">
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    专业方向
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                                    <input type="text" readonly value="{{$face.facepro.MAJOR_NAME}}">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    面授名称
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4">
+                                    <input type="text" class="am-input-sm" name="COURSENAME" value="{{$face.COURSENAME}}" readonly>
+                                </div>
+                                <div class="am-hide-sm-only am-u-md-6"></div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    面授简介
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
+                                    <textarea rows="3" name="FACETRAINDETAILS" readonly>{{$face.FACETRAINDETAILS}}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    咨询电话
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-2">
+                                    <input type="text" class="am-input-sm" name="COUNSELPHONE" value="{{$face.COUNSELPHONE}}" readonly>
+                                </div>
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    推荐排序
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-2 am-u-end">
+                                    <input type="text" class="am-input-sm" name="RECOMMENDSORT" value="{{$face.RECOMMENDSORT}}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    面授地点
+                                </div>
+                                <div class="am-u-sm-4 am-u-md-2 am-u-end col-end">
+                                    <input type="text" readonly value="{{$province}}">
+                                </div>
+                                <div class="am-u-sm-4 am-u-md-2 am-u-end col-end">
+                                    <input type="text" readonly value="{{$city}}">
+                                </div>
+                            </div>
+
+                            <!--<div class="am-g am-margin-top">-->
+                                <!--<div class="am-u-sm-2 am-text-right">-->
+                                    <!--选择项设置-->
+                                <!--</div>-->
+                                <!--<div class="am-u-sm-9 am-u-end">-->
+                                    <!--<div class="am-btn-group am-btn-group-sm">-->
+                                        <!--<a type="button" class="am-btn am-btn-default am-text-success createstagetd"-->
+                                           <!--href="javascript:;">-->
+                                            <!--<span class="am-icon-plus"></span> 新增-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-10 am-u-sm-centered">
+                                    <table class="am-table  am-table-hover table-main">
+                                        <thead>
+                                        <tr>
+                                            <!--<th class="table-check"><input type="checkbox" class="checked_all"/></th>-->
+                                            <th style="width: 8%" class="table-id">编号</th>
+                                            <th style="width: 40%">名称</th>
+                                            <th>价格</th>
+                                            <!--<th>操作</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody class="createstage">
+                                        {{foreach name="stages" id="stage"}}
+                                        <tr data-id="{{$stage.id}}" class="xParent">
+                                            <td style="line-height: 37px">{{$stage.id}}</td>
+                                            <td><input readonly="readonly" type="text" style="" name="name[]"
+                                                       class="name" value="{{$stage.name}}"></td>
+                                            <td>
+                                                <input readonly="readonly" type="text" style="" name="price[]"
+                                                       class="price" value="{{$stage.price}}">
+                                            </td>
+                                            <!--<td>-->
+                                                <!--<div class="am-btn-toolbar">-->
+                                                    <!--<div class="am-btn-group am-btn-group-sm">-->
+                                                        <!--<a class="removeredaonlyno am-btn am-btn-default am-btn-xs am-text-secondary"-->
+                                                           <!--href="javascript:;" res="0">-->
+                                                            <!--<span class="am-icon-pencil-square-o"></span> 编辑-->
+                                                        <!--</a>-->
+                                                        <!--<a class="delstage am-btn am-btn-default am-btn-xs delete_category am-text-danger am-hide-sm-only"-->
+                                                           <!--href="javascript:;">-->
+                                                            <!--<span class="am-icon-trash-o"></span> 删除-->
+                                                        <!--</a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</td>-->
+                                        </tr>
+                                        {{/foreach}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    列表图片
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
+                                    <div>
+                                        <img src="{{$face.IMGURL}}" id="img_show" style="max-height: 200px;">
+                                    </div>
+                                    <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed am-no-layout">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    详情图片
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-8 am-u-end col-end">
+                                    <div>
+                                        <img src="{{$face.DETAILSIMGURL}}" id="img_show1" style="max-height: 200px;">
+                                    </div>
+                                    <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed am-no-layout">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="am-tab-panel am-fade" id="tab2">
+                            <div class="am-g am-margin-top-sm">
+                                <div class="am-u-sm-12 am-u-md-12">
+                                    <!--<div id="markdown">-->
+                                    <textarea rows="6" name="content" readonly>{{$face.FACETRAINWORD}}</textarea>
+                                    <!--</div>-->
+                                    <!--<script id="container" name="FACETRAINWORD" type="text/plain">{{$face.FACETRAINWORD}}-->
+                                    <!--</script>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="am-margin">
+                    <!--<button type="submit" class="am-btn am-btn-primary am-radius">提交保存</button>-->
+                    <buttom class="am-btn am-btn-danger am-radius" onclick="history.go(-1)">返回</buttom>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{/block}}
+
+{{block name="js"}}
+<!--<script src="/vendor/markdown/editormd.min.js"></script>             //文本编辑器-->
+<!--<script src="/vendor/admin/js/editormd_config.js"></script>-->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/vendor/ueditor/ueditor.all.js"></script>
+<!--<script type="text/javascript" src="/vendor/admin/js/provincecity.js"></script>-->
+
+
+<script type="text/javascript">
+    var ue = UE.getEditor('container',{
+
+    });
+
+    function getstring(){
+
+        document.getElementById('container').innerHTML=UE.getEditor('editor').getContent();
+
+//get.Content() 函数可以获得你所编辑的内容的html代码
+    }
+
+</script>
+<script src="/vendor/admin/html5-fileupload/jquery.html5-fileupload.js"></script>   //图片上传
+<!--//课程信息图片js-->
+<script src="/vendor/admin/js/courseimgupload.js"></script>
+<script src="/vendor/admin/js/courseupload.js"></script>
+{{/block}}

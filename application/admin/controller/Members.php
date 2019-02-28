@@ -170,6 +170,7 @@ class Members extends Common
     {
         $user = Member::find($id);
         $uuid = $user['UUID'];
+        //将发送过来的密码和uuid拼接然后md5加密,然后全部转大写;
         $newpassword = strtoupper(md5($request->param('PASSWORD').$uuid));
 //        return json($newpassword);
         $validate = Validate('MemberValidate');

@@ -3,7 +3,7 @@
         <ul class="am-list admin-sidebar-list">
             <li><a href="/admin" class="{{$_home ?? ''}}"><span class="am-icon-home"></span> 首页</a></li>
             <li class="admin-parent">
-                <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span>直播教室管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 直播教室<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                 <ul class="am-list am-collapse admin-sidebar-sub {{$_xfx_live ?? ''}}" id="collapse-nav">
                     <li><a href="{{:Url('/admin/Lives/index')}}" class="{{$_live ?? ''}}"><span class="am-icon-puzzle-piece"></span> 直播间管理</a></li>
                     <li><a href="{{:Url('/admin/Liveurls/index')}}" class="{{$_liveurl ?? ''}}"><span class="am-icon-check"></span> 直播课管理</a></li>
@@ -15,8 +15,13 @@
                     <li><a href="{{:Url('/admin/Coursedesigns/index')}}" class="{{$_coursedesign ?? ''}}"><span class="am-icon-check"></span> 课程设计</a></li>
                 </ul>
             </li>
-            <li><a href="javascript:;" class="{{$_face ?? ''}}"><span class="am-icon-pencil-square-o"></span> 面授培训</a></li>
-            <li><a class="am-cf" data-am-collapse="{target: '#collapse-book'}"><span class="am-icon-sign-out"></span> 图书资源<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+            <li><a class="am-cf" data-am-collapse="{target: '#collapse-face'}"><span class="am-icon-pencil-square-o"></span> 面授管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <ul class="am-list am-collapse admin-sidebar-sub {{$_xfx_face ?? ''}}" id="collapse-face">
+                    <li><a href="{{:Url('/admin/Faces/index')}}" class="{{$_face ?? ''}}"><span class="am-icon-puzzle-piece"></span> 面授信息</a></li>
+                    <li><a href="{{:Url('/admin/Faceapplies/index')}}" class="{{$_coursedesign ?? ''}}"><span class="am-icon-check"></span> 报名信息</a></li>
+                </ul>
+            </li>
+            <li><a class="am-cf" data-am-collapse="{target: '#collapse-book'}"><span class="am-icon-sign-out"></span> 图书资料<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                 <ul class="am-list am-collapse admin-sidebar-sub {{$_xfx_book ?? ''}}" id="collapse-book">
                     <li><a href="{{:Url('/admin/Books/index')}}" class="{{$_book ?? ''}}"><span class="am-icon-book"></span> 图书信息管理</a></li>
                     <li><a href="{{:Url('/admin/Bookorders/index')}}" class="{{$_bookorder ?? ''}}"><span class="am-icon-book"></span> 图书订单管理</a></li>

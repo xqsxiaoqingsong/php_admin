@@ -29,7 +29,7 @@ class Activity extends Controller
 //                $info = $this->error();
 //                return json($info);
                 $info = array(
-                    'ApiUrl' => 'http://test.xfxerj.com/api/activity/createuserinfo',
+                    'ApiUrl' => 'https://admin.xfxerj.com/api/activity/createuserinfo',
                     'Code' => '1',
                     'Data' => array(),
                     'Msg' => $validate->getError(),
@@ -46,7 +46,7 @@ class Activity extends Controller
             ]);
             if ($result) {
                 $info = array(
-                    'ApiUrl' => 'http://test.xfxerj.com/api/activity/createuserinfo',
+                    'ApiUrl' => 'https://admin.xfxerj.com/api/activity/createuserinfo',
                     'Code' => '0',
                     'Data' => array(),
                     'Msg' => '添加成功',
@@ -54,7 +54,7 @@ class Activity extends Controller
                 return json($info);
             } else {
                 $info = array(
-                    'ApiUrl' => 'http://test.xfxerj.com/api/activity/createuserinfo',
+                    'ApiUrl' => 'https://admin.xfxerj.com/api/activity/createuserinfo',
                     'Code' => '1',
                     'Data' => array('name' => ''),
                     'Msg' => '添加失败',
@@ -92,14 +92,14 @@ class Activity extends Controller
                 $activitys['infolist'] = array_merge(array($array1, $array2, $array3));
                 $downloads = Activitydowonload::where('activityId', $id)->select();
                 if (isset($activitys)) {
-                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+                    $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/tabinfo',
                         'Code' => '0',
                         'Data' => array('left' => $activitys, 'right' => $downloads),
                         'Msg' => '获取详情成功',
                         'Time' => time());
                     return json($info);
                 } else {
-                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+                    $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/tabinfo',
                         'Code' => '1',
                         'Data' => '',
                         'Msg' => '获取详情失败,没有相关数据',
@@ -107,7 +107,7 @@ class Activity extends Controller
                     return json($info);
                 }
             } else {
-                $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+                $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/tabinfo',
                     'Code' => '1',
                     'Data' => '',
                     'Msg' => '获取列表失败,缺少参数id',
@@ -126,14 +126,14 @@ class Activity extends Controller
             if ($id) {
                 $videos = Activityvideo::where('fourId',$id)->select();
                 if (isset($videos)) {
-                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/fourtabinfo',
+                    $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/fourtabinfo',
                         'Code' => '0',
                         'Data' => $videos,
                         'Msg' => '获取视频成功',
                         'Time' => time());
                     return json($info);
                 } else {
-                    $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/fourtabinfo',
+                    $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/fourtabinfo',
                         'Code' => '1',
                         'Data' => '',
                         'Msg' => '获取视频失败,没有相关数据',
@@ -141,7 +141,7 @@ class Activity extends Controller
                     return json($info);
                 }
             } else {
-                $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/fourtabinfo',
+                $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/fourtabinfo',
                     'Code' => '1',
                     'Data' => '',
                     'Msg' => '获取视频失败,缺少参数id',
@@ -165,14 +165,14 @@ class Activity extends Controller
 //        $activitys['infolist'] = array_merge(array($array1, $array2, $array3));
 //        $downloads = Activitydowonload::where('activityId', 1)->select();
 //        if (isset($activitys)) {
-//            $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+//            $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/tabinfo',
 //                'Code' => '0',
 //                'Data' => array('left' => $activitys, 'rigit' => $downloads),
 //                'Msg' => '获取详情成功',
 //                'Time' => time());
 //            return json($info);
 //        } else {
-//            $info = array('ApiUrl' => 'http://test.xfxerj.com/api/activity/tabinfo',
+//            $info = array('ApiUrl' => 'https://admin.xfxerj.com/api/activity/tabinfo',
 //                'Code' => '1',
 //                'Data' => '',
 //                'Msg' => '获取详情失败,没有相关数据',
